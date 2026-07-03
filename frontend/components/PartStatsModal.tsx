@@ -3,6 +3,7 @@ import { X, Clock, Calendar, CalendarDays, Infinity as InfinityIcon } from 'luci
 import { useAppStore } from '../store';
 import { calculatePartStats } from '../utils';
 import { TrackPart } from '../types';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface PartStatsModalProps {
   part: TrackPart | null;
@@ -18,58 +19,83 @@ export const PartStatsModal: React.FC<PartStatsModalProps> = ({ part, isOpen, on
     return calculatePartStats(state.blocks, part.id);
   }, [part, state.blocks]);
 
-  if (!isOpen || !part || !stats) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/80 backdrop-blur-md p-0 sm:p-4 animate-fade-in-up">
-      <div className="bg-app-surface w-full max-w-sm rounded-t-[32px] sm:rounded-[32px] overflow-hidden border border-app-border shadow-[0_-10px_40px_rgba(0,0,0,0.5)] flex flex-col animate-scale-in">
-        
-        <div className="flex items-center justify-between p-6 border-b border-white/5">
-          <h3 className="text-2xl font-bold text-white tracking-tight">{part.name}</h3>
-          <button 
-            onClick={onClose}
-            className="p-2 -mr-2 rounded-full hover:bg-white/10 text-white/60 transition-colors active:scale-95"
+    <AnimatePresence>
+      {isOpen && part && stats && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/75 backdrop-blur-sm p-0 sm:p-4">
+          {/* Tap outside backdrop */}
+          <div className="absolute inset-0 z-10" onClick={onClose} />
+
+          <motion.div 
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 220 }}
+            className="bg-zinc-950 w-full max-w-sm rounded-t-[32px] sm:rounded-[32px] overflow-hidden border border-white/5 shadow-[0_-16px_48px_rgba(0,0,0,0.6)] flex flex-col z-20"
           >
-            <X size={20} />
-          </button>
+            {/* Soft top drag indicator bar */}
+            <div className="w-12 h-1 bg-white/10 rounded-full mx-auto mt-3 shrink-0" />
+
+            <div className="flex items-center justify-between px-6 pt-3 pb-4 border-b border-white/5">
+              <h3 className="text-lg font-extrabold text-white tracking-tight">{part.name}</h3>
+              <button 
+                onClick={onClose}
+                className="p-2 -mr-2 rounded-full hover:bg-white/5 text-white/50 hover:text-white transition-colors active:scale-95 border border-transparent hover:border-white/5"
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            <div className="p-6 space-y-4">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-white/[0.01] p-4.5 rounded-[22px] border border-white/5">
+                  <div className="flex items-center gap-2 text-white/30 mb-2.5">
+                    <Clock size={14} />
+                    <span className="text-[9px] font-bold uppercase tracking-wider">Today</span>
+                  </div>
+                  <p className="text-2xl font-extrabold text-white tracking-tight font-mono">
+                    {stats.today}
+                    <span className="text-xs text-white/40 ml-1 font-sans font-medium">h</span>
+                  </p>
+                </div>
+                
+                <div className="bg-white/[0.01] p-4.5 rounded-[22px] border border-white/5">
+                  <div className="flex items-center gap-2 text-white/30 mb-2.5">
+                    <Calendar size={14} />
+                    <span className="text-[9px] font-bold uppercase tracking-wider">Week</span>
+                  </div>
+                  <p className="text-2xl font-extrabold text-white tracking-tight font-mono">
+                    {stats.week}
+                    <span className="text-xs text-white/40 ml-1 font-sans font-medium">h</span>
+                  </p>
+                </div>
+
+                <div className="bg-white/[0.01] p-4.5 rounded-[22px] border border-white/5">
+                  <div className="flex items-center gap-2 text-white/30 mb-2.5">
+                    <CalendarDays size={14} />
+                    <span className="text-[9px] font-bold uppercase tracking-wider">Month</span>
+                  </div>
+                  <p className="text-2xl font-extrabold text-white tracking-tight font-mono">
+                    {stats.month}
+                    <span className="text-xs text-white/40 ml-1 font-sans font-medium">h</span>
+                  </p>
+                </div>
+
+                <div className="bg-indigo-500/5 p-4.5 rounded-[22px] border border-indigo-500/10">
+                  <div className="flex items-center gap-2 text-indigo-400/80 mb-2.5">
+                    <InfinityIcon size={14} />
+                    <span className="text-[9px] font-bold uppercase tracking-wider">Lifetime</span>
+                  </div>
+                  <p className="text-2xl font-extrabold text-indigo-200 tracking-tight font-mono">
+                    {stats.lifetime}
+                    <span className="text-xs text-indigo-400/60 ml-1 font-sans font-medium">h</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
-
-        <div className="p-6 space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-white/[0.02] p-5 rounded-[24px] border border-white/5">
-              <div className="flex items-center gap-2 text-white/40 mb-3">
-                <Clock size={16} />
-                <span className="text-xs font-bold uppercase tracking-wider">Today</span>
-              </div>
-              <p className="text-3xl font-bold text-white tracking-tighter">{stats.today}<span className="text-sm text-white/40 ml-1">h</span></p>
-            </div>
-            
-            <div className="bg-white/[0.02] p-5 rounded-[24px] border border-white/5">
-              <div className="flex items-center gap-2 text-white/40 mb-3">
-                <Calendar size={16} />
-                <span className="text-xs font-bold uppercase tracking-wider">This Week</span>
-              </div>
-              <p className="text-3xl font-bold text-white tracking-tighter">{stats.week}<span className="text-sm text-white/40 ml-1">h</span></p>
-            </div>
-
-            <div className="bg-white/[0.02] p-5 rounded-[24px] border border-white/5">
-              <div className="flex items-center gap-2 text-white/40 mb-3">
-                <CalendarDays size={16} />
-                <span className="text-xs font-bold uppercase tracking-wider">This Month</span>
-              </div>
-              <p className="text-3xl font-bold text-white tracking-tighter">{stats.month}<span className="text-sm text-white/40 ml-1">h</span></p>
-            </div>
-
-            <div className="bg-blue-500/10 p-5 rounded-[24px] border border-blue-500/20">
-              <div className="flex items-center gap-2 text-blue-400 mb-3">
-                <InfinityIcon size={16} />
-                <span className="text-xs font-bold uppercase tracking-wider">Lifetime</span>
-              </div>
-              <p className="text-3xl font-bold text-blue-100 tracking-tighter">{stats.lifetime}<span className="text-sm text-blue-500/70 ml-1">h</span></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      )}
+    </AnimatePresence>
   );
 };

@@ -6,7 +6,7 @@
   <title>TimeOS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -21,15 +21,16 @@
               950: '#050505',
             },
             app: {
-              bg: '#000000',
-              card: '#0A0A0A',
-              surface: '#111111',
-              border: 'rgba(255, 255, 255, 0.05)',
-              borderHover: 'rgba(255, 255, 255, 0.1)',
+              bg: '#09090b',
+              card: '#121214',
+              surface: '#18181b',
+              border: 'rgba(255, 255, 255, 0.06)',
+              borderHover: 'rgba(255, 255, 255, 0.12)',
             }
           },
           fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
           },
           animation: {
             'fade-in-up': 'fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
@@ -41,7 +42,7 @@
               '100%': { opacity: '1', transform: 'translateY(0)' },
             },
             scaleIn: {
-              '0%': { opacity: '0', transform: 'scale(0.95)' },
+              '0%': { opacity: '0', transform: 'scale(0.97)' },
               '100%': { opacity: '1', transform: 'scale(1)' },
             }
           }
@@ -51,11 +52,11 @@
   </script>
   <style>
     body {
-      background-color: #000000;
+      background-color: #09090b;
       color: #ffffff;
       -webkit-tap-highlight-color: transparent;
       overscroll-behavior-y: none;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -73,10 +74,20 @@
     html {
       scroll-behavior: smooth;
     }
+
+    /* Ambient Glow Backdrops */
+    .glow-bg {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(100px);
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 0;
+    }
   </style>
   </head>
 <body>
   <div id="root"></div>
   <script type="module" src="./index.tsx"></script>
-<script type="module" src="/index.js"></script></body>
+</body>
 </html>
