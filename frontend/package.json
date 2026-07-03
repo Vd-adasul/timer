@@ -9,13 +9,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@capacitor/android": "^8.4.1",
+    "@capacitor/cli": "^8.4.1",
+    "@capacitor/core": "^8.4.1",
+    "date-fns": "latest",
+    "html-to-image": "latest",
+    "lucide-react": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-router-dom": "latest",
-    "recharts": "latest",
-    "lucide-react": "latest",
-    "date-fns": "latest",
-    "html-to-image": "latest"
+    "recharts": "latest"
   },
   "devDependencies": {
     "@types/node": "latest",
