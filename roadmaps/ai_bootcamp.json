@@ -1,0 +1,76 @@
+{
+  "name": "AI & LLM Bootcamp",
+  "description": "Building Generative AI, Agents and LLM Applications Curriculum",
+  "parts": [
+    {
+      "name": "Week 0 - Intro to AI & LLMs",
+      "lectures": [
+        "What are Large Language Models?",
+        "Transformers architecture & self-attention overview"
+      ],
+      "assignments": [
+        "Set up OpenAI and Gemini Developer Accounts"
+      ]
+    },
+    {
+      "name": "Week 1 - Prompt Engineering",
+      "lectures": [
+        "System vs User Prompts",
+        "Few-shot prompting & Chain of Thought techniques"
+      ],
+      "assignments": [
+        "Design robust system prompt for translation chatbot"
+      ]
+    },
+    {
+      "name": "Week 2 - Working with LLM APIs",
+      "lectures": [
+        "REST API requests vs SDK clients",
+        "Handling rate limits and backoff handling"
+      ],
+      "assignments": [
+        "Write node script to summarize text using GPT-4o API"
+      ]
+    },
+    {
+      "name": "Week 3 - Chatbots & LangChain",
+      "lectures": [
+        "Intro to LangChain & LangGraph framework",
+        "Managing conversation history & memory buffers"
+      ],
+      "assignments": [
+        "Build CLI chatbot with memory"
+      ]
+    },
+    {
+      "name": "Week 4 - Vector Databases & RAG",
+      "lectures": [
+        "Embeddings: generating vector coordinates",
+        "Retrieval Augmented Generation workflows"
+      ],
+      "assignments": [
+        "Integrate Pinecone database to search PDF document"
+      ]
+    },
+    {
+      "name": "Week 5 - Tool Calling & Agents",
+      "lectures": [
+        "Function calling & schema declaration",
+        "Building autonomous agents with looping feedback"
+      ],
+      "assignments": [
+        "Implement weather checker tool agent"
+      ]
+    },
+    {
+      "name": "Week 6 - Model Tuning & Deployment",
+      "lectures": [
+        "Fine-tuning models using system datasets",
+        "Optimizing latency & token billing configurations"
+      ],
+      "assignments": [
+        "Deploy a fine-tuned GPT model to production environment"
+      ]
+    }
+  ]
+}

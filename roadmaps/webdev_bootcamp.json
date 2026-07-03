@@ -1,0 +1,133 @@
+{
+  "name": "Web Dev & DevOps Bootcamp",
+  "description": "100xSchool Web Development and DevOps Curriculum",
+  "parts": [
+    {
+      "name": "Week 0 - Meet your Instructor",
+      "lectures": [
+        "Week 0 - Web Development | Meet your instructor | AMA | Doubt session - Harkirat Singh"
+      ],
+      "assignments": []
+    },
+    {
+      "name": "Week 1 - HTML & CSS Basics",
+      "lectures": [
+        "Week 1 - Web Development | HTML and CSS"
+      ],
+      "assignments": [
+        "HTML and CSS Basics"
+      ]
+    },
+    {
+      "name": "Week 2 - JavaScript Foundations",
+      "lectures": [
+        "Week 2 - Web Development | JavaScript Basics"
+      ],
+      "assignments": [
+        "JavaScript Basics Problems"
+      ]
+    },
+    {
+      "name": "Week 3 - Async JS & Control Flow",
+      "lectures": [
+        "Week 3 - Web Development | Promises, Callbacks, CPU vs IO Tasks",
+        "Week 3.1 - Web Development | Map, Filter and Arrow functions ( Offline Video )"
+      ],
+      "assignments": [
+        "Promises & Async Tasks"
+      ]
+    },
+    {
+      "name": "Week 4 - Promises Deep Dive",
+      "lectures": [
+        "Week 4 - Web Development | Promises"
+      ],
+      "assignments": [
+        "Custom Promise Implementations"
+      ]
+    },
+    {
+      "name": "Week 5 - Async/Await & File IO",
+      "lectures": [
+        "Week 5 - Web Development | Writing promises and async await"
+      ],
+      "assignments": [
+        "Async/Await Tasks"
+      ]
+    },
+    {
+      "name": "Week 6 - DOM Basics",
+      "lectures": [
+        "Week 6 - Web Development | Starting Frontend ( DOM Basics )"
+      ],
+      "assignments": [
+        "DOM Manipulation Projects"
+      ]
+    },
+    {
+      "name": "Week 7 - HTTP Part 1",
+      "lectures": [
+        "[Week 7 Offline] HTTP Part 1 (Payloads, Domains, IPs, Routes)"
+      ],
+      "assignments": [
+        "Basic Networking Exercises"
+      ]
+    },
+    {
+      "name": "Week 8 - Express & First Server",
+      "lectures": [
+        "Week 8 - Web Development | HTTP Part 2 - Headers, Params and Express",
+        "Axios vs Fetch | [ Cohort 2 ]"
+      ],
+      "assignments": [
+        "HTTP Servers and Express"
+      ]
+    },
+    {
+      "name": "Week 9 - Auth & JWT",
+      "lectures": [
+        "Week 9 - Web Development | Authentication and JWT",
+        "Authentication using cookies | Cohort 2"
+      ],
+      "assignments": [
+        "Auth & JWT Middlewares"
+      ]
+    },
+    {
+      "name": "Week 10 - End to End DOM & Express App",
+      "lectures": [
+        "Week 10 - Web Development | End to End App (Trello) Using DOM and Express"
+      ],
+      "assignments": [
+        "Trello Frontend & Backend"
+      ]
+    },
+    {
+      "name": "Week 11 - Databases Intro",
+      "lectures": [
+        "Week 11 - Web Development | Databases"
+      ],
+      "assignments": [
+        "Database Schema Design"
+      ]
+    },
+    {
+      "name": "Week 12 - MongoDB Integration",
+      "lectures": [
+        "Week 12 (Offline): Migrating Trello to MongoDB"
+      ],
+      "assignments": [
+        "MongoDB Integration"
+      ]
+    },
+    {
+      "name": "Week 13 - Relational DB & SQL",
+      "lectures": [
+        "Week 13 - Web Development | SQL"
+      ],
+      "assignments": [
+        "SQL Queries Practice"
+      ]
+    }
+  ]
+}

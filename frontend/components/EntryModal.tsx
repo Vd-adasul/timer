@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, ChevronRight, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { X, ChevronRight, ArrowLeft, CheckCircle2, Check } from 'lucide-react';
 import { useAppStore } from '../store';
 import { Activity, Track, TrackPart, TrackItem } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -139,7 +139,7 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
                   <ArrowLeft size={14} />
                 </button>
               )}
-              <h3 className="text-sm font-extrabold text-stone-850 tracking-tight">
+              <h3 className="text-sm font-extrabold text-stone-855 tracking-tight">
                 {step === 'ACTIVITY' ? 'Select Activity' : 
                  step === 'TRACK' ? 'Select Track' : 
                  step === 'PART' ? 'Select Part' : 'Select Detail'}
@@ -254,9 +254,10 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
                         <button
                           key={lec.id}
                           onClick={() => handleItemSelect(lec)}
-                          className="w-full flex items-center p-4.5 rounded-[22px] bg-stone-50/50 hover:bg-stone-50 border border-stone-200/30 transition-all text-left mb-2.5 active:scale-[0.98]"
+                          className="w-full flex items-center justify-between p-4.5 rounded-[22px] bg-stone-50/50 hover:bg-stone-50 border border-stone-200/30 transition-all text-left mb-2.5 active:scale-[0.98] group"
                         >
-                          <span className="font-extrabold text-xs text-stone-600 truncate">{lec.name}</span>
+                          <span className={`font-extrabold text-xs truncate flex-1 ${lec.completed ? 'line-through text-stone-400' : 'text-stone-600 group-hover:text-stone-850'}`}>{lec.name}</span>
+                          {lec.completed && <Check size={14} className="text-app-peach ml-2 shrink-0" />}
                         </button>
                       ))}
                     </div>
@@ -269,9 +270,10 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
                         <button
                           key={ass.id}
                           onClick={() => handleItemSelect(ass)}
-                          className="w-full flex items-center p-4.5 rounded-[22px] bg-stone-50/50 hover:bg-stone-50 border border-stone-200/30 transition-all text-left mb-2.5 active:scale-[0.98]"
+                          className="w-full flex items-center justify-between p-4.5 rounded-[22px] bg-stone-50/50 hover:bg-stone-50 border border-stone-200/30 transition-all text-left mb-2.5 active:scale-[0.98] group"
                         >
-                          <span className="font-extrabold text-xs text-stone-600 truncate">{ass.name}</span>
+                          <span className={`font-extrabold text-xs truncate flex-1 ${ass.completed ? 'line-through text-stone-400' : 'text-stone-600 group-hover:text-stone-850'}`}>{ass.name}</span>
+                          {ass.completed && <Check size={14} className="text-app-peach ml-2 shrink-0" />}
                         </button>
                       ))}
                     </div>

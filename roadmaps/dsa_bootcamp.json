@@ -1,0 +1,169 @@
+{
+  "name": "DSA Bootcamp",
+  "description": "100xSchool DSA Curriculum and Practice Assignments",
+  "parts": [
+    {
+      "name": "Week 0 - DSA Orientation",
+      "lectures": [
+        "Week 0 - DSA Orientation ( Recap of live class )"
+      ],
+      "assignments": []
+    },
+    {
+      "name": "Week 1 - Intro to C++",
+      "lectures": [
+        "Week 1 - DSA | Introduction to C++"
+      ],
+      "assignments": [
+        "Introduction to C++"
+      ]
+    },
+    {
+      "name": "Week 2 - Loops & Pattern Printing",
+      "lectures": [
+        "Week 2 - DSA | Loops and Pattern Printing",
+        "Week 2.1 - DSA | Pattern Printing Solutions ( Offline Video )"
+      ],
+      "assignments": [
+        "Loops",
+        "Pattern Printing",
+        "Contest I"
+      ]
+    },
+    {
+      "name": "Week 3 - Functions",
+      "lectures": [
+        "Week 3 - DSA | Functions"
+      ],
+      "assignments": [
+        "Functions"
+      ]
+    },
+    {
+      "name": "Week 4 - Arrays",
+      "lectures": [
+        "Week 4 - DSA | Arrays"
+      ],
+      "assignments": [
+        "Arrays",
+        "Contest II"
+      ]
+    },
+    {
+      "name": "Week 5 - Strings & 2D Arrays",
+      "lectures": [
+        "Week 5 - DSA | Strings / 2D Arrays"
+      ],
+      "assignments": [
+        "Strings",
+        "2D Arrays"
+      ]
+    },
+    {
+      "name": "Week 6 - Sorting & Searching",
+      "lectures": [
+        "Week 6 - DSA | Sorting & Searching Basics"
+      ],
+      "assignments": [
+        "Sorting and Searching",
+        "Sorting"
+      ]
+    },
+    {
+      "name": "Week 7 - Mixed Problem Solving",
+      "lectures": [
+        "Week 7 - DSA | Mixed Problem Solving Session"
+      ],
+      "assignments": [
+        "Mixed Practice",
+        "Contest III"
+      ]
+    },
+    {
+      "name": "Week 8 - Complexity Analysis",
+      "lectures": [
+        "Week 8 - DSA | Time and space complexity"
+      ],
+      "assignments": [
+        "Time and Space Complexity"
+      ]
+    },
+    {
+      "name": "Week 9 - Array Techniques",
+      "lectures": [
+        "Week 9 - DSA | Array Techniques - Prefix Sums, Sliding Window, Contribution"
+      ],
+      "assignments": [
+        "Prefix Sums and Contribution"
+      ]
+    },
+    {
+      "name": "Week 10 - Sets & Maps",
+      "lectures": [
+        "Week 10 - DSA | Sets and Maps",
+        "Week 10.1 - DSA | Sets and Maps ( Offline Video )"
+      ],
+      "assignments": [
+        "Sets and Maps",
+        "Contest IV"
+      ]
+    },
+    {
+      "name": "Week 11 - Two Pointers & Sliding Window",
+      "lectures": [
+        "Week 11 - DSA | Two Pointers / Sliding Window"
+      ],
+      "assignments": [
+        "Sliding Window and Two Pointers"
+      ]
+    },
+    {
+      "name": "Week 12 - Binary Search",
+      "lectures": [
+        "Week 12 - DSA | Interview Problems",
+        "Week 13 - DSA | Binary Search",
+        "Week 13.1 - DSA | Binary Search ( Offline Video )"
+      ],
+      "assignments": [
+        "Binary Search",
+        "Contest V"
+      ]
+    },
+    {
+      "name": "Week 13 - Number Theory",
+      "lectures": [
+        "Week 14 - DSA | Number Theory Basics"
+      ],
+      "assignments": [
+        "Number Theory (Basics)"
+      ]
+    },
+    {
+      "name": "Week 14 - Bit Manipulation",
+      "lectures": [
+        "Week 15 - DSA | Bit Manipulation",
+        "Week 15.1 - DSA | Bit Manipulation - Part 2"
+      ],
+      "assignments": [
+        "Bit Manipulation"
+      ]
+    },
+    {
+      "name": "Week 15 - Recursion & Backtracking",
+      "lectures": [],
+      "assignments": [
+        "Recursion",
+        "Backtracking"
+      ]
+    },
+    {
+      "name": "Week 16 - Advanced Data Structures",
+      "lectures": [],
+      "assignments": [
+        "Linked List",
+        "Stack and Queue",
+        "Contest VI"
+      ]
+    }
+  ]
+}

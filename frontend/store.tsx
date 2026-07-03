@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { AppState, TimeBlock, Track } from './types';
+import { AppState, TimeBlock, Track, TrackItem } from './types';
 import { INITIAL_STATE } from './constants';
 
 export interface ToastType {
@@ -30,6 +30,7 @@ interface StoreContextType {
   hideConfirm: () => void;
   theme: 'light' | 'dark';
   toggleTheme: () => void;
+  toggleItemCompleted: (trackId: string, partId: string, itemId: string) => void;
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
@@ -145,6 +146,30 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     }));
   };
 
+  const toggleItemCompleted = (trackId: string, partId: string, itemId: string) => {
+    setState(prev => {
+      const newTracks = prev.tracks.map(t => {
+        if (t.id !== trackId) return t;
+        return {
+          ...t,
+          parts: t.parts.map(p => {
+            if (p.id !== partId) return p;
+            
+            const toggleCompleted = (items?: TrackItem[]) => 
+              items?.map(i => i.id === itemId ? { ...i, completed: !i.completed } : i);
+              
+            return {
+              ...p,
+              lectures: toggleCompleted(p.lectures),
+              assignments: toggleCompleted(p.assignments)
+            };
+          })
+        };
+      });
+      return { ...prev, tracks: newTracks };
+    });
+  };
+
   const clearData = () => {
     setState(INITIAL_STATE);
   };
@@ -168,7 +193,7 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       addTrack, deleteTrack, importData,
       toast, showToast, hideToast,
       confirmDialog, showConfirm, hideConfirm,
-      theme, toggleTheme
+      theme, toggleTheme, toggleItemCompleted
     }}>
       {children}
     </StoreContext.Provider>
