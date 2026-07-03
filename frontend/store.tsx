@@ -28,6 +28,8 @@ interface StoreContextType {
   confirmDialog: ConfirmDialogType | null;
   showConfirm: (title: string, message: string, onConfirm: () => void, onCancel?: () => void) => void;
   hideConfirm: () => void;
+  theme: 'light' | 'dark';
+  toggleTheme: () => void;
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
@@ -51,9 +53,30 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const [toast, setToast] = useState<ToastType | null>(null);
   const [confirmDialog, setConfirmDialog] = useState<ConfirmDialogType | null>(null);
 
+  // Theme Management
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const saved = localStorage.getItem('timeos_theme');
+    if (saved === 'light' || saved === 'dark') return saved;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
+
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }, [state]);
+
+  useEffect(() => {
+    localStorage.setItem('timeos_theme', theme);
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
 
   const showToast = (message: string, type: 'success' | 'error' | 'info' = 'info') => {
     const id = Date.now();
@@ -144,7 +167,8 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       state, saveBlock, clearData, 
       addTrack, deleteTrack, importData,
       toast, showToast, hideToast,
-      confirmDialog, showConfirm, hideConfirm
+      confirmDialog, showConfirm, hideConfirm,
+      theme, toggleTheme
     }}>
       {children}
     </StoreContext.Provider>

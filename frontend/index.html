@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -15,21 +15,25 @@
         extend: {
           colors: {
             stone: {
-              800: '#292524',
-              500: '#78716C',
-              200: '#E7E5E4',
-              100: '#F5F5F4',
-              50: '#FAFAF9',
+              850: 'var(--text-primary)',
+              800: 'var(--text-primary)',
+              500: 'var(--text-muted)',
+              400: 'var(--text-muted)',
+              300: 'var(--text-muted-light)',
+              200: 'var(--color-border)',
+              100: 'var(--bg-app-surface)',
+              50: 'var(--bg-app-surface)',
             },
             app: {
-              bg: '#FDFCF8',
-              card: '#FFFFFF',
-              surface: '#FCFBF7',
-              sage: '#E8EFE8',
-              lavender: '#EFEDF4',
-              peach: '#FFB7B2',
-              border: 'rgba(41, 37, 36, 0.06)',
-              borderHover: 'rgba(41, 37, 36, 0.12)',
+              bg: 'var(--bg-app-bg)',
+              card: 'var(--bg-app-card)',
+              surface: 'var(--bg-app-surface)',
+              sage: 'var(--color-sage)',
+              lavender: 'var(--color-lavender)',
+              peach: 'var(--color-peach)',
+              border: 'var(--color-border)',
+              borderHover: 'var(--color-border-hover)',
+              sand: 'var(--color-sand)',
             }
           },
           fontFamily: {
@@ -56,15 +60,53 @@
     }
   </script>
   <style>
+    :root {
+      --bg-app-bg: #FDFCF8;
+      --bg-app-card: #FFFFFF;
+      --bg-app-surface: #FCFBF7;
+      --text-primary: #292524;
+      --text-muted: #78716C;
+      --text-muted-light: #A8A29E;
+      --color-border: rgba(41, 37, 36, 0.06);
+      --color-border-hover: rgba(41, 37, 36, 0.12);
+      
+      --color-sage: #E8EFE8;
+      --color-lavender: #EFEDF4;
+      --color-peach: #FFB7B2;
+      --color-sand: #F5F5F0;
+    }
+
+    .dark {
+      --bg-app-bg: #12110F;
+      --bg-app-card: #1C1A18;
+      --bg-app-surface: #242220;
+      --text-primary: #FAFAF9;
+      --text-muted: #A8A29E;
+      --text-muted-light: #78716C;
+      --color-border: rgba(250, 250, 249, 0.08);
+      --color-border-hover: rgba(250, 250, 249, 0.14);
+      
+      --color-sage: #252D25;
+      --color-lavender: #282531;
+      --color-peach: #E29992;
+      --color-sand: #2C2825;
+    }
+
     body {
-      background-color: #FDFCF8;
-      color: #292524;
+      background-color: var(--bg-app-bg);
+      color: var(--text-primary);
       -webkit-tap-highlight-color: transparent;
       overscroll-behavior-y: none;
       font-family: 'Outfit', sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
+    
+    /* Override bg-white class for dark mode compatibility */
+    .bg-white {
+      background-color: var(--bg-app-card) !important;
+    }
+
     /* Hide scrollbar for Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {
       display: none;

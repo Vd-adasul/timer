@@ -187,7 +187,7 @@ export const HomeScreen: React.FC = () => {
         <div className="grid grid-cols-3 gap-4">
           {/* Study Ring Card */}
           <div className="bg-white p-5 rounded-[28px] border border-stone-200/30 flex flex-col items-center justify-center text-center hover:bg-stone-50/50 transition-colors shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)] relative overflow-hidden group">
-            <ProgressRing percentage={studyHours ? (studyHours / 8) * 100 : 0} color="#E8EFE8">
+            <ProgressRing percentage={studyHours ? (studyHours / 8) * 100 : 0} color="var(--color-sage)">
               <Target size={14} className="text-stone-500" />
             </ProgressRing>
             <p className="text-lg font-extrabold text-stone-800 tracking-tight mt-3">
@@ -199,7 +199,7 @@ export const HomeScreen: React.FC = () => {
 
           {/* Gym Ring Card */}
           <div className="bg-white p-5 rounded-[28px] border border-stone-200/30 flex flex-col items-center justify-center text-center hover:bg-stone-50/50 transition-colors shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)] relative overflow-hidden group">
-            <ProgressRing percentage={gymHours ? (gymHours / 2) * 100 : 0} color="#FFB7B2">
+            <ProgressRing percentage={gymHours ? (gymHours / 2) * 100 : 0} color="var(--color-peach)">
               <Flame size={14} className="text-stone-500" />
             </ProgressRing>
             <p className="text-lg font-extrabold text-stone-800 tracking-tight mt-3">
@@ -211,7 +211,7 @@ export const HomeScreen: React.FC = () => {
 
           {/* Sleep Ring Card */}
           <div className="bg-white p-5 rounded-[28px] border border-stone-200/30 flex flex-col items-center justify-center text-center hover:bg-stone-50/50 transition-colors shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)] relative overflow-hidden group">
-            <ProgressRing percentage={sleepHours ? (sleepHours / 8) * 100 : 0} color="#EFEDF4">
+            <ProgressRing percentage={sleepHours ? (sleepHours / 8) * 100 : 0} color="var(--color-lavender)">
               <Clock size={14} className="text-stone-500" />
             </ProgressRing>
             <p className="text-lg font-extrabold text-stone-800 tracking-tight mt-3">

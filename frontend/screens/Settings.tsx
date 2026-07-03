@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react';
-import { Trash2, Database, Info, ChevronRight, Plus, Download, Upload, AlertTriangle, FileJson, CheckCircle2, ArrowLeft } from 'lucide-react';
+import { Trash2, Database, Info, ChevronRight, Plus, Download, Upload, AlertTriangle, FileJson, CheckCircle2, ArrowLeft, Sun, Moon } from 'lucide-react';
 import { useAppStore } from '../store';
 import { Track } from '../types';
 import { motion } from 'framer-motion';
 
 export const SettingsScreen: React.FC = () => {
-  const { state, clearData, addTrack, deleteTrack, importData, showToast, showConfirm } = useAppStore();
+  const { state, clearData, addTrack, deleteTrack, importData, showToast, showConfirm, theme, toggleTheme } = useAppStore();
   const [view, setView] = useState<'main' | 'tracks' | 'paste_json' | 'preview_json'>('main');
   const [showDangerZone, setShowDangerZone] = useState(false);
   const [deleteInput, setDeleteInput] = useState('');
@@ -283,7 +283,7 @@ export const SettingsScreen: React.FC = () => {
           <div className="bg-white rounded-[32px] border border-stone-200/30 overflow-hidden shadow-sm">
             <button 
               onClick={() => setView('tracks')}
-              className="w-full p-5 flex items-center justify-between hover:bg-stone-50/50 transition-colors text-left group active:bg-stone-50"
+              className="w-full p-5 flex items-center justify-between hover:bg-stone-50/50 transition-colors text-left group active:bg-stone-50 border-b border-stone-100"
             >
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-app-sage rounded-2xl text-stone-700">
@@ -295,6 +295,24 @@ export const SettingsScreen: React.FC = () => {
                 </div>
               </div>
               <ChevronRight size={14} className="text-stone-300 group-hover:text-stone-500 transition-colors" />
+            </button>
+
+            <button 
+              onClick={toggleTheme}
+              className="w-full p-5 flex items-center justify-between hover:bg-stone-50/50 transition-colors text-left group active:bg-stone-50"
+            >
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-app-lavender rounded-2xl text-stone-700">
+                  {theme === 'dark' ? <Moon size={16} /> : <Sun size={16} />}
+                </div>
+                <div>
+                  <p className="text-stone-800 font-extrabold text-xs">App Theme</p>
+                  <p className="text-stone-400 text-[10px] font-medium mt-0.5">Currently: {theme === 'dark' ? 'Dark' : 'Light'} Mode</p>
+                </div>
+              </div>
+              <div className="w-10 h-6 bg-stone-100 rounded-full p-1 transition-all duration-300 cursor-pointer flex items-center relative select-none">
+                <div className={`w-4 h-4 bg-stone-500 rounded-full shadow-md transform transition-transform duration-300 ${theme === 'dark' ? 'translate-x-4' : 'translate-x-0'}`} />
+              </div>
             </button>
           </div>
         </section>

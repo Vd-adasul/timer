@@ -154,13 +154,13 @@ const App: React.FC = () => {
   return (
     <StoreProvider>
       <HashRouter>
-        <div className="h-screen w-screen bg-[#FDFCF8] text-stone-800 font-sans overflow-hidden flex justify-center selection:bg-app-peach/30">
+        <div className="h-screen w-screen bg-app-bg text-stone-800 font-sans overflow-hidden flex justify-center selection:bg-app-peach/30">
           {/* Warm Sage/Peach Ambient Glows */}
           <div className="glow-bg bg-app-sage w-80 h-80 top-[-80px] left-[-80px]" />
           <div className="glow-bg bg-app-lavender w-80 h-80 bottom-[-80px] right-[-80px]" />
 
           {/* Mobile container constraint for web view */}
-          <div className="w-full max-w-md h-full relative bg-[#FDFCF8] border-x border-stone-200/30 shadow-[0_20px_50px_rgba(41,37,36,0.06)] overflow-hidden flex flex-col">
+          <div className="w-full max-w-md h-full relative bg-app-bg border-x border-stone-200/30 shadow-[0_20px_50px_rgba(41,37,36,0.06)] overflow-hidden flex flex-col">
             <GlobalToast />
             <GlobalConfirm />
             
