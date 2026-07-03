@@ -113,7 +113,7 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/75 backdrop-blur-sm p-0 sm:p-4">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-stone-900/40 backdrop-blur-sm p-0 sm:p-4">
       {/* Tap outside to close */}
       <div className="absolute inset-0 z-10" onClick={onClose} />
 
@@ -122,24 +122,24 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
         transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-        className="bg-zinc-950 w-full max-w-md rounded-t-[32px] sm:rounded-[32px] overflow-hidden border border-white/5 shadow-[0_-16px_48px_rgba(0,0,0,0.6)] flex flex-col max-h-[85vh] z-20 relative"
+        className="bg-white w-full max-w-md rounded-t-[32px] sm:rounded-[32px] overflow-hidden border border-stone-200/30 shadow-[0_-16px_48px_rgba(41,37,36,0.06)] flex flex-col max-h-[85vh] z-20 relative text-stone-850"
       >
         {/* Dynamic Island style top drag handle */}
-        <div className="w-12 h-1 bg-white/10 rounded-full mx-auto mt-3 mb-1 shrink-0" />
+        <div className="w-12 h-1 bg-stone-200 rounded-full mx-auto mt-3 mb-1 shrink-0" />
         
         {/* Header and selection breadcrumbs */}
-        <div className="px-6 pt-3 pb-4 border-b border-white/5 shrink-0 flex flex-col">
+        <div className="px-6 pt-3 pb-4 border-b border-stone-100 shrink-0 flex flex-col">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               {step !== 'ACTIVITY' && (
                 <button 
                   onClick={goBack}
-                  className="p-2 -ml-2 rounded-full hover:bg-white/5 text-white/50 hover:text-white transition-colors active:scale-95 border border-transparent hover:border-white/5"
+                  className="p-2 -ml-2 rounded-full hover:bg-stone-50 text-stone-500 hover:text-stone-800 transition-colors active:scale-95 border border-transparent hover:border-stone-200/20"
                 >
-                  <ArrowLeft size={16} />
+                  <ArrowLeft size={14} />
                 </button>
               )}
-              <h3 className="text-base font-extrabold text-white tracking-tight">
+              <h3 className="text-sm font-extrabold text-stone-850 tracking-tight">
                 {step === 'ACTIVITY' ? 'Select Activity' : 
                  step === 'TRACK' ? 'Select Track' : 
                  step === 'PART' ? 'Select Part' : 'Select Detail'}
@@ -147,15 +147,15 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
             </div>
             <button 
               onClick={onClose}
-              className="p-2 -mr-2 rounded-full hover:bg-white/5 text-white/50 hover:text-white transition-colors active:scale-95 border border-transparent hover:border-white/5"
+              className="p-2 -mr-2 rounded-full hover:bg-stone-50 text-stone-500 hover:text-stone-800 transition-colors active:scale-95 border border-transparent hover:border-stone-200/20"
             >
-              <X size={16} />
+              <X size={14} />
             </button>
           </div>
 
           {/* Breadcrumbs for tracking selections */}
           {selectedActivity && (
-            <p className="text-[9px] text-indigo-400 font-bold uppercase tracking-wider mt-2.5 truncate">
+            <p className="text-[8px] text-stone-400 font-extrabold uppercase tracking-widest mt-2 truncate font-cursive text-sm">
               {getBreadcrumbs()}
             </p>
           )}
@@ -180,20 +180,20 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
                     <button
                       key={activity.id}
                       onClick={() => handleActivitySelect(activity)}
-                      className="flex items-center justify-between p-4.5 rounded-[22px] bg-zinc-900/40 hover:bg-zinc-900/80 border border-white/5 transition-all text-left group active:scale-[0.97]"
+                      className="flex items-center justify-between p-4.5 rounded-[22px] bg-stone-50/50 hover:bg-stone-50 border border-stone-200/30 transition-all text-left group active:scale-[0.97]"
                     >
                       <div className="flex items-center gap-3 overflow-hidden">
                         <div className="w-2.5 h-2.5 rounded-full shadow-sm shrink-0" style={{ backgroundColor: activity.color }} />
-                        <span className="font-bold text-xs text-white/80 group-hover:text-white transition-colors truncate">{activity.name}</span>
+                        <span className="font-extrabold text-xs text-stone-600 group-hover:text-stone-850 transition-colors truncate">{activity.name}</span>
                       </div>
                       {activity.requiresTrack && (
-                        <ChevronRight size={14} className="text-white/20 group-hover:text-white/50 shrink-0 ml-1" />
+                        <ChevronRight size={12} className="text-stone-300 group-hover:text-stone-500 shrink-0 ml-1" />
                       )}
                     </button>
                   ))}
                   <button
                     onClick={handleClear}
-                    className="col-span-2 mt-4 py-4 rounded-[22px] bg-red-950/20 hover:bg-red-950/40 text-red-400 font-bold text-xs uppercase tracking-wider transition-colors border border-red-500/10 active:scale-[0.98]"
+                    className="col-span-2 mt-4 py-4 rounded-[22px] bg-red-500/5 hover:bg-red-500/10 text-red-500 font-extrabold text-xs uppercase tracking-wider transition-colors border border-red-200/20 active:scale-[0.98]"
                   >
                     Clear Block
                   </button>
@@ -206,14 +206,14 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
                     <button
                       key={track.id}
                       onClick={() => handleTrackSelect(track)}
-                      className="flex items-center justify-between p-4.5 rounded-[22px] bg-zinc-900/40 hover:bg-zinc-900/80 border border-white/5 transition-all text-left group active:scale-[0.98]"
+                      className="flex items-center justify-between p-4.5 rounded-[22px] bg-stone-50/50 hover:bg-stone-50 border border-stone-200/30 transition-all text-left group active:scale-[0.98]"
                     >
-                      <span className="font-bold text-xs text-white/85 group-hover:text-white truncate">{track.name}</span>
-                      <ChevronRight size={14} className="text-white/20 group-hover:text-white/50" />
+                      <span className="font-extrabold text-xs text-stone-600 group-hover:text-stone-850 truncate">{track.name}</span>
+                      <ChevronRight size={12} className="text-stone-300 group-hover:text-stone-500" />
                     </button>
                   ))}
                   {state.tracks.length === 0 && (
-                    <div className="py-12 text-center text-white/30 text-xs font-bold uppercase tracking-widest">
+                    <div className="py-12 text-center text-stone-400 text-xs font-bold uppercase tracking-widest">
                       No tracks found. Add them in Settings.
                     </div>
                   )}
@@ -226,11 +226,11 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
                     <button
                       key={part.id}
                       onClick={() => handlePartSelect(part)}
-                      className="flex items-center justify-between p-4.5 rounded-[22px] bg-zinc-900/40 hover:bg-zinc-900/80 border border-white/5 transition-all text-left group active:scale-[0.98]"
+                      className="flex items-center justify-between p-4.5 rounded-[22px] bg-stone-50/50 hover:bg-stone-50 border border-stone-200/30 transition-all text-left group active:scale-[0.98]"
                     >
-                      <span className="font-bold text-xs text-white/85 group-hover:text-white truncate">{part.name}</span>
+                      <span className="font-extrabold text-xs text-stone-600 group-hover:text-stone-850 truncate">{part.name}</span>
                       {((part.lectures && part.lectures.length > 0) || (part.assignments && part.assignments.length > 0)) && (
-                        <ChevronRight size={14} className="text-white/20 group-hover:text-white/50" />
+                        <ChevronRight size={12} className="text-stone-300 group-hover:text-stone-500" />
                       )}
                     </button>
                   ))}
@@ -241,22 +241,22 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
                 <div className="flex flex-col gap-3">
                   <button
                     onClick={() => handleItemSelect()}
-                    className="flex items-center justify-center gap-2 p-4 rounded-[22px] bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs uppercase tracking-wider transition-all mb-3 active:scale-[0.98]"
+                    className="flex items-center justify-center gap-2 p-4 rounded-[22px] bg-stone-800 hover:bg-stone-900 text-white font-extrabold text-xs uppercase tracking-wider transition-all mb-3 active:scale-[0.98] shadow-sm"
                   >
-                    <CheckCircle2 size={16} />
+                    <CheckCircle2 size={14} />
                     Track "{selectedPart.name}" Only
                   </button>
 
                   {selectedPart.lectures && selectedPart.lectures.length > 0 && (
                     <div className="mb-3">
-                      <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-3 ml-2">Lectures</p>
+                      <p className="text-[9px] font-extrabold text-stone-450 uppercase tracking-wider mb-3 ml-2">Lectures</p>
                       {selectedPart.lectures.map(lec => (
                         <button
                           key={lec.id}
                           onClick={() => handleItemSelect(lec)}
-                          className="w-full flex items-center p-4.5 rounded-[22px] bg-zinc-900/40 hover:bg-zinc-900/80 border border-white/5 transition-all text-left mb-2.5 active:scale-[0.98]"
+                          className="w-full flex items-center p-4.5 rounded-[22px] bg-stone-50/50 hover:bg-stone-50 border border-stone-200/30 transition-all text-left mb-2.5 active:scale-[0.98]"
                         >
-                          <span className="font-bold text-xs text-white/80 truncate">{lec.name}</span>
+                          <span className="font-extrabold text-xs text-stone-600 truncate">{lec.name}</span>
                         </button>
                       ))}
                     </div>
@@ -264,14 +264,14 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
 
                   {selectedPart.assignments && selectedPart.assignments.length > 0 && (
                     <div>
-                      <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-3 ml-2">Assignments</p>
+                      <p className="text-[9px] font-extrabold text-stone-450 uppercase tracking-wider mb-3 ml-2">Assignments</p>
                       {selectedPart.assignments.map(ass => (
                         <button
                           key={ass.id}
                           onClick={() => handleItemSelect(ass)}
-                          className="w-full flex items-center p-4.5 rounded-[22px] bg-zinc-900/40 hover:bg-zinc-900/80 border border-white/5 transition-all text-left mb-2.5 active:scale-[0.98]"
+                          className="w-full flex items-center p-4.5 rounded-[22px] bg-stone-50/50 hover:bg-stone-50 border border-stone-200/30 transition-all text-left mb-2.5 active:scale-[0.98]"
                         >
-                          <span className="font-bold text-xs text-white/80 truncate">{ass.name}</span>
+                          <span className="font-extrabold text-xs text-stone-600 truncate">{ass.name}</span>
                         </button>
                       ))}
                     </div>

@@ -84,57 +84,56 @@ export const TimelineScreen: React.FC = () => {
       >
         {/* Time Column */}
         <div className="w-16 flex-shrink-0 flex flex-col items-end pr-4 justify-center relative select-none">
-          <span className="text-[10px] font-bold text-white/30 font-mono tracking-wider group-hover:text-white/60 transition-colors">
+          <span className="text-[10px] font-bold text-stone-400/80 font-mono tracking-wider group-hover:text-stone-850 transition-colors">
             {formatTime(index)}
           </span>
           {/* Timeline Connector Line */}
           {index !== 47 && (
-            <div className="absolute right-[-0.5px] top-1/2 bottom-[-1/2] w-[1px] h-full bg-white/10 group-hover:bg-white/20 transition-colors" />
+            <div className="absolute right-[-0.5px] top-1/2 bottom-[-1/2] w-[1px] h-full bg-stone-200/50 group-hover:bg-stone-300 transition-colors" />
           )}
           {/* Node dot */}
-          <div className="absolute right-[-3px] top-[calc(50%-3px)] w-1.5 h-1.5 rounded-full bg-white/20 group-hover:bg-white/40 group-hover:scale-125 transition-all" />
+          <div className="absolute right-[-3px] top-[calc(50%-3px)] w-1.5 h-1.5 rounded-full bg-stone-300 group-hover:bg-app-peach group-hover:scale-125 transition-all" />
         </div>
 
         {/* Content Column */}
         <div className="flex-1 pl-5 py-1.5 relative select-none">
           {activity ? (
             <div 
-              className="h-full rounded-2xl px-4 flex flex-col justify-center transition-all duration-300 hover:brightness-110 active:scale-[0.98] border border-white/[0.03] shadow-md relative overflow-hidden"
+              className="h-full rounded-[20px] bg-white px-4 flex flex-col justify-center transition-all duration-300 hover:shadow-[0_4px_16px_rgba(41,37,36,0.03)] active:scale-[0.98] border border-stone-200/30 relative overflow-hidden"
               style={{ 
-                backgroundColor: `${activity.color}0a`, 
                 borderLeft: `4px solid ${activity.color}` 
               }}
             >
               {/* Soft glow behind the block */}
               <div 
-                className="absolute inset-y-0 left-0 w-24 opacity-30 filter blur-xl" 
+                className="absolute inset-y-0 left-0 w-16 opacity-5 filter blur-md" 
                 style={{ backgroundColor: activity.color }}
               />
               <div className="flex items-center gap-2 relative z-10">
-                <span className="font-bold text-sm tracking-tight" style={{ color: activity.color }}>
-                  {activity.name} {trackName ? <span className="text-white/40 font-medium"> · {trackName}</span> : ''}
+                <span className="font-extrabold text-xs tracking-tight text-stone-800">
+                  {activity.name} {trackName ? <span className="text-stone-400 font-medium font-cursive text-base lowercase ml-1">({trackName})</span> : ''}
                 </span>
               </div>
               {partName && (
-                <span className="text-xs text-white/50 mt-0.5 font-medium tracking-wide truncate max-w-[240px] relative z-10">
-                  {partName} {itemName ? <span className="text-white/30 font-normal">({itemName})</span> : ''}
+                <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider mt-0.5 truncate max-w-[240px] relative z-10">
+                  {partName} {itemName ? <span className="text-stone-400 font-normal">({itemName})</span> : ''}
                 </span>
               )}
             </div>
           ) : (
-            <div className="h-full rounded-2xl border border-transparent bg-white/[0.01] hover:bg-white/[0.03] hover:border-white/5 transition-all duration-200 flex items-center px-4 active:scale-[0.98]">
-              <span className="text-[11px] text-white/20 font-bold uppercase tracking-wider">Tap to track</span>
+            <div className="h-full rounded-[20px] border border-dashed border-stone-200/50 bg-stone-50/20 hover:bg-stone-50/60 transition-all duration-200 flex items-center px-4 active:scale-[0.98]">
+              <span className="text-[10px] text-stone-400 font-extrabold uppercase tracking-wider">Tap to track</span>
             </div>
           )}
 
-          {/* Award Winning 'Now' Indicator Line Overlay */}
+          {/* Award Winning 'Now' Indicator Line Overlay - styled Softly */}
           {showNowIndicator && (
             <div 
               className="absolute left-1 right-3 z-20 pointer-events-none flex items-center gap-1.5"
               style={{ top: `${nowOffsetPercent}%` }}
             >
-              <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-ping shadow-[0_0_8px_#6366f1]" />
-              <div className="flex-1 h-[1px] bg-gradient-to-r from-indigo-500/80 to-transparent" />
+              <div className="w-1.5 h-1.5 rounded-full bg-app-peach animate-ping shadow-[0_0_8px_#FFB7B2]" />
+              <div className="flex-1 h-[1px] bg-gradient-to-r from-app-peach to-transparent" />
             </div>
           )}
         </div>
@@ -147,33 +146,33 @@ export const TimelineScreen: React.FC = () => {
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
-      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-      className="flex flex-col h-full bg-[#09090b]"
+      transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+      className="flex flex-col h-full bg-[#FDFCF8]"
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-4 bg-[#09090b]/80 backdrop-blur-xl sticky top-0 z-30 border-b border-white/5">
+      <div className="flex items-center justify-between px-4 py-4 bg-[#FDFCF8]/70 backdrop-blur-xl sticky top-0 z-30 border-b border-stone-200/20">
         <button 
           onClick={() => setCurrentDate(subDays(currentDate, 1))}
-          className="p-2.5 rounded-full hover:bg-white/5 border border-transparent hover:border-white/5 text-white/50 hover:text-white transition-all active:scale-95"
+          className="p-2.5 rounded-full hover:bg-stone-50 border border-transparent hover:border-stone-200/20 text-stone-500 hover:text-stone-855 transition-all active:scale-95"
         >
-          <ChevronLeft size={20} />
+          <ChevronLeft size={18} />
         </button>
         
         <div 
-          className="flex items-center gap-2 cursor-pointer hover:bg-white/5 px-4 py-2 border border-transparent hover:border-white/5 rounded-full transition-all active:scale-95" 
+          className="flex items-center gap-2 cursor-pointer hover:bg-stone-50 px-4 py-2 border border-transparent hover:border-stone-200/20 rounded-full transition-all active:scale-95" 
           onClick={() => setCurrentDate(new Date())}
         >
-          <CalendarIcon size={14} className="text-white/40" />
-          <h2 className="text-xs font-bold uppercase tracking-widest text-white/80">
+          <CalendarIcon size={12} className="text-stone-400" />
+          <h2 className="text-[10px] font-extrabold uppercase tracking-widest text-stone-800">
             {format(currentDate, 'EEEE, MMM d')}
           </h2>
         </div>
 
         <button 
           onClick={() => setCurrentDate(addDays(currentDate, 1))}
-          className="p-2.5 rounded-full hover:bg-white/5 border border-transparent hover:border-white/5 text-white/50 hover:text-white transition-all active:scale-95"
+          className="p-2.5 rounded-full hover:bg-stone-50 border border-transparent hover:border-stone-200/20 text-stone-500 hover:text-stone-855 transition-all active:scale-95"
         >
-          <ChevronRight size={20} />
+          <ChevronRight size={18} />
         </button>
       </div>
 

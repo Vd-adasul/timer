@@ -108,46 +108,46 @@ export const SettingsScreen: React.FC = () => {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -20 }}
-        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-col h-full bg-[#09090b] overflow-y-auto pb-32 no-scrollbar"
+        transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+        className="flex flex-col h-full bg-[#FDFCF8] overflow-y-auto pb-32 no-scrollbar"
       >
-        <div className="px-6 pt-10 pb-6 sticky top-0 bg-[#09090b]/95 backdrop-blur-xl z-10 flex items-center gap-3 border-b border-white/5">
-          <button onClick={() => setView('paste_json')} className="p-2 -ml-2 rounded-full hover:bg-white/5 text-white/60 hover:text-white transition-all active:scale-95 border border-transparent hover:border-white/5">
-            <ArrowLeft size={20} />
+        <div className="px-6 pt-10 pb-6 sticky top-0 bg-[#FDFCF8]/85 backdrop-blur-md z-10 flex items-center gap-3 border-b border-stone-200/20">
+          <button onClick={() => setView('paste_json')} className="p-2.5 -ml-2 rounded-full hover:bg-stone-50 text-stone-500 hover:text-stone-850 transition-all active:scale-95 border border-transparent hover:border-stone-200/20">
+            <ArrowLeft size={18} />
           </button>
           <div>
-            <h1 className="text-xl font-extrabold text-white tracking-tight">Preview Track</h1>
-            <p className="text-[9px] text-white/40 font-bold uppercase tracking-wider">Confirm imported items</p>
+            <h1 className="text-xl font-extrabold text-stone-800 tracking-tight">Preview Track</h1>
+            <p className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest">Confirm imported items</p>
           </div>
         </div>
 
         <div className="px-6 space-y-6 max-w-2xl mx-auto w-full mt-6">
-          <div className="bg-zinc-900/40 p-6 rounded-[32px] border border-white/5 text-center relative overflow-hidden">
-            <div className="w-16 h-16 bg-indigo-500/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-indigo-500/20">
-              <CheckCircle2 size={32} className="text-indigo-400" />
+          <div className="bg-white p-6 rounded-[36px] border border-stone-200/30 text-center relative overflow-hidden shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)]">
+            <div className="w-16 h-16 bg-app-sage rounded-full flex items-center justify-center mx-auto mb-4 border border-stone-200/20">
+              <CheckCircle2 size={24} className="text-stone-600" />
             </div>
-            <h2 className="text-2xl font-extrabold text-white mb-1.5 tracking-tight">{previewTrack.name}</h2>
-            {previewTrack.description && <p className="text-white/40 text-xs mb-6 font-medium">{previewTrack.description}</p>}
+            <h2 className="text-xl font-extrabold text-stone-800 mb-1.5 tracking-tight">{previewTrack.name}</h2>
+            {previewTrack.description && <p className="text-stone-400 text-xs mb-6 font-medium font-cursive text-lg">{previewTrack.description}</p>}
             
             <div className="grid grid-cols-3 gap-3">
-              <div className="bg-white/[0.01] p-4 rounded-2xl border border-white/5">
-                <p className="text-2xl font-extrabold text-white font-mono">{previewTrack.parts.length}</p>
-                <p className="text-[9px] text-white/30 font-bold uppercase tracking-widest mt-1">Parts</p>
+              <div className="bg-stone-50/50 p-4 rounded-[22px] border border-stone-200/35">
+                <p className="text-xl font-extrabold text-stone-800 font-mono">{previewTrack.parts.length}</p>
+                <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider mt-1">Parts</p>
               </div>
-              <div className="bg-white/[0.01] p-4 rounded-2xl border border-white/5">
-                <p className="text-2xl font-extrabold text-white font-mono">{totalLectures}</p>
-                <p className="text-[9px] text-white/30 font-bold uppercase tracking-widest mt-1">Lectures</p>
+              <div className="bg-stone-50/50 p-4 rounded-[22px] border border-stone-200/35">
+                <p className="text-xl font-extrabold text-stone-800 font-mono">{totalLectures}</p>
+                <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider mt-1">Lectures</p>
               </div>
-              <div className="bg-white/[0.01] p-4 rounded-2xl border border-white/5">
-                <p className="text-2xl font-extrabold text-white font-mono">{totalAssignments}</p>
-                <p className="text-[9px] text-white/30 font-bold uppercase tracking-widest mt-1">Tasks</p>
+              <div className="bg-stone-50/50 p-4 rounded-[22px] border border-stone-200/35">
+                <p className="text-xl font-extrabold text-stone-800 font-mono">{totalAssignments}</p>
+                <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider mt-1">Tasks</p>
               </div>
             </div>
           </div>
 
           <button 
             onClick={handleSaveTrack}
-            className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold text-sm transition-all active:scale-[0.98] shadow-lg shadow-indigo-600/10"
+            className="w-full py-4 bg-stone-800 hover:bg-stone-900 text-white rounded-[22px] font-extrabold text-xs uppercase tracking-wider transition-all active:scale-[0.98] shadow-lg shadow-stone-800/10"
           >
             Import Track
           </button>
@@ -162,16 +162,16 @@ export const SettingsScreen: React.FC = () => {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -20 }}
-        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-col h-full bg-[#09090b] overflow-y-auto pb-32 no-scrollbar"
+        transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+        className="flex flex-col h-full bg-[#FDFCF8] overflow-y-auto pb-32 no-scrollbar"
       >
-        <div className="px-6 pt-10 pb-6 sticky top-0 bg-[#09090b]/95 backdrop-blur-xl z-10 flex items-center gap-3 border-b border-white/5">
-          <button onClick={() => setView('tracks')} className="p-2 -ml-2 rounded-full hover:bg-white/5 text-white/60 hover:text-white transition-all active:scale-95 border border-transparent hover:border-white/5">
-            <ArrowLeft size={20} />
+        <div className="px-6 pt-10 pb-6 sticky top-0 bg-[#FDFCF8]/85 backdrop-blur-md z-10 flex items-center gap-3 border-b border-stone-200/20">
+          <button onClick={() => setView('tracks')} className="p-2.5 -ml-2 rounded-full hover:bg-stone-50 text-stone-500 hover:text-stone-850 transition-all active:scale-95 border border-transparent hover:border-stone-200/20">
+            <ArrowLeft size={18} />
           </button>
           <div>
-            <h1 className="text-xl font-extrabold text-white tracking-tight">Paste JSON</h1>
-            <p className="text-[9px] text-white/40 font-bold uppercase tracking-wider">Input structured JSON roadmap</p>
+            <h1 className="text-xl font-extrabold text-stone-800 tracking-tight">Paste JSON</h1>
+            <p className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest">Input structured JSON roadmap</p>
           </div>
         </div>
 
@@ -180,11 +180,11 @@ export const SettingsScreen: React.FC = () => {
             value={jsonInput}
             onChange={(e) => setJsonInput(e.target.value)}
             placeholder={`{\n  "name": "DSA Roadmap",\n  "description": "Arrays and dynamic programming",\n  "parts": [\n    {\n      "name": "Arrays",\n      "lectures": ["Intro to Arrays"],\n      "assignments": ["Array practice"]\n    }\n  ]\n}`}
-            className="flex-1 w-full bg-zinc-900/40 border border-white/5 rounded-2xl p-4 text-xs text-white/80 font-mono focus:outline-none focus:border-indigo-500/50 resize-none min-h-[260px] shadow-inner leading-relaxed"
+            className="flex-1 w-full bg-white border border-stone-200/40 rounded-[22px] p-4 text-xs text-stone-800 font-mono focus:outline-none focus:border-stone-400/50 resize-none min-h-[260px] shadow-sm leading-relaxed"
           />
           
           {jsonError && (
-            <div className="p-4 bg-red-500/5 border border-red-500/10 rounded-2xl text-red-400 text-xs font-bold uppercase tracking-wider leading-relaxed">
+            <div className="p-4 bg-red-50/5 border border-red-200/40 rounded-[22px] text-red-600 text-xs font-bold uppercase tracking-wider leading-relaxed">
               {jsonError}
             </div>
           )}
@@ -192,7 +192,7 @@ export const SettingsScreen: React.FC = () => {
           <button 
             onClick={handlePreviewJSON}
             disabled={!jsonInput.trim()}
-            className="w-full py-3.5 bg-white hover:bg-white/90 text-black rounded-2xl font-bold text-sm transition-all active:scale-[0.98] disabled:opacity-30"
+            className="w-full py-4 bg-stone-800 hover:bg-stone-900 text-white rounded-[22px] font-extrabold text-xs uppercase tracking-wider transition-all active:scale-[0.98] disabled:opacity-30"
           >
             Verify Preview
           </button>
@@ -207,33 +207,33 @@ export const SettingsScreen: React.FC = () => {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -20 }}
-        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-col h-full bg-[#09090b] overflow-y-auto pb-32 no-scrollbar"
+        transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+        className="flex flex-col h-full bg-[#FDFCF8] overflow-y-auto pb-32 no-scrollbar"
       >
-        <div className="px-6 pt-10 pb-6 sticky top-0 bg-[#09090b]/95 backdrop-blur-xl z-10 flex items-center gap-3 border-b border-white/5">
-          <button onClick={() => setView('main')} className="p-2 -ml-2 rounded-full hover:bg-white/5 text-white/60 hover:text-white transition-all active:scale-95 border border-transparent hover:border-white/5">
-            <ArrowLeft size={20} />
+        <div className="px-6 pt-10 pb-6 sticky top-0 bg-[#FDFCF8]/85 backdrop-blur-md z-10 flex items-center gap-3 border-b border-stone-200/20">
+          <button onClick={() => setView('main')} className="p-2.5 -ml-2 rounded-full hover:bg-stone-50 text-stone-500 hover:text-stone-855 transition-all active:scale-95 border border-transparent hover:border-stone-200/20">
+            <ArrowLeft size={18} />
           </button>
           <div>
-            <h1 className="text-xl font-extrabold text-white tracking-tight">Learning Tracks</h1>
-            <p className="text-[9px] text-white/40 font-bold uppercase tracking-wider">Configure study curriculum</p>
+            <h1 className="text-xl font-extrabold text-stone-800 tracking-tight">Learning Tracks</h1>
+            <p className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest">Configure study curriculum</p>
           </div>
         </div>
 
         <div className="px-6 space-y-5 max-w-2xl mx-auto w-full mt-6">
           <button 
             onClick={() => setView('paste_json')}
-            className="w-full bg-indigo-500/5 hover:bg-indigo-500/10 border border-indigo-500/15 p-4 rounded-2xl flex items-center justify-center gap-2 text-indigo-400 text-xs font-bold uppercase tracking-wider transition-all active:scale-[0.98]"
+            className="w-full bg-app-peach hover:bg-opacity-90 border border-stone-200/35 p-4 rounded-[22px] flex items-center justify-center gap-2 text-stone-800 text-[10px] font-extrabold uppercase tracking-wider transition-all active:scale-[0.98]"
           >
-            <Plus size={14} /> Add Track via JSON
+            <Plus size={12} /> Add Track via JSON
           </button>
 
           <div className="space-y-3">
             {state.tracks.map(track => (
-              <div key={track.id} className="bg-zinc-900/40 rounded-2xl border border-white/5 p-5 flex justify-between items-center group hover:border-white/10 transition-colors">
+              <div key={track.id} className="bg-white rounded-[26px] border border-stone-200/30 p-5 flex justify-between items-center group hover:border-stone-200/50 transition-colors shadow-sm">
                 <div>
-                  <h3 className="font-extrabold text-white text-base tracking-tight">{track.name}</h3>
-                  <p className="text-white/40 text-xs mt-0.5 font-bold uppercase tracking-wider">{track.parts.length} Parts</p>
+                  <h3 className="font-extrabold text-stone-800 text-sm tracking-tight">{track.name}</h3>
+                  <p className="text-stone-400 text-[9px] font-bold uppercase tracking-wider mt-0.5">{track.parts.length} Parts</p>
                 </div>
                 <button 
                   onClick={() => {
@@ -246,14 +246,14 @@ export const SettingsScreen: React.FC = () => {
                       }
                     );
                   }} 
-                  className="p-3 bg-white/[0.01] rounded-xl text-white/30 hover:text-red-400 hover:bg-red-500/10 transition-colors active:scale-95 border border-transparent hover:border-white/5"
+                  className="p-3 bg-stone-50 rounded-[14px] text-stone-400 hover:text-red-500 hover:bg-red-500/5 transition-all active:scale-95 border border-transparent hover:border-stone-200/30"
                 >
-                  <Trash2 size={16} />
+                  <Trash2 size={14} />
                 </button>
               </div>
             ))}
             {state.tracks.length === 0 && (
-              <div className="text-center py-16 text-white/20 text-xs font-bold uppercase tracking-widest">
+              <div className="text-center py-16 text-stone-400/40 text-[10px] font-extrabold uppercase tracking-widest">
                 No tracks added yet.
               </div>
             )}
@@ -268,58 +268,58 @@ export const SettingsScreen: React.FC = () => {
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
-      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-      className="flex flex-col h-full bg-[#09090b] overflow-y-auto pb-32 no-scrollbar"
+      transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+      className="flex flex-col h-full bg-[#FDFCF8] overflow-y-auto pb-32 no-scrollbar"
     >
-      <div className="px-6 pt-10 pb-6 sticky top-0 bg-[#09090b]/80 backdrop-blur-xl z-10 border-b border-transparent">
-        <h1 className="text-3xl font-extrabold text-white tracking-tight">Settings</h1>
-        <p className="text-white/40 text-xs mt-2 font-bold uppercase tracking-wider">Configure app and local data</p>
+      <div className="px-6 pt-10 pb-6 sticky top-0 bg-[#FDFCF8]/85 backdrop-blur-md z-10 border-b border-transparent">
+        <h1 className="text-2xl font-extrabold text-stone-800 tracking-tight">Settings</h1>
+        <p className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest">Configure app and local data</p>
       </div>
 
       <div className="px-6 space-y-6 max-w-2xl mx-auto w-full mt-2">
         
         <section>
-          <h2 className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-3 ml-4">Customization</h2>
-          <div className="bg-zinc-900/40 rounded-[28px] border border-white/5 overflow-hidden">
+          <h2 className="text-[9px] font-extrabold text-stone-400 uppercase tracking-widest mb-3 ml-4">Customization</h2>
+          <div className="bg-white rounded-[32px] border border-stone-200/30 overflow-hidden shadow-sm">
             <button 
               onClick={() => setView('tracks')}
-              className="w-full p-5 flex items-center justify-between hover:bg-white/[0.01] transition-colors text-left group active:bg-white/[0.02]"
+              className="w-full p-5 flex items-center justify-between hover:bg-stone-50/50 transition-colors text-left group active:bg-stone-50"
             >
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-indigo-500/5 rounded-2xl text-indigo-400 border border-indigo-500/10">
-                  <FileJson size={18} />
+                <div className="p-3 bg-app-sage rounded-2xl text-stone-700">
+                  <FileJson size={16} />
                 </div>
                 <div>
-                  <p className="text-white font-bold text-sm">Learning Tracks</p>
-                  <p className="text-white/40 text-xs font-medium mt-0.5">Manage JSON roadmaps</p>
+                  <p className="text-stone-800 font-extrabold text-xs">Learning Tracks</p>
+                  <p className="text-stone-400 text-[10px] font-medium mt-0.5">Manage JSON roadmaps</p>
                 </div>
               </div>
-              <ChevronRight size={16} className="text-white/20 group-hover:text-white/50 transition-colors" />
+              <ChevronRight size={14} className="text-stone-300 group-hover:text-stone-500 transition-colors" />
             </button>
           </div>
         </section>
 
         <section>
-          <h2 className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-3 ml-4">Data Management</h2>
-          <div className="bg-zinc-900/40 rounded-[28px] border border-white/5 overflow-hidden">
-            <div className="p-5 border-b border-white/5 flex items-center gap-4">
-              <div className="p-3 bg-white/5 rounded-2xl text-white/60 border border-white/5">
-                <Database size={18} />
+          <h2 className="text-[9px] font-extrabold text-stone-400 uppercase tracking-widest mb-3 ml-4">Data Management</h2>
+          <div className="bg-white rounded-[32px] border border-stone-200/30 overflow-hidden shadow-sm">
+            <div className="p-5 border-b border-stone-100 flex items-center gap-4">
+              <div className="p-3 bg-app-lavender rounded-2xl text-stone-700">
+                <Database size={16} />
               </div>
               <div>
-                <p className="text-white font-bold text-sm">Local Storage</p>
-                <p className="text-white/40 text-xs font-medium mt-0.5">All data remains completely offline.</p>
+                <p className="text-stone-800 font-extrabold text-xs">Local Storage</p>
+                <p className="text-stone-400 text-[10px] font-medium mt-0.5">All data remains completely offline.</p>
               </div>
             </div>
             
-            <button onClick={handleExport} className="w-full p-5 border-b border-white/5 flex items-center justify-between hover:bg-white/[0.01] transition-colors text-left active:bg-white/[0.02]">
-              <span className="text-white/70 font-bold text-xs uppercase tracking-wider">Export App Data</span>
-              <Download size={16} className="text-white/40" />
+            <button onClick={handleExport} className="w-full p-5 border-b border-stone-100 flex items-center justify-between hover:bg-stone-50/50 transition-colors text-left active:bg-stone-50">
+              <span className="text-stone-500 font-extrabold text-[10px] uppercase tracking-wider">Export App Data</span>
+              <Download size={14} className="text-stone-400" />
             </button>
             
-            <button onClick={() => fileInputRef.current?.click()} className="w-full p-5 border-b border-white/5 flex items-center justify-between hover:bg-white/[0.01] transition-colors text-left active:bg-white/[0.02]">
-              <span className="text-white/70 font-bold text-xs uppercase tracking-wider">Import App Data</span>
-              <Upload size={16} className="text-white/40" />
+            <button onClick={() => fileInputRef.current?.click()} className="w-full p-5 border-b border-stone-100 flex items-center justify-between hover:bg-stone-50/50 transition-colors text-left active:bg-stone-50">
+              <span className="text-stone-500 font-extrabold text-[10px] uppercase tracking-wider">Import App Data</span>
+              <Upload size={14} className="text-stone-400" />
             </button>
             <input type="file" accept=".json" ref={fileInputRef} onChange={handleImport} className="hidden" />
 
@@ -327,40 +327,40 @@ export const SettingsScreen: React.FC = () => {
               {!showDangerZone ? (
                 <button 
                   onClick={() => setShowDangerZone(true)}
-                  className="w-full py-3 rounded-2xl border border-red-500/10 hover:border-red-500/20 text-red-400 text-xs font-bold uppercase tracking-wider hover:bg-red-500/5 transition-all active:scale-[0.98]"
+                  className="w-full py-3.5 rounded-[22px] border border-red-200 hover:border-red-300 text-red-500 text-[10px] font-extrabold uppercase tracking-wider hover:bg-red-500/5 transition-all active:scale-[0.98]"
                 >
                   Danger Zone
                 </button>
               ) : (
-                <div className="bg-red-500/5 border border-red-500/10 rounded-2xl p-5 animate-scale-in">
+                <div className="bg-red-500/5 border border-red-200/40 rounded-[24px] p-5 animate-scale-in">
                   <div className="flex items-start gap-3.5 mb-5">
-                    <AlertTriangle size={18} className="text-red-400 shrink-0 mt-0.5 animate-pulse" />
-                    <div className="text-xs text-red-200/70 space-y-1">
-                      <p className="font-extrabold text-red-400 text-sm">Erase Device Database</p>
-                      <p className="font-medium leading-relaxed">This will delete all tracked days, streak histories, study track logs, and local configurations. This action is absolute.</p>
+                    <AlertTriangle size={16} className="text-red-500 shrink-0 mt-0.5 animate-pulse" />
+                    <div className="text-xs text-stone-500 space-y-1">
+                      <p className="font-extrabold text-red-500 text-xs uppercase tracking-wider">Erase Device Database</p>
+                      <p className="font-medium leading-relaxed mt-0.5">This will delete all tracked days, streak histories, study track logs, and local configurations. This action is absolute.</p>
                     </div>
                   </div>
-                  <p className="text-[10px] text-white/30 font-bold uppercase tracking-wider mb-2.5">
-                    Type <span className="text-red-400 font-mono">DELETE</span> below to execute:
+                  <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-widest mb-2.5">
+                    Type <span className="text-red-500 font-mono">DELETE</span> below to execute:
                   </p>
                   <input 
                     type="text" 
                     value={deleteInput}
                     onChange={(e) => setDeleteInput(e.target.value)}
                     placeholder="DELETE"
-                    className="w-full bg-[#09090b] border border-red-500/20 rounded-xl px-4 py-3 text-white text-xs font-mono font-bold focus:outline-none focus:border-red-500 mb-4"
+                    className="w-full bg-white border border-stone-200/50 rounded-xl px-4 py-3 text-stone-850 text-xs font-mono font-bold focus:outline-none focus:border-red-400 mb-4 shadow-inner"
                   />
                   <div className="flex gap-3">
                     <button 
                       onClick={() => { setShowDangerZone(false); setDeleteInput(''); }}
-                      className="flex-1 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white text-xs font-bold uppercase tracking-wider transition-all active:scale-95"
+                      className="flex-1 py-3 rounded-[16px] bg-stone-100 hover:bg-stone-200 text-stone-700 text-[10px] font-extrabold uppercase tracking-wider transition-all active:scale-95"
                     >
                       Cancel
                     </button>
                     <button 
                       onClick={handleEraseData}
                       disabled={deleteInput !== 'DELETE'}
-                      className="flex-1 py-3 rounded-xl bg-red-600 text-white text-xs font-bold uppercase tracking-wider disabled:opacity-30 disabled:bg-red-600/50 transition-all active:scale-95 shadow-lg shadow-red-600/10"
+                      className="flex-1 py-3 rounded-[16px] bg-red-500 text-white text-[10px] font-extrabold uppercase tracking-wider disabled:opacity-30 disabled:bg-red-500/50 transition-all active:scale-95 shadow-md shadow-red-500/10"
                     >
                       Erase All
                     </button>
@@ -372,14 +372,14 @@ export const SettingsScreen: React.FC = () => {
         </section>
 
         <section>
-          <h2 className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-3 ml-4">About</h2>
-          <div className="bg-zinc-900/40 rounded-[28px] border border-white/5 p-5 flex gap-4 items-start">
-             <div className="p-3 bg-white/5 rounded-2xl text-white/60 shrink-0 border border-white/5">
-                <Info size={20} />
+          <h2 className="text-[9px] font-extrabold text-stone-400 uppercase tracking-widest mb-3 ml-4">About</h2>
+          <div className="bg-white rounded-[32px] border border-stone-200/30 p-5 flex gap-4 items-start shadow-sm">
+             <div className="p-3 bg-stone-50 rounded-2xl text-stone-400 border border-stone-100">
+                <Info size={16} />
               </div>
               <div>
-                <p className="text-white font-bold text-base">TimeOS v3.1</p>
-                <p className="text-white/40 text-xs leading-relaxed font-medium mt-1">
+                <p className="text-stone-800 font-extrabold text-sm">TimeOS v3.1</p>
+                <p className="text-stone-500 text-[11px] leading-relaxed font-medium mt-1">
                   Offline-first personal time wrapper designed to track and optimize daily focus distribution, built with premium mobile-first interactive aesthetics.
                 </p>
               </div>

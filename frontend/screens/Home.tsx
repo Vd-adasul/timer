@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 // Custom Animated Number component
-const AnimatedNumber: React.FC<{ value: number; duration?: number; suffix?: string }> = ({ value, duration = 1, suffix = '' }) => {
+const AnimatedNumber: React.FC<{ value: number; duration?: number; suffix?: string }> = ({ value, duration = 0.8, suffix = '' }) => {
   const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
@@ -38,15 +38,15 @@ const AnimatedNumber: React.FC<{ value: number; duration?: number; suffix?: stri
     return () => clearInterval(timer);
   }, [value, duration]);
 
-  return <span className="font-mono">{displayValue}{suffix}</span>;
+  return <span className="font-mono font-medium">{displayValue}{suffix}</span>;
 };
 
-// SVG Circular Progress Ring
+// SVG Circular Progress Ring - Softly style
 const ProgressRing: React.FC<{ percentage: number; color: string; size?: number; strokeWidth?: number; children: React.ReactNode }> = ({ 
   percentage, 
   color, 
-  size = 56, 
-  strokeWidth = 4,
+  size = 64, 
+  strokeWidth = 5,
   children 
 }) => {
   const radius = (size - strokeWidth) / 2;
@@ -54,14 +54,14 @@ const ProgressRing: React.FC<{ percentage: number; color: string; size?: number;
   const strokeDashoffset = circumference - (Math.min(percentage, 100) / 100) * circumference;
 
   return (
-    <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
+    <div className="relative flex items-center justify-center shrink-0" style={{ width: size, height: size }}>
       <svg className="transform -rotate-90 w-full h-full">
-        {/* Background track */}
+        {/* Background track - light soft stone */}
         <circle
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          className="stroke-white/5 fill-transparent"
+          className="stroke-stone-100 fill-transparent"
           strokeWidth={strokeWidth}
         />
         {/* Dynamic track */}
@@ -75,7 +75,7 @@ const ProgressRing: React.FC<{ percentage: number; color: string; size?: number;
           strokeDasharray={circumference}
           initial={{ strokeDashoffset: circumference }}
           animate={{ strokeDashoffset }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          transition={{ duration: 1.2, ease: [0.25, 1, 0.5, 1] }}
           strokeLinecap="round"
         />
       </svg>
@@ -127,133 +127,128 @@ export const HomeScreen: React.FC = () => {
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
-      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-      className="flex flex-col h-full bg-[#09090b] overflow-y-auto pb-32 no-scrollbar"
+      transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+      className="flex flex-col h-full bg-[#FDFCF8] overflow-y-auto pb-32 no-scrollbar"
     >
-      {/* Premium Top Bar */}
+      {/* Soft Top Bar */}
       <div className="px-6 pt-10 pb-6 flex justify-between items-center z-10">
         <div>
-          <p className="text-white/40 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">
+          <p className="text-stone-500/80 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">
             {format(new Date(), 'EEEE, MMMM d')}
           </p>
-          <h1 className="text-3xl font-extrabold text-white tracking-tight flex items-center gap-1.5">
-            {greeting} <Sparkles size={16} className="text-indigo-400 animate-pulse" />
+          <h1 className="text-2xl font-extrabold text-stone-800 tracking-tight flex items-center gap-1.5">
+            {greeting} <Sparkles size={14} className="text-app-peach animate-pulse" />
           </h1>
         </div>
         <button 
           onClick={() => navigate('/report')}
-          className="p-3 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white border border-white/5 hover:border-white/10 rounded-full transition-all active:scale-95 shadow-md flex items-center justify-center shrink-0"
-          title="Share Daily Summary"
+          className="p-3 bg-white hover:bg-stone-50 text-stone-600 hover:text-stone-800 border border-stone-200/40 rounded-full transition-all active:scale-95 shadow-[0_4px_12px_-2px_rgba(41,37,36,0.04)] flex items-center justify-center shrink-0"
+          title="Share Wrap"
         >
-          <Share2 size={16} />
+          <Share2 size={15} />
         </button>
       </div>
 
       <div className="px-6 space-y-6 max-w-2xl mx-auto w-full">
         
-        {/* Main Progress Card (Linear inspired visual) */}
-        <div className="bg-zinc-900/60 backdrop-blur-md p-6 rounded-[32px] border border-white/5 shadow-xl relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-transparent to-transparent opacity-50" />
-          <div className="absolute -right-12 -top-12 w-40 h-40 bg-indigo-500/10 rounded-full blur-[40px] opacity-60" />
+        {/* Main Progress Card (Softly theme) */}
+        <div className="bg-white p-6 rounded-[36px] border border-stone-200/30 shadow-[0_8px_30px_rgba(41,37,36,0.03)] relative overflow-hidden group">
+          <div className="absolute inset-0 bg-gradient-to-br from-app-sage/30 via-transparent to-transparent opacity-50" />
           
-          <div className="flex justify-between items-end mb-6 relative z-10">
+          <div className="flex justify-between items-end mb-5 relative z-10">
             <div>
-              <p className="text-xs text-white/40 font-bold uppercase tracking-widest mb-1.5">Tracked Time</p>
-              <div className="flex items-baseline gap-1">
-                <p className="text-4xl font-extrabold text-white tracking-tight">
+              <p className="text-[10px] text-stone-500/70 font-extrabold uppercase tracking-widest mb-1">Tracked Time</p>
+              <div className="flex items-baseline gap-0.5">
+                <p className="text-3xl font-extrabold text-stone-800 tracking-tight">
                   <AnimatedNumber value={todayStats.totalTracked} />
                 </p>
-                <p className="text-lg text-white/30 font-semibold font-mono">/24h</p>
+                <p className="text-sm text-stone-400 font-bold font-mono">/24h</p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-xs text-white/40 font-bold uppercase tracking-widest mb-1.5">Productivity</p>
-              <p className="text-4xl font-extrabold text-indigo-400 tracking-tight">
+              <p className="text-[10px] text-stone-500/70 font-extrabold uppercase tracking-widest mb-1">Productivity</p>
+              <p className="text-3xl font-extrabold text-stone-800 tracking-tight">
                 <AnimatedNumber value={todayStats.score} suffix="%" />
               </p>
             </div>
           </div>
           
-          <div className="h-2.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/5 relative z-10">
+          <div className="h-2 w-full bg-stone-100 rounded-full overflow-hidden border border-stone-200/20 relative z-10">
             <motion.div 
-              className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full relative"
+              className="h-full bg-app-peach rounded-full relative"
               initial={{ width: 0 }}
               animate={{ width: `${progressPercentage}%` }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            >
-              {progressPercentage > 0 && (
-                <div className="absolute inset-0 bg-white/25 w-full h-full animate-[pulse_2s_infinite]" />
-              )}
-            </motion.div>
+              transition={{ duration: 1.2, ease: [0.25, 1, 0.5, 1] }}
+            />
           </div>
         </div>
 
-        {/* Quick Stats: Flighty-inspired dynamic SVG progress rings */}
+        {/* Quick Stats: Soft progress rings */}
         <div className="grid grid-cols-3 gap-4">
           {/* Study Ring Card */}
-          <div className="bg-zinc-900/40 p-5 rounded-[24px] border border-white/5 flex flex-col items-center justify-center text-center hover:bg-white/[0.02] transition-colors relative overflow-hidden group">
-            <ProgressRing percentage={studyHours ? (studyHours / 8) * 100 : 0} color={studyAct?.color || '#3b82f6'}>
-              <Target size={16} style={{ color: studyAct?.color || '#3b82f6' }} />
+          <div className="bg-white p-5 rounded-[28px] border border-stone-200/30 flex flex-col items-center justify-center text-center hover:bg-stone-50/50 transition-colors shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)] relative overflow-hidden group">
+            <ProgressRing percentage={studyHours ? (studyHours / 8) * 100 : 0} color="#E8EFE8">
+              <Target size={14} className="text-stone-500" />
             </ProgressRing>
-            <p className="text-xl font-bold text-white tracking-tight mt-3">
+            <p className="text-lg font-extrabold text-stone-800 tracking-tight mt-3">
               <span className="font-mono">{studyHours}</span>
-              <span className="text-xs text-white/40 ml-0.5 font-sans font-medium">h</span>
+              <span className="text-xs text-stone-400 ml-0.5 font-sans font-medium">h</span>
             </p>
-            <p className="text-[10px] text-white/40 font-bold uppercase tracking-wider mt-1">{studyName}</p>
+            <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider mt-1">{studyName}</p>
           </div>
 
           {/* Gym Ring Card */}
-          <div className="bg-zinc-900/40 p-5 rounded-[24px] border border-white/5 flex flex-col items-center justify-center text-center hover:bg-white/[0.02] transition-colors relative overflow-hidden group">
-            <ProgressRing percentage={gymHours ? (gymHours / 2) * 100 : 0} color={gymAct?.color || '#f97316'}>
-              <Flame size={16} style={{ color: gymAct?.color || '#f97316' }} />
+          <div className="bg-white p-5 rounded-[28px] border border-stone-200/30 flex flex-col items-center justify-center text-center hover:bg-stone-50/50 transition-colors shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)] relative overflow-hidden group">
+            <ProgressRing percentage={gymHours ? (gymHours / 2) * 100 : 0} color="#FFB7B2">
+              <Flame size={14} className="text-stone-500" />
             </ProgressRing>
-            <p className="text-xl font-bold text-white tracking-tight mt-3">
+            <p className="text-lg font-extrabold text-stone-800 tracking-tight mt-3">
               <span className="font-mono">{gymHours}</span>
-              <span className="text-xs text-white/40 ml-0.5 font-sans font-medium">h</span>
+              <span className="text-xs text-stone-400 ml-0.5 font-sans font-medium">h</span>
             </p>
-            <p className="text-[10px] text-white/40 font-bold uppercase tracking-wider mt-1">{gymName}</p>
+            <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider mt-1">{gymName}</p>
           </div>
 
           {/* Sleep Ring Card */}
-          <div className="bg-zinc-900/40 p-5 rounded-[24px] border border-white/5 flex flex-col items-center justify-center text-center hover:bg-white/[0.02] transition-colors relative overflow-hidden group">
-            <ProgressRing percentage={sleepHours ? (sleepHours / 8) * 100 : 0} color={sleepAct?.color || '#8b5cf6'}>
-              <Clock size={16} style={{ color: sleepAct?.color || '#8b5cf6' }} />
+          <div className="bg-white p-5 rounded-[28px] border border-stone-200/30 flex flex-col items-center justify-center text-center hover:bg-stone-50/50 transition-colors shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)] relative overflow-hidden group">
+            <ProgressRing percentage={sleepHours ? (sleepHours / 8) * 100 : 0} color="#EFEDF4">
+              <Clock size={14} className="text-stone-500" />
             </ProgressRing>
-            <p className="text-xl font-bold text-white tracking-tight mt-3">
+            <p className="text-lg font-extrabold text-stone-800 tracking-tight mt-3">
               <span className="font-mono">{sleepHours}</span>
-              <span className="text-xs text-white/40 ml-0.5 font-sans font-medium">h</span>
+              <span className="text-xs text-stone-400 ml-0.5 font-sans font-medium">h</span>
             </p>
-            <p className="text-[10px] text-white/40 font-bold uppercase tracking-wider mt-1">{sleepName}</p>
+            <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider mt-1">{sleepName}</p>
           </div>
         </div>
 
         {/* Highlights Section */}
         <div className="grid grid-cols-2 gap-4">
-          <div className="bg-gradient-to-br from-zinc-900/60 to-zinc-950 p-6 rounded-[28px] border border-white/5 relative overflow-hidden group">
-            <div className="absolute -right-6 -top-6 text-white/5 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12">
-              <Trophy size={100} strokeWidth={1} />
+          <div className="bg-white p-6 rounded-[28px] border border-stone-200/30 relative overflow-hidden group shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)]">
+            <div className="absolute -right-6 -top-6 text-stone-100 transition-transform duration-500 group-hover:scale-105 group-hover:rotate-12 pointer-events-none">
+              <Trophy size={90} strokeWidth={1.5} />
             </div>
-            <p className="text-[10px] text-white/40 font-bold uppercase tracking-wider mb-2 relative z-10">Top Focus</p>
-            <p className="text-lg font-bold text-white relative z-10 truncate tracking-tight">
+            <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider mb-2 relative z-10">Top Focus</p>
+            <p className="text-base font-extrabold text-stone-800 relative z-10 truncate tracking-tight">
               {topPart ? topPart[0] : 'None yet'}
             </p>
             {topPart && (
-              <p className="text-xs text-indigo-400 font-bold font-mono mt-1.5 relative z-10">
+              <p className="text-xs text-stone-500 font-bold font-mono mt-1 relative z-10">
                 {topPart[1]} hours
               </p>
             )}
           </div>
 
-          <div className="bg-gradient-to-br from-orange-500/10 to-zinc-950 p-6 rounded-[28px] border border-orange-500/10 relative overflow-hidden group">
-            <div className="absolute -right-6 -top-6 text-orange-500/10 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-12">
-              <Flame size={100} strokeWidth={1} />
+          <div className="bg-white p-6 rounded-[28px] border border-stone-200/30 relative overflow-hidden group shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)]">
+            <div className="absolute -right-6 -top-6 text-app-peach/10 transition-transform duration-500 group-hover:scale-105 group-hover:-rotate-12 pointer-events-none">
+              <Flame size={90} strokeWidth={1.5} />
             </div>
-            <p className="text-[10px] text-orange-500/60 font-bold uppercase tracking-wider mb-2 relative z-10">Current Streak</p>
+            <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider mb-1 relative z-10">Streak Count</p>
             <div className="flex items-baseline gap-1 relative z-10">
-              <p className="text-3xl font-extrabold text-orange-400 tracking-tight">
+              <p className="text-3xl font-extrabold text-stone-800 tracking-tight">
                 <AnimatedNumber value={streak} />
               </p>
-              <p className="text-[10px] text-orange-500/60 font-bold uppercase tracking-wider mb-1">Days</p>
+              <span className="font-cursive text-2xl text-stone-500/80 lowercase select-none">days</span>
             </div>
           </div>
         </div>

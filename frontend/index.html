@@ -6,7 +6,7 @@
   <title>TimeOS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Reenie+Beanie&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -14,31 +14,36 @@
       theme: {
         extend: {
           colors: {
-            neutral: {
-              750: '#2d2d2d',
-              850: '#1f1f1f',
-              900: '#111111',
-              950: '#050505',
+            stone: {
+              800: '#292524',
+              500: '#78716C',
+              200: '#E7E5E4',
+              100: '#F5F5F4',
+              50: '#FAFAF9',
             },
             app: {
-              bg: '#09090b',
-              card: '#121214',
-              surface: '#18181b',
-              border: 'rgba(255, 255, 255, 0.06)',
-              borderHover: 'rgba(255, 255, 255, 0.12)',
+              bg: '#FDFCF8',
+              card: '#FFFFFF',
+              surface: '#FCFBF7',
+              sage: '#E8EFE8',
+              lavender: '#EFEDF4',
+              peach: '#FFB7B2',
+              border: 'rgba(41, 37, 36, 0.06)',
+              borderHover: 'rgba(41, 37, 36, 0.12)',
             }
           },
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            sans: ['"Outfit"', 'system-ui', 'sans-serif'],
+            cursive: ['"Reenie Beanie"', 'cursive'],
             mono: ['"JetBrains Mono"', 'monospace'],
           },
           animation: {
-            'fade-in-up': 'fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-            'scale-in': 'scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards',
+            'scale-in': 'scaleIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards',
           },
           keyframes: {
             fadeInUp: {
-              '0%': { opacity: '0', transform: 'translateY(10px)' },
+              '0%': { opacity: '0', transform: 'translateY(16px)' },
               '100%': { opacity: '1', transform: 'translateY(0)' },
             },
             scaleIn: {
@@ -52,11 +57,11 @@
   </script>
   <style>
     body {
-      background-color: #09090b;
-      color: #ffffff;
+      background-color: #FDFCF8;
+      color: #292524;
       -webkit-tap-highlight-color: transparent;
       overscroll-behavior-y: none;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Outfit', sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -75,18 +80,39 @@
       scroll-behavior: smooth;
     }
 
-    /* Ambient Glow Backdrops */
+    /* Ambient Wellness Glow Backdrops */
     .glow-bg {
       position: absolute;
       border-radius: 9999px;
-      filter: blur(100px);
-      opacity: 0.15;
+      filter: blur(120px);
+      opacity: 0.45;
       pointer-events: none;
       z-index: 0;
+    }
+
+    /* Paper/Grain texture overlay */
+    .grain-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 50;
+      opacity: 0.28;
+      pointer-events: none;
     }
   </style>
   </head>
 <body>
+  {/* Persistent SVG Grain Filter */}
+  <svg class="grain-overlay" xmlns="http://www.w3.org/2000/svg">
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.07 0" />
+      <feComposite operator="in" in2="SourceGraphic" />
+    </filter>
+    <rect width="100%" height="100%" filter="url(#noise)" />
+  </svg>
   <div id="root"></div>
   <script type="module" src="./index.tsx"></script>
 </body>
