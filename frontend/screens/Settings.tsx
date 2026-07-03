@@ -109,9 +109,9 @@ export const SettingsScreen: React.FC = () => {
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -20 }}
         transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
-        className="flex flex-col h-full bg-[#FDFCF8] overflow-y-auto pb-32 no-scrollbar"
+        className="flex flex-col h-full bg-app-bg overflow-y-auto pb-32 no-scrollbar"
       >
-        <div className="px-6 pt-10 pb-6 sticky top-0 bg-[#FDFCF8]/85 backdrop-blur-md z-10 flex items-center gap-3 border-b border-stone-200/20">
+        <div className="px-6 pt-10 pb-6 sticky top-0 bg-app-bg/85 backdrop-blur-md z-10 flex items-center gap-3 border-b border-stone-200/20">
           <button onClick={() => setView('paste_json')} className="p-2.5 -ml-2 rounded-full hover:bg-stone-50 text-stone-500 hover:text-stone-850 transition-all active:scale-95 border border-transparent hover:border-stone-200/20">
             <ArrowLeft size={18} />
           </button>
@@ -124,7 +124,7 @@ export const SettingsScreen: React.FC = () => {
         <div className="px-6 space-y-6 max-w-2xl mx-auto w-full mt-6">
           <div className="bg-white p-6 rounded-[36px] border border-stone-200/30 text-center relative overflow-hidden shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)]">
             <div className="w-16 h-16 bg-app-sage rounded-full flex items-center justify-center mx-auto mb-4 border border-stone-200/20">
-              <CheckCircle2 size={24} className="text-stone-600" />
+              <CheckCircle2 size={24} className="text-stone-650" />
             </div>
             <h2 className="text-xl font-extrabold text-stone-800 mb-1.5 tracking-tight">{previewTrack.name}</h2>
             {previewTrack.description && <p className="text-stone-400 text-xs mb-6 font-medium font-cursive text-lg">{previewTrack.description}</p>}
@@ -163,9 +163,9 @@ export const SettingsScreen: React.FC = () => {
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -20 }}
         transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
-        className="flex flex-col h-full bg-[#FDFCF8] overflow-y-auto pb-32 no-scrollbar"
+        className="flex flex-col h-full bg-app-bg overflow-y-auto pb-32 no-scrollbar"
       >
-        <div className="px-6 pt-10 pb-6 sticky top-0 bg-[#FDFCF8]/85 backdrop-blur-md z-10 flex items-center gap-3 border-b border-stone-200/20">
+        <div className="px-6 pt-10 pb-6 sticky top-0 bg-app-bg/85 backdrop-blur-md z-10 flex items-center gap-3 border-b border-stone-200/20">
           <button onClick={() => setView('tracks')} className="p-2.5 -ml-2 rounded-full hover:bg-stone-50 text-stone-500 hover:text-stone-850 transition-all active:scale-95 border border-transparent hover:border-stone-200/20">
             <ArrowLeft size={18} />
           </button>
@@ -208,9 +208,9 @@ export const SettingsScreen: React.FC = () => {
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -20 }}
         transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
-        className="flex flex-col h-full bg-[#FDFCF8] overflow-y-auto pb-32 no-scrollbar"
+        className="flex flex-col h-full bg-app-bg overflow-y-auto pb-32 no-scrollbar"
       >
-        <div className="px-6 pt-10 pb-6 sticky top-0 bg-[#FDFCF8]/85 backdrop-blur-md z-10 flex items-center gap-3 border-b border-stone-200/20">
+        <div className="px-6 pt-10 pb-6 sticky top-0 bg-app-bg/85 backdrop-blur-md z-10 flex items-center gap-3 border-b border-stone-200/20">
           <button onClick={() => setView('main')} className="p-2.5 -ml-2 rounded-full hover:bg-stone-50 text-stone-500 hover:text-stone-855 transition-all active:scale-95 border border-transparent hover:border-stone-200/20">
             <ArrowLeft size={18} />
           </button>
@@ -269,9 +269,9 @@ export const SettingsScreen: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
-      className="flex flex-col h-full bg-[#FDFCF8] overflow-y-auto pb-32 no-scrollbar"
+      className="flex flex-col h-full bg-app-bg overflow-y-auto pb-32 no-scrollbar"
     >
-      <div className="px-6 pt-10 pb-6 sticky top-0 bg-[#FDFCF8]/85 backdrop-blur-md z-10 border-b border-transparent">
+      <div className="px-6 pt-10 pb-6 sticky top-0 bg-app-bg/85 backdrop-blur-md z-10 border-b border-transparent">
         <h1 className="text-2xl font-extrabold text-stone-800 tracking-tight">Settings</h1>
         <p className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest">Configure app and local data</p>
       </div>

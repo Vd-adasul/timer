@@ -62,6 +62,9 @@
   <style>
     :root {
       --bg-app-bg: #FDFCF8;
+      --bg-app-bg-85: rgba(253, 252, 248, 0.85);
+      --bg-app-bg-70: rgba(253, 252, 248, 0.70);
+      
       --bg-app-card: #FFFFFF;
       --bg-app-surface: #FCFBF7;
       --text-primary: #292524;
@@ -78,6 +81,9 @@
 
     .dark {
       --bg-app-bg: #12110F;
+      --bg-app-bg-85: rgba(18, 17, 15, 0.85);
+      --bg-app-bg-70: rgba(18, 17, 15, 0.70);
+      
       --bg-app-card: #1C1A18;
       --bg-app-surface: #242220;
       --text-primary: #FAFAF9;
@@ -105,6 +111,15 @@
     /* Override bg-white class for dark mode compatibility */
     .bg-white {
       background-color: var(--bg-app-card) !important;
+    }
+
+    /* Handle background opacity overrides with variables */
+    .bg-app-bg\/85 {
+      background-color: var(--bg-app-bg-85) !important;
+    }
+    
+    .bg-app-bg\/70 {
+      background-color: var(--bg-app-bg-70) !important;
     }
 
     /* Hide scrollbar for Chrome, Safari and Opera */

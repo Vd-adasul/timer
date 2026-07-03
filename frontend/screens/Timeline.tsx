@@ -147,10 +147,10 @@ export const TimelineScreen: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
-      className="flex flex-col h-full bg-[#FDFCF8]"
+      className="flex flex-col h-full bg-app-bg"
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-4 bg-[#FDFCF8]/70 backdrop-blur-xl sticky top-0 z-30 border-b border-stone-200/20">
+      <div className="flex items-center justify-between px-4 py-4 bg-app-bg/70 backdrop-blur-xl sticky top-0 z-30 border-b border-stone-200/20">
         <button 
           onClick={() => setCurrentDate(subDays(currentDate, 1))}
           className="p-2.5 rounded-full hover:bg-stone-50 border border-transparent hover:border-stone-200/20 text-stone-500 hover:text-stone-855 transition-all active:scale-95"

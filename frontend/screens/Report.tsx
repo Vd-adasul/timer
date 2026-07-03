@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 export const ReportScreen: React.FC = () => {
-  const { state, showToast } = useAppStore();
+  const { state, showToast, theme } = useAppStore();
   const navigate = useNavigate();
   const reportRef = useRef<HTMLDivElement>(null);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -50,7 +50,7 @@ export const ReportScreen: React.FC = () => {
       const dataUrl = await htmlToImage.toPng(reportRef.current, {
         quality: 0.95,
         pixelRatio: 2,
-        backgroundColor: '#FDFCF8',
+        backgroundColor: theme === 'dark' ? '#12110F' : '#FDFCF8',
         style: {
           transform: 'scale(1)',
           transformOrigin: 'top left'
@@ -82,14 +82,14 @@ export const ReportScreen: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
-      className="flex flex-col h-full bg-[#FDFCF8] overflow-y-auto pb-32 no-scrollbar"
+      className="flex flex-col h-full bg-app-bg overflow-y-auto pb-32 no-scrollbar"
     >
       {/* Header */}
-      <div className="px-6 pt-10 pb-6 flex justify-between items-center bg-[#FDFCF8]/85 backdrop-blur-md z-20 border-b border-stone-200/20 sticky top-0">
+      <div className="px-6 pt-10 pb-6 flex justify-between items-center bg-app-bg/85 backdrop-blur-md z-20 border-b border-stone-200/20 sticky top-0">
         <div className="flex items-center gap-3">
           <button 
             onClick={() => navigate(-1)} 
-            className="p-2.5 -ml-2 rounded-full hover:bg-stone-50 text-stone-500 hover:text-stone-800 transition-colors active:scale-95 border border-transparent hover:border-stone-200/20"
+            className="p-2.5 -ml-2 rounded-full hover:bg-stone-50 text-stone-500 hover:text-stone-850 transition-colors active:scale-95 border border-transparent hover:border-stone-200/20"
           >
             <ArrowLeft size={18} />
           </button>
@@ -140,7 +140,7 @@ export const ReportScreen: React.FC = () => {
         ) : (
           <div className="w-full flex flex-col items-center">
             {/* Social Media Report Design Container in Softly theme */}
-            <div className="w-[300px] h-[533px] bg-[#FDFCF8] p-6 rounded-[36px] flex flex-col justify-between relative overflow-hidden border border-stone-200/30 shadow-md shrink-0" ref={reportRef}>
+            <div className="w-[300px] h-[533px] bg-app-bg p-6 rounded-[36px] flex flex-col justify-between relative overflow-hidden border border-stone-200/30 shadow-md shrink-0" ref={reportRef}>
               
               {/* Subtle ambient gradients */}
               <div className="absolute top-[-10%] left-[-10%] w-56 h-56 bg-app-sage/40 rounded-full blur-[80px] pointer-events-none" />

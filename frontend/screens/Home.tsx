@@ -128,7 +128,7 @@ export const HomeScreen: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
-      className="flex flex-col h-full bg-[#FDFCF8] overflow-y-auto pb-32 no-scrollbar"
+      className="flex flex-col h-full bg-app-bg overflow-y-auto pb-32 no-scrollbar"
     >
       {/* Soft Top Bar */}
       <div className="px-6 pt-10 pb-6 flex justify-between items-center z-10">

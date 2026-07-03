@@ -84,9 +84,9 @@ export const AnalyticsScreen: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
-      className="flex flex-col h-full bg-[#FDFCF8] overflow-y-auto pb-32 no-scrollbar"
+      className="flex flex-col h-full bg-app-bg overflow-y-auto pb-32 no-scrollbar"
     >
-      <div className="px-6 pt-10 pb-4 sticky top-0 bg-[#FDFCF8]/85 backdrop-blur-md z-20 border-b border-transparent">
+      <div className="px-6 pt-10 pb-4 sticky top-0 bg-app-bg/85 backdrop-blur-md z-20 border-b border-transparent">
         <h1 className="text-2xl font-extrabold text-stone-800 tracking-tight mb-5">Analytics</h1>
         
         <div className="flex bg-stone-100/60 p-1 rounded-2xl border border-stone-200/35">
