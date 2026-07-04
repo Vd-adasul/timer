@@ -76,7 +76,7 @@ const GlobalConfirm = () => {
               </button>
               <button 
                 onClick={confirmDialog.onConfirm}
-                className="flex-1 py-3 rounded-2xl bg-stone-800 hover:bg-stone-900 text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-[0.98]"
+                className="flex-1 py-3 rounded-2xl bg-stone-800 hover:bg-stone-900 text-white dark:bg-stone-100 dark:hover:bg-stone-50 dark:text-stone-800 font-extrabold text-xs uppercase tracking-wider transition-all active:scale-[0.98]"
               >
                 Confirm
               </button>

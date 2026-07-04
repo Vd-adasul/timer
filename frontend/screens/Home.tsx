@@ -61,7 +61,7 @@ const ProgressRing: React.FC<{ percentage: number; color: string; size?: number;
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          className="stroke-stone-100 dark:stroke-stone-800 fill-transparent"
+          className="stroke-stone-200 fill-transparent"
           strokeWidth={strokeWidth}
         />
         {/* Dynamic track */}
@@ -182,13 +182,13 @@ export const HomeScreen: React.FC = () => {
         {!hasTrackedAnything && (
           <div className="bg-gradient-to-br from-indigo-50 to-indigo-100/50 dark:from-indigo-950/40 dark:to-indigo-900/10 p-6 rounded-[32px] border border-indigo-200/40 dark:border-indigo-900/30 shadow-sm relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 opacity-10 bg-indigo-500 rounded-full blur-2xl pointer-events-none" />
-            <h3 className="text-xs font-extrabold text-indigo-650 dark:text-indigo-400 uppercase tracking-widest mb-1.5 flex items-center gap-1">
+            <h3 className="text-xs font-extrabold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1.5 flex items-center gap-1">
               <Sparkles size={12} className="animate-pulse" /> Welcome to TimeOS
             </h3>
             <p className="text-xs text-indigo-950 dark:text-indigo-100 font-bold leading-relaxed mb-4">
               Get started on your learning and time tracking journey with 3 simple steps:
             </p>
-            <div className="space-y-3 text-[11px] font-medium text-indigo-900">
+            <div className="space-y-3 text-[11px] font-medium text-indigo-900 dark:text-indigo-300/90">
               <div className="flex items-start gap-2.5">
                 <span className="w-5 h-5 rounded-full bg-indigo-200 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-mono font-bold flex items-center justify-center shrink-0">1</span>
                 <div>
@@ -239,7 +239,7 @@ export const HomeScreen: React.FC = () => {
             </div>
           </div>
           
-          <div className="h-2 w-full bg-stone-100 dark:bg-stone-800 rounded-full overflow-hidden border border-stone-200/20 relative z-10">
+          <div className="h-2 w-full bg-stone-100 rounded-full overflow-hidden border border-stone-200/20 relative z-10">
             <motion.div 
               className="h-full bg-app-peach rounded-full relative"
               initial={{ width: 0 }}
@@ -291,7 +291,7 @@ export const HomeScreen: React.FC = () => {
         {/* Highlights Section */}
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-white p-6 rounded-[28px] border border-stone-200/30 relative overflow-hidden group shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)]">
-            <div className="absolute -right-6 -top-6 text-stone-100 dark:text-stone-800 transition-transform duration-500 group-hover:scale-105 group-hover:rotate-12 pointer-events-none">
+            <div className="absolute -right-6 -top-6 text-stone-100 transition-transform duration-500 group-hover:scale-105 group-hover:rotate-12 pointer-events-none">
               <Trophy size={90} strokeWidth={1.5} />
             </div>
             <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider mb-2 relative z-10">Top Focus</p>

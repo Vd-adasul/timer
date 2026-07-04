@@ -171,8 +171,8 @@ export const AnalyticsScreen: React.FC = () => {
                   </PieChart>
                 </ResponsiveContainer>
                 <div className="absolute flex flex-col items-center justify-center pointer-events-none">
-                  <span className="text-2xl font-extrabold text-stone-850 font-mono tracking-tight">{stats.totalTracked}h</span>
-                  <span className="font-cursive text-xl text-stone-500 lowercase select-none">total</span>
+                  <span className="text-2xl font-extrabold text-stone-800 font-mono tracking-tight">{stats.totalTracked}h</span>
+                  <span className="font-sans font-extrabold text-[9px] tracking-widest text-stone-400 uppercase select-none mt-0.5">total</span>
                 </div>
               </div>
 
@@ -262,7 +262,7 @@ export const AnalyticsScreen: React.FC = () => {
                   <div 
                     key={item.name}
                     onClick={() => handlePartClick(item.name)}
-                    className="flex flex-col p-3 rounded-[22px] hover:bg-stone-50/50 dark:hover:bg-stone-800 transition-all cursor-pointer group active:scale-[0.98]"
+                    className="flex flex-col p-3 rounded-[22px] hover:bg-stone-50/50 transition-all cursor-pointer group active:scale-[0.98]"
                   >
                     <div className="flex justify-between items-center mb-2">
                       <div className="flex items-center gap-3">
@@ -271,7 +271,7 @@ export const AnalyticsScreen: React.FC = () => {
                       </div>
                       <span className="text-xs font-bold text-stone-800 font-mono">{item.value}h</span>
                     </div>
-                    <div className="h-1 w-full bg-stone-100 dark:bg-stone-900 rounded-full overflow-hidden">
+                    <div className="h-1 w-full bg-stone-100 rounded-full overflow-hidden">
                       <motion.div 
                         className="h-full bg-app-peach"
                         initial={{ width: 0 }}

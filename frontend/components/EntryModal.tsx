@@ -154,7 +154,7 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
         transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-        className="bg-white w-full max-w-md rounded-t-[32px] sm:rounded-[32px] overflow-hidden border border-stone-200/30 shadow-[0_-16px_48px_rgba(41,37,36,0.06)] flex flex-col max-h-[85vh] z-20 relative text-stone-855"
+        className="bg-white w-full max-w-md rounded-t-[32px] sm:rounded-[32px] overflow-hidden border border-stone-200/30 shadow-[0_-16px_48px_rgba(41,37,36,0.06)] flex flex-col max-h-[85vh] z-20 relative text-stone-800"
       >
         {/* Dynamic Island style top drag handle */}
         <div className="w-12 h-1 bg-stone-200 rounded-full mx-auto mt-3 mb-1 shrink-0" />
@@ -171,7 +171,7 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
                   <ArrowLeft size={14} />
                 </button>
               )}
-              <h3 className="text-sm font-extrabold text-stone-855 tracking-tight">
+              <h3 className="text-sm font-extrabold text-stone-800 tracking-tight">
                 {step === 'ACTIVITY' ? 'Select Activity' : 
                  step === 'TRACK' ? 'Select Track' : 
                  step === 'PART' ? 'Select Part' : 'Select Detail'}
@@ -187,7 +187,7 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
 
           {/* Breadcrumbs for tracking selections */}
           {selectedActivity && (
-            <p className="text-[8px] text-stone-400 font-extrabold uppercase tracking-widest mt-2 truncate font-cursive text-sm">
+            <p className="text-[8px] text-stone-400 font-extrabold uppercase tracking-widest mt-2 truncate">
               {getBreadcrumbs()}
             </p>
           )}
@@ -216,7 +216,7 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
                     >
                       <div className="flex items-center gap-3 overflow-hidden">
                         <div className="w-2.5 h-2.5 rounded-full shadow-sm shrink-0" style={{ backgroundColor: activity.color }} />
-                        <span className="font-extrabold text-xs text-stone-600 group-hover:text-stone-850 transition-colors truncate">{activity.name}</span>
+                        <span className="font-extrabold text-xs text-stone-600 group-hover:text-stone-800 transition-colors truncate">{activity.name}</span>
                       </div>
                       {activity.requiresTrack && (
                         <ChevronRight size={12} className="text-stone-300 group-hover:text-stone-500 shrink-0 ml-1" />
@@ -237,7 +237,7 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
                         );
                         onClose();
                       }}
-                      className="col-span-2 py-3 px-4 rounded-[22px] bg-indigo-50 hover:bg-indigo-100/80 dark:bg-indigo-950/20 dark:hover:bg-indigo-900/30 text-indigo-650 dark:text-indigo-400 border border-indigo-200/40 dark:border-indigo-900/30 transition-all text-left flex flex-col justify-center active:scale-[0.98] group mt-1"
+                      className="col-span-2 py-3 px-4 rounded-[22px] bg-indigo-50 hover:bg-indigo-100/80 dark:bg-indigo-950/20 dark:hover:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 border border-indigo-200/40 dark:border-indigo-900/30 transition-all text-left flex flex-col justify-center active:scale-[0.98] group mt-1"
                     >
                       <span className="text-[8px] font-extrabold uppercase tracking-widest text-indigo-400 dark:text-indigo-500">Quick Log Last Study Session</span>
                       <span className="font-extrabold text-[11px] text-indigo-950 dark:text-indigo-100 truncate mt-1">
@@ -263,7 +263,7 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
                       onClick={() => handleTrackSelect(track)}
                       className="flex items-center justify-between p-4.5 rounded-[22px] bg-stone-50/50 hover:bg-stone-50 border border-stone-200/30 transition-all text-left group active:scale-[0.98]"
                     >
-                      <span className="font-extrabold text-xs text-stone-600 group-hover:text-stone-850 truncate">{track.name}</span>
+                      <span className="font-extrabold text-xs text-stone-600 group-hover:text-stone-800 truncate">{track.name}</span>
                       <ChevronRight size={12} className="text-stone-300 group-hover:text-stone-500" />
                     </button>
                   ))}
@@ -275,7 +275,7 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
                           onClose();
                           navigate('/curriculum');
                         }}
-                        className="mt-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-750 text-white rounded-xl text-[10px] font-extrabold uppercase tracking-wider"
+                        className="mt-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-[10px] font-extrabold uppercase tracking-wider"
                       >
                         Go to Curriculum
                       </button>
@@ -292,7 +292,7 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
                       onClick={() => handlePartSelect(part)}
                       className="flex items-center justify-between p-4.5 rounded-[22px] bg-stone-50/50 hover:bg-stone-50 border border-stone-200/30 transition-all text-left group active:scale-[0.98]"
                     >
-                      <span className="font-extrabold text-xs text-stone-600 group-hover:text-stone-850 truncate">{part.name}</span>
+                      <span className="font-extrabold text-xs text-stone-600 group-hover:text-stone-800 truncate">{part.name}</span>
                       {((part.lectures && part.lectures.length > 0) || (part.assignments && part.assignments.length > 0)) && (
                         <ChevronRight size={12} className="text-stone-300 group-hover:text-stone-500" />
                       )}
@@ -305,7 +305,7 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
                 <div className="flex flex-col gap-3">
                   <button
                     onClick={() => handleItemSelect()}
-                    className="flex items-center justify-center gap-2 p-4 rounded-[22px] bg-stone-800 hover:bg-stone-900 text-white font-extrabold text-xs uppercase tracking-wider transition-all mb-3 active:scale-[0.98] shadow-sm"
+                    className="flex items-center justify-center gap-2 p-4 rounded-[22px] bg-stone-800 hover:bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-800 font-extrabold text-xs uppercase tracking-wider transition-all mb-3 active:scale-[0.98] shadow-sm"
                   >
                     <CheckCircle2 size={14} />
                     Track "{selectedPart.name}" Only
@@ -313,14 +313,14 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
 
                   {selectedPart.lectures && selectedPart.lectures.length > 0 && (
                     <div className="mb-3">
-                      <p className="text-[9px] font-extrabold text-stone-450 uppercase tracking-wider mb-3 ml-2">Lectures</p>
+                      <p className="text-[9px] font-extrabold text-stone-400 uppercase tracking-wider mb-3 ml-2">Lectures</p>
                       {selectedPart.lectures.map(lec => (
                         <button
                           key={lec.id}
                           onClick={() => handleItemSelect(lec)}
                           className="w-full flex items-center justify-between p-4.5 rounded-[22px] bg-stone-50/50 hover:bg-stone-50 border border-stone-200/30 transition-all text-left mb-2.5 active:scale-[0.98] group"
                         >
-                          <span className={`font-extrabold text-xs truncate flex-1 ${lec.completed ? 'line-through text-stone-400' : 'text-stone-600 group-hover:text-stone-850'}`}>{lec.name}</span>
+                          <span className={`font-extrabold text-xs truncate flex-1 ${lec.completed ? 'line-through text-stone-400' : 'text-stone-600 group-hover:text-stone-800'}`}>{lec.name}</span>
                           {lec.completed && <Check size={14} className="text-app-peach ml-2 shrink-0" />}
                         </button>
                       ))}
@@ -329,14 +329,14 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
 
                   {selectedPart.assignments && selectedPart.assignments.length > 0 && (
                     <div>
-                      <p className="text-[9px] font-extrabold text-stone-450 uppercase tracking-wider mb-3 ml-2">Assignments</p>
+                      <p className="text-[9px] font-extrabold text-stone-400 uppercase tracking-wider mb-3 ml-2">Assignments</p>
                       {selectedPart.assignments.map(ass => (
                         <button
                           key={ass.id}
                           onClick={() => handleItemSelect(ass)}
                           className="w-full flex items-center justify-between p-4.5 rounded-[22px] bg-stone-50/50 hover:bg-stone-50 border border-stone-200/30 transition-all text-left mb-2.5 active:scale-[0.98] group"
                         >
-                          <span className={`font-extrabold text-xs truncate flex-1 ${ass.completed ? 'line-through text-stone-400' : 'text-stone-600 group-hover:text-stone-850'}`}>{ass.name}</span>
+                          <span className={`font-extrabold text-xs truncate flex-1 ${ass.completed ? 'line-through text-stone-400' : 'text-stone-600 group-hover:text-stone-800'}`}>{ass.name}</span>
                           {ass.completed && <Check size={14} className="text-app-peach ml-2 shrink-0" />}
                         </button>
                       ))}

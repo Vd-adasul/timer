@@ -165,7 +165,7 @@ export const TimelineScreen: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-4 bg-app-bg/70 backdrop-blur-xl sticky top-0 z-30 border-b border-stone-200/20">
         <button 
           onClick={() => setCurrentDate(subDays(currentDate, 1))}
-          className="p-2.5 rounded-full hover:bg-stone-50 border border-transparent hover:border-stone-200/20 text-stone-500 hover:text-stone-855 transition-all active:scale-95"
+          className="p-2.5 rounded-full hover:bg-stone-50 border border-transparent hover:border-stone-200/20 text-stone-500 hover:text-stone-800 transition-all active:scale-95"
         >
           <ChevronLeft size={18} />
         </button>
@@ -191,7 +191,7 @@ export const TimelineScreen: React.FC = () => {
 
         <button 
           onClick={() => setCurrentDate(addDays(currentDate, 1))}
-          className="p-2.5 rounded-full hover:bg-stone-50 border border-transparent hover:border-stone-200/20 text-stone-500 hover:text-stone-855 transition-all active:scale-95"
+          className="p-2.5 rounded-full hover:bg-stone-50 border border-transparent hover:border-stone-200/20 text-stone-500 hover:text-stone-800 transition-all active:scale-95"
         >
           <ChevronRight size={18} />
         </button>

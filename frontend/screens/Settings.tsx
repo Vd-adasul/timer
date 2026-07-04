@@ -80,7 +80,7 @@ export const SettingsScreen: React.FC = () => {
                 </div>
               </div>
               <div className="w-10 h-6 bg-stone-100 rounded-full p-1 transition-all duration-300 cursor-pointer flex items-center relative select-none">
-                <div className={`w-4 h-4 bg-stone-500 rounded-full shadow-md transform transition-transform duration-300 ${theme === 'dark' ? 'translate-x-4' : 'translate-x-0'}`} />
+                <div className={`w-4 h-4 bg-stone-500 dark:bg-stone-800 rounded-full shadow-md transform transition-transform duration-300 ${theme === 'dark' ? 'translate-x-4' : 'translate-x-0'}`} />
               </div>
             </button>
           </div>
@@ -98,7 +98,7 @@ export const SettingsScreen: React.FC = () => {
                   max="24"
                   value={state.goals?.act_study || 8}
                   onChange={(e) => updateActivityGoal('act_study', Math.max(1, Math.min(24, parseInt(e.target.value) || 1)))}
-                  className="w-full bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-2 text-stone-800 font-mono font-bold focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2 text-stone-800 font-mono font-bold focus:outline-none focus:border-indigo-500"
                 />
               </div>
               <div className="space-y-1.5">
@@ -109,7 +109,7 @@ export const SettingsScreen: React.FC = () => {
                   max="24"
                   value={state.goals?.act_gym || 2}
                   onChange={(e) => updateActivityGoal('act_gym', Math.max(1, Math.min(24, parseInt(e.target.value) || 1)))}
-                  className="w-full bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-2 text-stone-800 font-mono font-bold focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2 text-stone-800 font-mono font-bold focus:outline-none focus:border-indigo-500"
                 />
               </div>
               <div className="space-y-1.5">
@@ -120,7 +120,7 @@ export const SettingsScreen: React.FC = () => {
                   max="24"
                   value={state.goals?.act_sleep || 8}
                   onChange={(e) => updateActivityGoal('act_sleep', Math.max(1, Math.min(24, parseInt(e.target.value) || 1)))}
-                  className="w-full bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-2 text-stone-800 font-mono font-bold focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2 text-stone-800 font-mono font-bold focus:outline-none focus:border-indigo-500"
                 />
               </div>
               <div className="space-y-1.5">
@@ -131,7 +131,7 @@ export const SettingsScreen: React.FC = () => {
                   max="24"
                   value={state.goals?.act_work || 8}
                   onChange={(e) => updateActivityGoal('act_work', Math.max(1, Math.min(24, parseInt(e.target.value) || 1)))}
-                  className="w-full bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-2 text-stone-800 font-mono font-bold focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2 text-stone-800 font-mono font-bold focus:outline-none focus:border-indigo-500"
                 />
               </div>
             </div>
@@ -151,17 +151,17 @@ export const SettingsScreen: React.FC = () => {
                   <p className="text-stone-400 text-[10px] font-medium mt-0.5">All data remains completely offline.</p>
                 </div>
               </div>
-              <span className="text-[10px] font-mono font-bold text-stone-500 bg-stone-50 dark:bg-stone-800 px-2.5 py-1 rounded-lg border border-stone-200/20 select-none">
+              <span className="text-[10px] font-mono font-bold text-stone-500 bg-stone-50 px-2.5 py-1 rounded-lg border border-stone-200/20 select-none">
                 {(JSON.stringify(state).length / 1024).toFixed(2)} KB
               </span>
             </div>
             
-            <button onClick={handleExport} className="w-full p-5 border-b border-stone-100 flex items-center justify-between hover:bg-stone-50/50 transition-colors text-left active:bg-stone-55">
+            <button onClick={handleExport} className="w-full p-5 border-b border-stone-100 flex items-center justify-between hover:bg-stone-50/50 transition-colors text-left active:bg-stone-50">
               <span className="text-stone-500 font-extrabold text-[10px] uppercase tracking-wider">Export App Data</span>
               <Download size={14} className="text-stone-400" />
             </button>
             
-            <button onClick={() => fileInputRef.current?.click()} className="w-full p-5 border-b border-stone-100 flex items-center justify-between hover:bg-stone-50/50 transition-colors text-left active:bg-stone-55">
+            <button onClick={() => fileInputRef.current?.click()} className="w-full p-5 border-b border-stone-100 flex items-center justify-between hover:bg-stone-50/50 transition-colors text-left active:bg-stone-50">
               <span className="text-stone-500 font-extrabold text-[10px] uppercase tracking-wider">Import App Data</span>
               <Upload size={14} className="text-stone-400" />
             </button>
@@ -192,7 +192,7 @@ export const SettingsScreen: React.FC = () => {
                     value={deleteInput}
                     onChange={(e) => setDeleteInput(e.target.value)}
                     placeholder="DELETE"
-                    className="w-full bg-white border border-stone-200/50 rounded-xl px-4 py-3 text-stone-850 text-xs font-mono font-bold focus:outline-none focus:border-red-400 mb-4 shadow-inner"
+                    className="w-full bg-white border border-stone-200/50 rounded-xl px-4 py-3 text-stone-800 text-xs font-mono font-bold focus:outline-none focus:border-red-400 mb-4 shadow-inner"
                   />
                   <div className="flex gap-3">
                     <button 

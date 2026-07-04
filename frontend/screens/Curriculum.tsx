@@ -193,7 +193,7 @@ export const CurriculumScreen: React.FC = () => {
                   value={newTrackName}
                   onChange={e => setNewTrackName(e.target.value)}
                   placeholder="Track Name (e.g. Data Structures)"
-                  className="w-full bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-2.5 text-xs text-stone-800 placeholder-stone-400 focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-xs text-stone-800 placeholder-stone-400 focus:outline-none focus:border-indigo-500"
                   required
                 />
                 <input 
@@ -201,20 +201,20 @@ export const CurriculumScreen: React.FC = () => {
                   value={newTrackDesc}
                   onChange={e => setNewTrackDesc(e.target.value)}
                   placeholder="Short Description (e.g. Master algorithms and arrays)"
-                  className="w-full bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-2.5 text-xs text-stone-800 placeholder-stone-400 focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-xs text-stone-800 placeholder-stone-400 focus:outline-none focus:border-indigo-500"
                 />
               </div>
               <div className="flex gap-2 justify-end pt-1">
                 <button 
                   type="button"
                   onClick={() => setShowAddTrack(false)}
-                  className="px-4 py-2 rounded-xl bg-stone-100 hover:bg-stone-200/60 text-stone-605 text-[10px] font-extrabold uppercase tracking-wider transition-colors"
+                  className="px-4 py-2 rounded-xl bg-stone-100 hover:bg-stone-200/60 text-stone-600 text-[10px] font-extrabold uppercase tracking-wider transition-colors"
                 >
                   Cancel
                 </button>
                 <button 
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-750 text-white text-[10px] font-extrabold uppercase tracking-wider transition-colors shadow-md shadow-indigo-600/10"
+                  className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-extrabold uppercase tracking-wider transition-colors shadow-md shadow-indigo-600/10"
                 >
                   Create
                 </button>
@@ -235,7 +235,7 @@ export const CurriculumScreen: React.FC = () => {
                 }}
                 className={`px-4 py-2 rounded-xl text-[10px] font-extrabold uppercase tracking-wider shrink-0 border transition-all ${
                   activeTrackId === t.id 
-                    ? 'bg-indigo-50 dark:bg-indigo-950/20 border-indigo-550 text-indigo-600 dark:text-indigo-400 shadow-sm' 
+                    ? 'bg-indigo-50 dark:bg-indigo-950/20 border-indigo-500 text-indigo-600 dark:text-indigo-400 shadow-sm' 
                     : 'bg-white border-stone-200/30 text-stone-500 hover:text-stone-800 hover:border-stone-300'
                 }`}
               >
@@ -254,18 +254,18 @@ export const CurriculumScreen: React.FC = () => {
               <div className="flex justify-between items-start z-10 relative">
                 <div>
                   <div className="flex items-center gap-2 text-stone-400 font-mono text-[9px] uppercase tracking-widest mb-1.5">
-                    <BookOpen size={10} className="text-indigo-650 dark:text-indigo-400" />
+                    <BookOpen size={10} className="text-indigo-600 dark:text-indigo-400" />
                     <span>Learning Path</span>
                   </div>
-                  <h2 className="text-lg font-extrabold text-stone-850 tracking-tight">{activeTrack.name}</h2>
+                  <h2 className="text-lg font-extrabold text-stone-800 tracking-tight">{activeTrack.name}</h2>
                   {activeTrack.description && (
-                    <p className="text-xs text-stone-500 mt-1 font-cursive text-lg lowercase">{activeTrack.description}</p>
+                    <p className="text-xs text-stone-500 mt-1 font-sans font-medium">{activeTrack.description}</p>
                   )}
                 </div>
 
                 <button 
                   onClick={() => handleDeleteTrack(activeTrack)}
-                  className="p-2.5 rounded-xl bg-stone-50 dark:bg-stone-800 hover:bg-red-500/10 border border-stone-200/30 text-stone-400 hover:text-red-500 transition-all active:scale-95"
+                  className="p-2.5 rounded-xl bg-stone-50 hover:bg-red-500/10 border border-stone-200/30 text-stone-400 hover:text-red-500 transition-all active:scale-95"
                   title="Delete Track"
                 >
                   <Trash2 size={12} />
@@ -278,7 +278,7 @@ export const CurriculumScreen: React.FC = () => {
                   <span className="uppercase tracking-wider">Overall Syllabus Progress</span>
                   <span className="text-indigo-600 dark:text-indigo-400">{trackStats.percent}% ({trackStats.completed}/{trackStats.total} lectures)</span>
                 </div>
-                <div className="w-full h-1.5 bg-stone-50 dark:bg-stone-800 border border-stone-200/20 rounded-full overflow-hidden">
+                <div className="w-full h-1.5 bg-stone-50 border border-stone-200/20 rounded-full overflow-hidden">
                   <motion.div 
                     className="h-full bg-indigo-500 rounded-full"
                     initial={{ width: 0 }}
@@ -297,7 +297,7 @@ export const CurriculumScreen: React.FC = () => {
                       setShowIncompleteOnly(e.target.checked);
                       setSelectedLecture(null); // Clear selected lecture on filter change to avoid stale state
                     }}
-                    className="w-3.5 h-3.5 rounded border-stone-350 text-indigo-650 focus:ring-indigo-500 cursor-pointer"
+                    className="w-3.5 h-3.5 rounded border-stone-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
                   />
                   <label htmlFor="show-incomplete-filter" className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider cursor-pointer">
                     Show Incomplete Only
@@ -326,7 +326,7 @@ export const CurriculumScreen: React.FC = () => {
                           M
                         </div>
                         <div>
-                          <h4 className="text-xs font-extrabold text-stone-850 tracking-tight">{part.name}</h4>
+                          <h4 className="text-xs font-extrabold text-stone-800 tracking-tight">{part.name}</h4>
                           <p className="text-[9px] text-stone-400 font-bold uppercase tracking-wider">{partLectures.length} Lectures</p>
                         </div>
                       </div>
@@ -365,7 +365,7 @@ export const CurriculumScreen: React.FC = () => {
                                 className={`aspect-square flex items-center justify-center rounded-xl text-[10px] font-mono font-bold transition-all relative group select-none active:scale-[0.9] ${
                                   lec.completed
                                     ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-700'
-                                    : 'bg-stone-50 dark:bg-stone-800 text-stone-500 hover:border-stone-400 border border-stone-200 dark:border-stone-700'
+                                    : 'bg-stone-50 text-stone-500 hover:border-stone-400 border border-stone-200'
                                 } ${isSelected ? 'ring-2 ring-indigo-500 ring-offset-2 ring-offset-white dark:ring-offset-stone-900' : ''}`}
                               >
                                 {lec.lectureNumber || '?'}
@@ -387,21 +387,21 @@ export const CurriculumScreen: React.FC = () => {
                         value={newLectureNo[part.id] || ''}
                         onChange={e => setNewLectureNo(prev => ({ ...prev, [part.id]: e.target.value }))}
                         placeholder="1.1"
-                        className="w-16 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-3 py-2 text-[10px] text-stone-850 placeholder-stone-400 focus:outline-none focus:border-indigo-500 font-mono text-center"
+                        className="w-16 bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-[10px] text-stone-800 placeholder-stone-400 focus:outline-none focus:border-indigo-500 font-mono text-center"
                       />
                       <input 
                         type="text" 
                         value={newLectureName[part.id] || ''}
                         onChange={e => setNewLectureName(prev => ({ ...prev, [part.id]: e.target.value }))}
                         placeholder="Lecture Name"
-                        className="flex-1 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-3 py-2 text-[10px] text-stone-850 placeholder-stone-400 focus:outline-none focus:border-indigo-500 font-bold"
+                        className="flex-1 bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-[10px] text-stone-800 placeholder-stone-400 focus:outline-none focus:border-indigo-500 font-bold"
                         onKeyDown={e => {
                           if (e.key === 'Enter') handleCreateLecture(activeTrack.id, part.id);
                         }}
                       />
                       <button
                         onClick={() => handleCreateLecture(activeTrack.id, part.id)}
-                        className="p-2 bg-stone-50 dark:bg-stone-800 hover:bg-indigo-650 hover:text-white border border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-300 rounded-xl transition-colors"
+                        className="p-2 bg-stone-50 hover:bg-indigo-600 hover:text-white border border-stone-200 text-stone-600 rounded-xl transition-colors"
                         title="Add Lecture"
                       >
                         <Plus size={14} />
@@ -419,14 +419,14 @@ export const CurriculumScreen: React.FC = () => {
                 value={newPartName[activeTrack.id] || ''}
                 onChange={e => setNewPartName(prev => ({ ...prev, [activeTrack.id]: e.target.value }))}
                 placeholder="Module Name (e.g. Dynamic Programming)"
-                className="flex-1 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-2.5 text-xs text-stone-850 placeholder-stone-400 focus:outline-none focus:border-indigo-500 font-bold"
+                className="flex-1 bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-xs text-stone-800 placeholder-stone-400 focus:outline-none focus:border-indigo-500 font-bold"
                 onKeyDown={e => {
                   if (e.key === 'Enter') handleCreatePart(activeTrack.id);
                 }}
               />
               <button
                 onClick={() => handleCreatePart(activeTrack.id)}
-                className="bg-indigo-650 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl font-extrabold text-[10px] uppercase tracking-wider transition-colors active:scale-95 shrink-0 shadow-md shadow-indigo-600/10"
+                className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl font-extrabold text-[10px] uppercase tracking-wider transition-colors active:scale-95 shrink-0 shadow-md shadow-indigo-600/10"
               >
                 Add Module
               </button>
@@ -457,7 +457,7 @@ export const CurriculumScreen: React.FC = () => {
                       type="text"
                       value={editingNameValue}
                       onChange={(e) => setEditingNameValue(e.target.value)}
-                      className="flex-1 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-3 py-1.5 text-xs font-bold text-stone-850 focus:outline-none focus:border-indigo-500"
+                      className="flex-1 bg-stone-50 border border-stone-200 rounded-xl px-3 py-1.5 text-xs font-bold text-stone-800 focus:outline-none focus:border-indigo-500"
                       onKeyDown={(e) => {
                         if (e.key === 'Enter') handleRenameSave();
                       }}
@@ -465,13 +465,13 @@ export const CurriculumScreen: React.FC = () => {
                     />
                     <button 
                       onClick={handleRenameSave}
-                      className="px-3 py-1.5 bg-indigo-650 text-white rounded-xl text-[10px] font-extrabold uppercase tracking-wider"
+                      className="px-3 py-1.5 bg-indigo-600 text-white rounded-xl text-[10px] font-extrabold uppercase tracking-wider"
                     >
                       Save
                     </button>
                     <button 
                       onClick={() => setIsEditingName(false)}
-                      className="px-3 py-1.5 bg-stone-50 dark:bg-stone-800 text-stone-600 rounded-xl text-[10px] font-extrabold uppercase tracking-wider"
+                      className="px-3 py-1.5 bg-stone-50 text-stone-600 rounded-xl text-[10px] font-extrabold uppercase tracking-wider"
                     >
                       Cancel
                     </button>
@@ -494,7 +494,7 @@ export const CurriculumScreen: React.FC = () => {
                   </div>
                 )}
                 <p className="text-[9px] text-stone-400 mt-1.5 font-extrabold uppercase tracking-wider">
-                  Status: <span className={selectedLecture.lecture.completed ? 'text-indigo-600 dark:text-indigo-400 font-extrabold' : 'text-stone-550'}>
+                  Status: <span className={selectedLecture.lecture.completed ? 'text-indigo-600 dark:text-indigo-400 font-extrabold' : 'text-stone-500'}>
                     {selectedLecture.lecture.completed ? 'COMPLETED' : 'INCOMPLETE'}
                   </span>
                 </p>

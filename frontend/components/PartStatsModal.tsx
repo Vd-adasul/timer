@@ -61,7 +61,7 @@ export const PartStatsModal: React.FC<PartStatsModalProps> = ({ part, isOpen, on
 
             <div className="flex items-center justify-between px-6 pt-3 pb-4 border-b border-stone-100 shrink-0">
               <div>
-                <h3 className="text-base font-extrabold text-stone-855 tracking-tight">{part.name}</h3>
+                <h3 className="text-base font-extrabold text-stone-800 tracking-tight">{part.name}</h3>
                 {track && (
                   <p className="text-[10px] text-stone-400 font-extrabold uppercase tracking-wider mt-0.5">
                     {track.name}
@@ -70,7 +70,7 @@ export const PartStatsModal: React.FC<PartStatsModalProps> = ({ part, isOpen, on
               </div>
               <button 
                 onClick={onClose}
-                className="p-2 -mr-2 rounded-full hover:bg-stone-50 text-stone-500 hover:text-stone-850 transition-colors active:scale-95 border border-transparent hover:border-stone-200/20"
+                className="p-2 -mr-2 rounded-full hover:bg-stone-50 text-stone-500 hover:text-stone-800 transition-colors active:scale-95 border border-transparent hover:border-stone-200/20"
               >
                 <X size={14} />
               </button>
@@ -90,7 +90,7 @@ export const PartStatsModal: React.FC<PartStatsModalProps> = ({ part, isOpen, on
                       onClose();
                     }
                   }}
-                  className="w-full py-3 bg-stone-800 hover:bg-stone-900 text-white dark:bg-stone-100 dark:hover:bg-stone-50 dark:text-stone-900 rounded-[22px] text-[10px] font-extrabold uppercase tracking-wider transition-all active:scale-[0.98] flex items-center justify-center gap-1.5 shadow-sm"
+                  className="w-full py-3 bg-stone-800 hover:bg-stone-900 text-white dark:bg-stone-100 dark:hover:bg-stone-50 dark:text-stone-800 rounded-[22px] text-[10px] font-extrabold uppercase tracking-wider transition-all active:scale-[0.98] flex items-center justify-center gap-1.5 shadow-sm"
                 >
                   <Clock size={12} />
                   Jump to Latest Session Logs
@@ -104,7 +104,7 @@ export const PartStatsModal: React.FC<PartStatsModalProps> = ({ part, isOpen, on
                     <Clock size={12} className="shrink-0" />
                     <span className="text-[9px] font-bold uppercase tracking-wider">Today</span>
                   </div>
-                  <p className="text-xl font-extrabold text-stone-855 tracking-tight font-mono">
+                  <p className="text-xl font-extrabold text-stone-800 tracking-tight font-mono">
                     {stats.today}
                     <span className="text-xs text-stone-400 ml-1 font-sans font-medium">h</span>
                   </p>
@@ -115,7 +115,7 @@ export const PartStatsModal: React.FC<PartStatsModalProps> = ({ part, isOpen, on
                     <Calendar size={12} className="shrink-0" />
                     <span className="text-[9px] font-bold uppercase tracking-wider">Week</span>
                   </div>
-                  <p className="text-xl font-extrabold text-stone-855 tracking-tight font-mono">
+                  <p className="text-xl font-extrabold text-stone-800 tracking-tight font-mono">
                     {stats.week}
                     <span className="text-xs text-stone-400 ml-1 font-sans font-medium">h</span>
                   </p>
@@ -126,7 +126,7 @@ export const PartStatsModal: React.FC<PartStatsModalProps> = ({ part, isOpen, on
                     <CalendarDays size={12} className="shrink-0" />
                     <span className="text-[9px] font-bold uppercase tracking-wider">Month</span>
                   </div>
-                  <p className="text-xl font-extrabold text-stone-855 tracking-tight font-mono">
+                  <p className="text-xl font-extrabold text-stone-800 tracking-tight font-mono">
                     {stats.month}
                     <span className="text-xs text-stone-400 ml-1 font-sans font-medium">h</span>
                   </p>
@@ -137,7 +137,7 @@ export const PartStatsModal: React.FC<PartStatsModalProps> = ({ part, isOpen, on
                     <InfinityIcon size={12} className="shrink-0" />
                     <span className="text-[9px] font-bold uppercase tracking-wider font-extrabold">Lifetime</span>
                   </div>
-                  <p className="text-xl font-extrabold text-stone-855 tracking-tight font-mono">
+                  <p className="text-xl font-extrabold text-stone-800 tracking-tight font-mono">
                     {stats.lifetime}
                     <span className="text-xs text-stone-500 ml-1 font-sans font-medium">h</span>
                   </p>
@@ -151,7 +151,7 @@ export const PartStatsModal: React.FC<PartStatsModalProps> = ({ part, isOpen, on
                     <span className="text-[10px] font-extrabold text-stone-500 uppercase tracking-wider">Roadmap Progress</span>
                     <span className="text-xs font-bold text-stone-800 font-mono">{progressInfo.percent}% ({progressInfo.completed}/{progressInfo.total})</span>
                   </div>
-                  <div className="h-1.5 w-full bg-stone-200/40 rounded-full overflow-hidden">
+                  <div className="h-1.5 w-full bg-stone-200 rounded-full overflow-hidden">
                     <div 
                       className="h-full bg-app-peach rounded-full transition-all duration-500" 
                       style={{ width: `${progressInfo.percent}%` }}
@@ -184,7 +184,7 @@ export const PartStatsModal: React.FC<PartStatsModalProps> = ({ part, isOpen, on
                             <span className={`text-xs font-bold transition-all truncate flex-1 ${
                               item.completed 
                                 ? 'line-through text-stone-400 font-medium' 
-                                : 'text-stone-700 group-hover:text-stone-850'
+                                : 'text-stone-700 group-hover:text-stone-800'
                             }`}>
                               {item.name}
                             </span>
@@ -215,7 +215,7 @@ export const PartStatsModal: React.FC<PartStatsModalProps> = ({ part, isOpen, on
                             <span className={`text-xs font-bold transition-all truncate flex-1 ${
                               item.completed 
                                 ? 'line-through text-stone-400 font-medium' 
-                                : 'text-stone-700 group-hover:text-stone-850'
+                                : 'text-stone-700 group-hover:text-stone-800'
                             }`}>
                               {item.name}
                             </span>
