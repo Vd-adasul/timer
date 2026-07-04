@@ -46,6 +46,7 @@ export interface AppState {
   activities: Activity[];
   tracks: Track[];
   blocks: Record<string, TimeBlock>; // Key: "YYYY-MM-DD-index"
+  goals: Record<string, number>; // Key: activityId, value: goalHours
 }
 
 export interface DailyStats {

@@ -4,6 +4,7 @@ import { useAppStore } from '../store';
 import { calculatePartStats } from '../utils';
 import { TrackPart } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 interface PartStatsModalProps {
   part: TrackPart | null;
@@ -13,6 +14,7 @@ interface PartStatsModalProps {
 
 export const PartStatsModal: React.FC<PartStatsModalProps> = ({ part, isOpen, onClose }) => {
   const { state, toggleItemCompleted } = useAppStore();
+  const navigate = useNavigate();
 
   const stats = useMemo(() => {
     if (!part) return null;
@@ -59,7 +61,7 @@ export const PartStatsModal: React.FC<PartStatsModalProps> = ({ part, isOpen, on
 
             <div className="flex items-center justify-between px-6 pt-3 pb-4 border-b border-stone-100 shrink-0">
               <div>
-                <h3 className="text-base font-extrabold text-stone-850 tracking-tight">{part.name}</h3>
+                <h3 className="text-base font-extrabold text-stone-855 tracking-tight">{part.name}</h3>
                 {track && (
                   <p className="text-[10px] text-stone-400 font-extrabold uppercase tracking-wider mt-0.5">
                     {track.name}
@@ -76,6 +78,24 @@ export const PartStatsModal: React.FC<PartStatsModalProps> = ({ part, isOpen, on
 
             {/* Scrollable container for stats + checklist */}
             <div className="overflow-y-auto p-6 space-y-6 no-scrollbar flex-1">
+              
+              {/* Jump to latest log button */}
+              {stats.lifetime > 0 && (
+                <button
+                  onClick={() => {
+                    const partBlocks = Object.values(state.blocks).filter(b => b.partId === part.id);
+                    if (partBlocks.length > 0) {
+                      const sorted = partBlocks.sort((a, b) => b.date.localeCompare(a.date));
+                      navigate('/timeline', { state: { jumpToDate: sorted[0].date } });
+                      onClose();
+                    }
+                  }}
+                  className="w-full py-3 bg-stone-800 hover:bg-stone-900 text-white dark:bg-stone-100 dark:hover:bg-stone-50 dark:text-stone-900 rounded-[22px] text-[10px] font-extrabold uppercase tracking-wider transition-all active:scale-[0.98] flex items-center justify-center gap-1.5 shadow-sm"
+                >
+                  <Clock size={12} />
+                  Jump to Latest Session Logs
+                </button>
+              )}
               
               {/* Hourly Stats Grid */}
               <div className="grid grid-cols-2 gap-3">

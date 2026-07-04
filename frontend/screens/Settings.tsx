@@ -4,7 +4,7 @@ import { useAppStore } from '../store';
 import { motion } from 'framer-motion';
 
 export const SettingsScreen: React.FC = () => {
-  const { state, clearData, importData, showToast, theme, toggleTheme } = useAppStore();
+  const { state, clearData, importData, showToast, theme, toggleTheme, updateActivityGoal } = useAppStore();
   const [showDangerZone, setShowDangerZone] = useState(false);
   const [deleteInput, setDeleteInput] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -87,16 +87,73 @@ export const SettingsScreen: React.FC = () => {
         </section>
 
         <section>
+          <h2 className="text-[9px] font-extrabold text-stone-400 uppercase tracking-widest mb-3 ml-4">Configure Goals</h2>
+          <div className="bg-white rounded-[32px] border border-stone-200/30 p-5 space-y-4 shadow-sm">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <label className="text-[9px] font-extrabold text-stone-400 uppercase tracking-wider block ml-1">Study Goal (hrs)</label>
+                <input 
+                  type="number" 
+                  min="1" 
+                  max="24"
+                  value={state.goals?.act_study || 8}
+                  onChange={(e) => updateActivityGoal('act_study', Math.max(1, Math.min(24, parseInt(e.target.value) || 1)))}
+                  className="w-full bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-2 text-stone-800 font-mono font-bold focus:outline-none focus:border-indigo-500"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-[9px] font-extrabold text-stone-400 uppercase tracking-wider block ml-1">Gym Goal (hrs)</label>
+                <input 
+                  type="number" 
+                  min="1" 
+                  max="24"
+                  value={state.goals?.act_gym || 2}
+                  onChange={(e) => updateActivityGoal('act_gym', Math.max(1, Math.min(24, parseInt(e.target.value) || 1)))}
+                  className="w-full bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-2 text-stone-800 font-mono font-bold focus:outline-none focus:border-indigo-500"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-[9px] font-extrabold text-stone-400 uppercase tracking-wider block ml-1">Sleep Goal (hrs)</label>
+                <input 
+                  type="number" 
+                  min="1" 
+                  max="24"
+                  value={state.goals?.act_sleep || 8}
+                  onChange={(e) => updateActivityGoal('act_sleep', Math.max(1, Math.min(24, parseInt(e.target.value) || 1)))}
+                  className="w-full bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-2 text-stone-800 font-mono font-bold focus:outline-none focus:border-indigo-500"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-[9px] font-extrabold text-stone-400 uppercase tracking-wider block ml-1">Work Goal (hrs)</label>
+                <input 
+                  type="number" 
+                  min="1" 
+                  max="24"
+                  value={state.goals?.act_work || 8}
+                  onChange={(e) => updateActivityGoal('act_work', Math.max(1, Math.min(24, parseInt(e.target.value) || 1)))}
+                  className="w-full bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-2 text-stone-800 font-mono font-bold focus:outline-none focus:border-indigo-500"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
           <h2 className="text-[9px] font-extrabold text-stone-400 uppercase tracking-widest mb-3 ml-4">Data Management</h2>
           <div className="bg-white rounded-[32px] border border-stone-200/30 overflow-hidden shadow-sm">
-            <div className="p-5 border-b border-stone-100 flex items-center gap-4">
-              <div className="p-3 bg-app-lavender rounded-2xl text-stone-700">
-                <Database size={16} />
+            <div className="p-5 border-b border-stone-100 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-app-lavender rounded-2xl text-stone-700">
+                  <Database size={16} />
+                </div>
+                <div>
+                  <p className="text-stone-800 font-extrabold text-xs">Local Storage</p>
+                  <p className="text-stone-400 text-[10px] font-medium mt-0.5">All data remains completely offline.</p>
+                </div>
               </div>
-              <div>
-                <p className="text-stone-800 font-extrabold text-xs">Local Storage</p>
-                <p className="text-stone-400 text-[10px] font-medium mt-0.5">All data remains completely offline.</p>
-              </div>
+              <span className="text-[10px] font-mono font-bold text-stone-500 bg-stone-50 dark:bg-stone-800 px-2.5 py-1 rounded-lg border border-stone-200/20 select-none">
+                {(JSON.stringify(state).length / 1024).toFixed(2)} KB
+              </span>
             </div>
             
             <button onClick={handleExport} className="w-full p-5 border-b border-stone-100 flex items-center justify-between hover:bg-stone-50/50 transition-colors text-left active:bg-stone-55">

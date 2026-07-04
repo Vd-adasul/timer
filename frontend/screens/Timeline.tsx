@@ -5,10 +5,19 @@ import { useAppStore } from '../store';
 import { formatTime, getBlockKey } from '../utils';
 import { EntryModal } from '../components/EntryModal';
 import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
 export const TimelineScreen: React.FC = () => {
   const { state } = useAppStore();
+  const location = useLocation();
   const [currentDate, setCurrentDate] = useState(new Date());
+
+  useEffect(() => {
+    if (location.state && (location.state as any).jumpToDate) {
+      setCurrentDate(new Date((location.state as any).jumpToDate + 'T00:00:00'));
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedBlock, setSelectedBlock] = useState<number>(0);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -74,13 +83,16 @@ export const TimelineScreen: React.FC = () => {
     }
 
     const showNowIndicator = isToday && index === nowBlockIndex;
+    const hasActivity = !!activity;
 
     return (
       <div 
         key={index} 
         id={`block-${index}`}
         onClick={() => handleBlockClick(index)}
-        className="flex items-stretch group cursor-pointer h-16 relative select-none"
+        className={`flex items-stretch group cursor-pointer relative select-none transition-all duration-150 ${
+          hasActivity ? 'h-16' : 'h-10'
+        }`}
       >
         {/* Time Column */}
         <div className="w-16 flex-shrink-0 flex flex-col items-end pr-4 justify-center relative select-none">
@@ -96,7 +108,7 @@ export const TimelineScreen: React.FC = () => {
         </div>
 
         {/* Content Column */}
-        <div className="flex-1 pl-5 py-1.5 relative select-none">
+        <div className="flex-1 pl-5 py-1 relative select-none">
           {activity ? (
             <div 
               className="h-full rounded-[20px] bg-white px-4 flex flex-col justify-center transition-all duration-300 hover:shadow-[0_4px_16px_rgba(41,37,36,0.03)] active:scale-[0.98] border border-stone-200/30 relative overflow-hidden"
@@ -121,8 +133,8 @@ export const TimelineScreen: React.FC = () => {
               )}
             </div>
           ) : (
-            <div className="h-full rounded-[20px] border border-dashed border-stone-200/50 bg-stone-50/20 hover:bg-stone-50/60 transition-all duration-200 flex items-center px-4 active:scale-[0.98]">
-              <span className="text-[10px] text-stone-400 font-extrabold uppercase tracking-wider">Tap to track</span>
+            <div className="h-full rounded-[14px] border border-dashed border-stone-200/50 bg-stone-50/20 hover:bg-stone-50/60 transition-all duration-200 flex items-center px-4 active:scale-[0.98]">
+              <span className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider">Tap to track</span>
             </div>
           )}
 
@@ -159,9 +171,18 @@ export const TimelineScreen: React.FC = () => {
         </button>
         
         <div 
-          className="flex items-center gap-2 cursor-pointer hover:bg-stone-50 px-4 py-2 border border-transparent hover:border-stone-200/20 rounded-full transition-all active:scale-95" 
-          onClick={() => setCurrentDate(new Date())}
+          className="flex items-center gap-2 cursor-pointer hover:bg-stone-50 px-4 py-2 border border-transparent hover:border-stone-200/20 rounded-full transition-all active:scale-95 relative" 
         >
+          <input 
+            type="date"
+            value={format(currentDate, 'yyyy-MM-dd')}
+            onChange={(e) => {
+              if (e.target.value) {
+                setCurrentDate(new Date(e.target.value + 'T00:00:00'));
+              }
+            }}
+            className="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10"
+          />
           <CalendarIcon size={12} className="text-stone-400" />
           <h2 className="text-[10px] font-extrabold uppercase tracking-widest text-stone-800">
             {format(currentDate, 'EEEE, MMM d')}
@@ -179,6 +200,17 @@ export const TimelineScreen: React.FC = () => {
       {/* Timeline List */}
       <div className="flex-1 overflow-y-auto pb-32 px-4 no-scrollbar" ref={scrollRef}>
         <div className="max-w-2xl mx-auto py-6 relative">
+          {!isToday && (
+            <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 rounded-3xl flex items-center justify-between">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider">Viewing Past Day</span>
+              <button 
+                onClick={() => setCurrentDate(new Date())}
+                className="text-[10px] font-extrabold uppercase bg-amber-500 text-white dark:text-stone-900 px-3.5 py-1.5 rounded-xl hover:bg-amber-600 transition-colors"
+              >
+                Go to Today
+              </button>
+            </div>
+          )}
           {Array.from({ length: 48 }).map((_, i) => renderBlock(i))}
         </div>
       </div>

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { X, ChevronRight, ArrowLeft, CheckCircle2, Check } from 'lucide-react';
 import { useAppStore } from '../store';
 import { Activity, Track, TrackPart, TrackItem } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 interface EntryModalProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ type Step = 'ACTIVITY' | 'TRACK' | 'PART' | 'ITEM';
 
 export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, blockIndex }) => {
   const { state, saveBlock } = useAppStore();
+  const navigate = useNavigate();
   const [step, setStep] = useState<Step>('ACTIVITY');
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
   const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
@@ -22,6 +24,36 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
   
   // Track animation direction: 1 for forward, -1 for backward
   const [slideDirection, setSlideDirection] = useState<number>(1);
+
+  // Retrieve last study block info for quick log shortcut
+  const lastStudyInfo = useMemo(() => {
+    const studyBlocks = Object.values(state.blocks).filter(b => b.activityId === 'act_study' && b.trackId);
+    if (studyBlocks.length === 0) return null;
+    
+    // Sort blocks by date desc, then index desc
+    const sorted = studyBlocks.sort((a, b) => {
+      if (a.date !== b.date) return b.date.localeCompare(a.date);
+      return b.index - a.index;
+    });
+    
+    const lastBlock = sorted[0];
+    const track = state.tracks.find(t => t.id === lastBlock.trackId);
+    if (!track) return null;
+    const part = track.parts.find(p => p.id === lastBlock.partId);
+    if (!part) return null;
+    let itemName = '';
+    if (lastBlock.itemId) {
+      const item = [...(part.lectures || []), ...(part.assignments || [])].find(i => i.id === lastBlock.itemId);
+      if (item) itemName = item.name;
+    }
+    
+    return {
+      track,
+      part,
+      itemName,
+      block: lastBlock
+    };
+  }, [state.blocks, state.tracks]);
 
   useEffect(() => {
     if (isOpen) {
@@ -122,7 +154,7 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
         transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-        className="bg-white w-full max-w-md rounded-t-[32px] sm:rounded-[32px] overflow-hidden border border-stone-200/30 shadow-[0_-16px_48px_rgba(41,37,36,0.06)] flex flex-col max-h-[85vh] z-20 relative text-stone-850"
+        className="bg-white w-full max-w-md rounded-t-[32px] sm:rounded-[32px] overflow-hidden border border-stone-200/30 shadow-[0_-16px_48px_rgba(41,37,36,0.06)] flex flex-col max-h-[85vh] z-20 relative text-stone-855"
       >
         {/* Dynamic Island style top drag handle */}
         <div className="w-12 h-1 bg-stone-200 rounded-full mx-auto mt-3 mb-1 shrink-0" />
@@ -162,7 +194,7 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
         </div>
 
         {/* Content with smooth horizontal transitions */}
-        <div className="overflow-y-auto p-5 no-scrollbar flex-1 relative min-h-[300px]">
+        <div className="overflow-y-auto overflow-x-hidden p-5 no-scrollbar flex-1 relative min-h-[300px]">
           <AnimatePresence initial={false} custom={slideDirection} mode="wait">
             <motion.div
               key={step}
@@ -191,9 +223,32 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
                       )}
                     </button>
                   ))}
+                  
+                  {lastStudyInfo && (
+                    <button
+                      onClick={() => {
+                        saveBlock(
+                          date, 
+                          blockIndex, 
+                          'act_study', 
+                          lastStudyInfo.block.trackId, 
+                          lastStudyInfo.block.partId, 
+                          lastStudyInfo.block.itemId
+                        );
+                        onClose();
+                      }}
+                      className="col-span-2 py-3 px-4 rounded-[22px] bg-indigo-50 hover:bg-indigo-100/80 dark:bg-indigo-950/20 dark:hover:bg-indigo-900/30 text-indigo-650 dark:text-indigo-400 border border-indigo-200/40 dark:border-indigo-900/30 transition-all text-left flex flex-col justify-center active:scale-[0.98] group mt-1"
+                    >
+                      <span className="text-[8px] font-extrabold uppercase tracking-widest text-indigo-400 dark:text-indigo-500">Quick Log Last Study Session</span>
+                      <span className="font-extrabold text-[11px] text-indigo-950 dark:text-indigo-100 truncate mt-1">
+                        {lastStudyInfo.track.name} &rarr; {lastStudyInfo.part.name} {lastStudyInfo.itemName ? `(${lastStudyInfo.itemName})` : ''}
+                      </span>
+                    </button>
+                  )}
+
                   <button
                     onClick={handleClear}
-                    className="col-span-2 mt-4 py-4 rounded-[22px] bg-red-500/5 hover:bg-red-500/10 text-red-500 font-extrabold text-xs uppercase tracking-wider transition-colors border border-red-200/20 active:scale-[0.98]"
+                    className="col-span-2 mt-2 py-4 rounded-[22px] bg-red-500/5 hover:bg-red-500/10 text-red-500 font-extrabold text-xs uppercase tracking-wider transition-colors border border-red-200/20 active:scale-[0.98]"
                   >
                     Clear Block
                   </button>
@@ -213,8 +268,17 @@ export const EntryModal: React.FC<EntryModalProps> = ({ isOpen, onClose, date, b
                     </button>
                   ))}
                   {state.tracks.length === 0 && (
-                    <div className="py-12 text-center text-stone-400 text-xs font-bold uppercase tracking-widest">
-                      No tracks found. Add them in Settings.
+                    <div className="py-8 text-center text-stone-400 text-xs font-medium flex flex-col items-center gap-3">
+                      <p>No tracks found. Set up your learning paths in the Curriculum tab.</p>
+                      <button
+                        onClick={() => {
+                          onClose();
+                          navigate('/curriculum');
+                        }}
+                        className="mt-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-750 text-white rounded-xl text-[10px] font-extrabold uppercase tracking-wider"
+                      >
+                        Go to Curriculum
+                      </button>
                     </div>
                   )}
                 </div>

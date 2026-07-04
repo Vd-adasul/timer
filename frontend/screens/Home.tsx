@@ -1,6 +1,6 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import { format, startOfDay, endOfDay } from 'date-fns';
-import { Flame, Target, Trophy, Clock, Share2, Sparkles } from 'lucide-react';
+import { Flame, Target, Trophy, Clock, FileText, Sparkles } from 'lucide-react';
 import { useAppStore } from '../store';
 import { calculateStats, calculateStreak } from '../utils';
 import { useNavigate } from 'react-router-dom';
@@ -61,7 +61,7 @@ const ProgressRing: React.FC<{ percentage: number; color: string; size?: number;
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          className="stroke-stone-100 fill-transparent"
+          className="stroke-stone-100 dark:stroke-stone-800 fill-transparent"
           strokeWidth={strokeWidth}
         />
         {/* Dynamic track */}
@@ -96,6 +96,8 @@ export const HomeScreen: React.FC = () => {
   }, [state]);
 
   const streak = useMemo(() => calculateStreak(state.blocks, state.activities), [state]);
+
+  const hasTrackedAnything = useMemo(() => Object.keys(state.blocks).length > 0, [state.blocks]);
 
   const completedToday = useMemo(() => {
     const list: { trackName: string; partName: string; lectureNumber?: string; name: string }[] = [];
@@ -132,6 +134,10 @@ export const HomeScreen: React.FC = () => {
   const gymHours = todayStats.activityBreakdown[gymName] || 0;
   const sleepHours = todayStats.activityBreakdown[sleepName] || 0;
 
+  const studyGoal = state.goals.act_study || 8;
+  const gymGoal = state.goals.act_gym || 2;
+  const sleepGoal = state.goals.act_sleep || 8;
+
   const progressPercentage = Math.min((todayStats.totalTracked / 24) * 100, 100);
 
   // Time-aware greeting
@@ -156,24 +162,61 @@ export const HomeScreen: React.FC = () => {
           <p className="text-stone-500/80 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">
             {format(new Date(), 'EEEE, MMMM d')}
           </p>
-          <h1 className="text-2xl font-extrabold text-stone-800 tracking-tight flex items-center gap-1.5">
+          <h1 className="text-2xl font-extrabold text-stone-800 tracking-tight flex items-center gap-1.5 animate-fade-in-up">
             {greeting} <Sparkles size={14} className="text-app-peach animate-pulse" />
           </h1>
         </div>
         <button 
           onClick={() => navigate('/report')}
-          className="p-3 bg-white hover:bg-stone-50 text-stone-600 hover:text-stone-800 border border-stone-200/40 rounded-full transition-all active:scale-95 shadow-[0_4px_12px_-2px_rgba(41,37,36,0.04)] flex items-center justify-center shrink-0"
-          title="Share Wrap"
+          className="px-3.5 py-2.5 bg-white hover:bg-stone-50 text-stone-600 hover:text-stone-800 border border-stone-200/40 rounded-full transition-all active:scale-95 shadow-[0_4px_12px_-2px_rgba(41,37,36,0.04)] flex items-center gap-1.5 shrink-0"
+          title="Daily Wrap Report"
         >
-          <Share2 size={15} />
+          <FileText size={13} />
+          <span className="text-[9px] font-extrabold uppercase tracking-wider">Report</span>
         </button>
       </div>
 
       <div className="px-6 space-y-6 max-w-2xl mx-auto w-full">
         
+        {/* Onboarding Guide Card */}
+        {!hasTrackedAnything && (
+          <div className="bg-gradient-to-br from-indigo-50 to-indigo-100/50 dark:from-indigo-950/40 dark:to-indigo-900/10 p-6 rounded-[32px] border border-indigo-200/40 dark:border-indigo-900/30 shadow-sm relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 opacity-10 bg-indigo-500 rounded-full blur-2xl pointer-events-none" />
+            <h3 className="text-xs font-extrabold text-indigo-650 dark:text-indigo-400 uppercase tracking-widest mb-1.5 flex items-center gap-1">
+              <Sparkles size={12} className="animate-pulse" /> Welcome to TimeOS
+            </h3>
+            <p className="text-xs text-indigo-950 dark:text-indigo-100 font-bold leading-relaxed mb-4">
+              Get started on your learning and time tracking journey with 3 simple steps:
+            </p>
+            <div className="space-y-3 text-[11px] font-medium text-indigo-900">
+              <div className="flex items-start gap-2.5">
+                <span className="w-5 h-5 rounded-full bg-indigo-200 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-mono font-bold flex items-center justify-center shrink-0">1</span>
+                <div>
+                  <p className="font-extrabold text-indigo-950 dark:text-indigo-100">Set up Curriculum</p>
+                  <p className="text-indigo-700/85 dark:text-indigo-400">Add learning tracks and syllabus lectures in the <strong>Curriculum</strong> tab.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <span className="w-5 h-5 rounded-full bg-indigo-200 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-mono font-bold flex items-center justify-center shrink-0">2</span>
+                <div>
+                  <p className="font-extrabold text-indigo-950 dark:text-indigo-100">Log Daily Timeline</p>
+                  <p className="text-indigo-700/85 dark:text-indigo-400">Tap timeslots in the <strong>Timeline</strong> tab to log your study blocks and select lectures.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <span className="w-5 h-5 rounded-full bg-indigo-200 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-mono font-bold flex items-center justify-center shrink-0">3</span>
+                <div>
+                  <p className="font-extrabold text-indigo-950 dark:text-indigo-100">Review Insights</p>
+                  <p className="text-indigo-700/85 dark:text-indigo-400">See your study progress and focus breakdowns in the <strong>Analytics</strong> tab.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Main Progress Card (Softly theme) */}
         <div className="bg-white p-6 rounded-[36px] border border-stone-200/30 shadow-[0_8px_30px_rgba(41,37,36,0.03)] relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-br from-app-sage/30 via-transparent to-transparent opacity-50" />
+          <div className="absolute inset-0 bg-gradient-to-br from-app-sage/30 via-transparent to-transparent opacity-50 font-sans" />
           
           <div className="flex justify-between items-end mb-5 relative z-10">
             <div>
@@ -185,15 +228,18 @@ export const HomeScreen: React.FC = () => {
                 <p className="text-sm text-stone-400 font-bold font-mono">/24h</p>
               </div>
             </div>
-            <div className="text-right">
+            <div className="text-right flex flex-col items-end">
               <p className="text-[10px] text-stone-500/70 font-extrabold uppercase tracking-widest mb-1">Productivity</p>
               <p className="text-3xl font-extrabold text-stone-800 tracking-tight">
                 <AnimatedNumber value={todayStats.score} suffix="%" />
               </p>
+              <p className="text-[8px] text-stone-400 font-bold mt-1 uppercase tracking-wider text-right max-w-[120px]">
+                Productive vs total tracked
+              </p>
             </div>
           </div>
           
-          <div className="h-2 w-full bg-stone-100 rounded-full overflow-hidden border border-stone-200/20 relative z-10">
+          <div className="h-2 w-full bg-stone-100 dark:bg-stone-800 rounded-full overflow-hidden border border-stone-200/20 relative z-10">
             <motion.div 
               className="h-full bg-app-peach rounded-full relative"
               initial={{ width: 0 }}
@@ -207,36 +253,36 @@ export const HomeScreen: React.FC = () => {
         <div className="grid grid-cols-3 gap-4">
           {/* Study Ring Card */}
           <div className="bg-white p-5 rounded-[28px] border border-stone-200/30 flex flex-col items-center justify-center text-center hover:bg-stone-50/50 transition-colors shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)] relative overflow-hidden group">
-            <ProgressRing percentage={studyHours ? (studyHours / 8) * 100 : 0} color="var(--color-sage)">
+            <ProgressRing percentage={studyHours ? (studyHours / studyGoal) * 100 : 0} color="var(--color-sage)">
               <Target size={14} className="text-stone-500" />
             </ProgressRing>
-            <p className="text-lg font-extrabold text-stone-800 tracking-tight mt-3">
+            <p className="text-sm font-extrabold text-stone-800 tracking-tight mt-3">
               <span className="font-mono">{studyHours}</span>
-              <span className="text-xs text-stone-400 ml-0.5 font-sans font-medium">h</span>
+              <span className="text-[10px] text-stone-400 ml-0.5 font-sans font-medium">/{studyGoal}h</span>
             </p>
             <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider mt-1">{studyName}</p>
           </div>
 
           {/* Gym Ring Card */}
           <div className="bg-white p-5 rounded-[28px] border border-stone-200/30 flex flex-col items-center justify-center text-center hover:bg-stone-50/50 transition-colors shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)] relative overflow-hidden group">
-            <ProgressRing percentage={gymHours ? (gymHours / 2) * 100 : 0} color="var(--color-peach)">
+            <ProgressRing percentage={gymHours ? (gymHours / gymGoal) * 100 : 0} color="var(--color-peach)">
               <Flame size={14} className="text-stone-500" />
             </ProgressRing>
-            <p className="text-lg font-extrabold text-stone-800 tracking-tight mt-3">
+            <p className="text-sm font-extrabold text-stone-800 tracking-tight mt-3">
               <span className="font-mono">{gymHours}</span>
-              <span className="text-xs text-stone-400 ml-0.5 font-sans font-medium">h</span>
+              <span className="text-[10px] text-stone-400 ml-0.5 font-sans font-medium">/{gymGoal}h</span>
             </p>
             <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider mt-1">{gymName}</p>
           </div>
 
           {/* Sleep Ring Card */}
           <div className="bg-white p-5 rounded-[28px] border border-stone-200/30 flex flex-col items-center justify-center text-center hover:bg-stone-50/50 transition-colors shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)] relative overflow-hidden group">
-            <ProgressRing percentage={sleepHours ? (sleepHours / 8) * 100 : 0} color="var(--color-lavender)">
+            <ProgressRing percentage={sleepHours ? (sleepHours / sleepGoal) * 100 : 0} color="var(--color-lavender)">
               <Clock size={14} className="text-stone-500" />
             </ProgressRing>
-            <p className="text-lg font-extrabold text-stone-800 tracking-tight mt-3">
+            <p className="text-sm font-extrabold text-stone-800 tracking-tight mt-3">
               <span className="font-mono">{sleepHours}</span>
-              <span className="text-xs text-stone-400 ml-0.5 font-sans font-medium">h</span>
+              <span className="text-[10px] text-stone-400 ml-0.5 font-sans font-medium">/{sleepGoal}h</span>
             </p>
             <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider mt-1">{sleepName}</p>
           </div>
@@ -245,7 +291,7 @@ export const HomeScreen: React.FC = () => {
         {/* Highlights Section */}
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-white p-6 rounded-[28px] border border-stone-200/30 relative overflow-hidden group shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)]">
-            <div className="absolute -right-6 -top-6 text-stone-100 transition-transform duration-500 group-hover:scale-105 group-hover:rotate-12 pointer-events-none">
+            <div className="absolute -right-6 -top-6 text-stone-100 dark:text-stone-800 transition-transform duration-500 group-hover:scale-105 group-hover:rotate-12 pointer-events-none">
               <Trophy size={90} strokeWidth={1.5} />
             </div>
             <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider mb-2 relative z-10">Top Focus</p>
@@ -274,9 +320,9 @@ export const HomeScreen: React.FC = () => {
         </div>
 
         {/* Completed Lectures Today Section */}
-        {completedToday.length > 0 && (
-          <div className="bg-white p-6 rounded-[28px] border border-stone-200/30 shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)] relative overflow-hidden">
-            <h3 className="text-[10px] font-extrabold text-stone-400 uppercase tracking-widest mb-4">Completed Today</h3>
+        <div className="bg-white p-6 rounded-[28px] border border-stone-200/30 shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)] relative overflow-hidden">
+          <h3 className="text-[10px] font-extrabold text-stone-400 uppercase tracking-widest mb-4">Completed Today</h3>
+          {completedToday.length > 0 ? (
             <div className="space-y-3">
               {completedToday.map((lec, idx) => (
                 <div key={idx} className="flex items-center gap-3 p-3 bg-stone-50/50 rounded-2xl border border-stone-200/20">
@@ -292,8 +338,18 @@ export const HomeScreen: React.FC = () => {
                 </div>
               ))}
             </div>
-          </div>
-        )}
+          ) : (
+            <div className="text-center py-6 text-stone-400">
+              <p className="text-xs font-medium">No lectures marked completed today yet.</p>
+              <button 
+                onClick={() => navigate('/curriculum')}
+                className="mt-3 text-[10px] font-extrabold text-indigo-500 hover:text-indigo-600 dark:text-indigo-400 uppercase tracking-wider hover:underline"
+              >
+                Go to Curriculum →
+              </button>
+            </div>
+          )}
+        </div>
 
       </div>
     </motion.div>

@@ -73,7 +73,14 @@ export const calculateStats = (
 export const calculateStreak = (blocks: Record<string, TimeBlock>, activities: Activity[]): number => {
   let streak = 0;
   let currentDate = new Date();
+  
+  // 4 AM grace period: if current time is before 4 AM, start checking from yesterday
+  if (currentDate.getHours() < 4) {
+    currentDate = subDays(currentDate, 1);
+  }
+  
   const productiveActivityIds = activities.filter(a => a.type === 'Productive').map(a => a.id);
+  const baseDate = currentDate;
 
   while (true) {
     const dateStr = format(currentDate, 'yyyy-MM-dd');
@@ -91,7 +98,7 @@ export const calculateStreak = (blocks: Record<string, TimeBlock>, activities: A
       streak++;
       currentDate = subDays(currentDate, 1);
     } else {
-      if (streak === 0 && isSameDay(currentDate, new Date())) {
+      if (streak === 0 && isSameDay(currentDate, baseDate)) {
          currentDate = subDays(currentDate, 1);
          continue;
       }

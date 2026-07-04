@@ -36,6 +36,12 @@ export const INITIAL_STATE: AppState = {
   activities: DEFAULT_ACTIVITIES,
   tracks: DEFAULT_TRACKS,
   blocks: {},
+  goals: {
+    act_sleep: 8,
+    act_study: 8,
+    act_gym: 2,
+    act_work: 8,
+  }
 };
 
 export const BLOCKS_PER_DAY = 48;

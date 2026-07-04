@@ -36,6 +36,8 @@ interface StoreContextType {
   theme: 'light' | 'dark';
   toggleTheme: () => void;
   toggleItemCompleted: (trackId: string, partId: string, itemId: string) => void;
+  updateActivityGoal: (activityId: string, goalHours: number) => void;
+  renameLecture: (trackId: string, partId: string, itemId: string, newName: string) => void;
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
@@ -47,7 +49,11 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (!parsed.goals) {
+          parsed.goals = { ...INITIAL_STATE.goals };
+        }
+        return parsed;
       } catch (e) {
         console.error("Failed to parse local storage", e);
         return INITIAL_STATE;
@@ -271,6 +277,9 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     try {
       const parsed = JSON.parse(dataStr);
       if (parsed && parsed.activities && parsed.blocks) {
+        if (!parsed.goals) {
+          parsed.goals = { ...INITIAL_STATE.goals };
+        }
         setState(parsed);
         return true;
       }
@@ -278,6 +287,45 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     } catch (e) {
       return false;
     }
+  };
+
+  const updateActivityGoal = (activityId: string, goalHours: number) => {
+    setState(prev => ({
+      ...prev,
+      goals: {
+        ...prev.goals,
+        [activityId]: goalHours
+      }
+    }));
+  };
+
+  const renameLecture = (trackId: string, partId: string, itemId: string, newName: string) => {
+    setState(prev => {
+      const newTracks = prev.tracks.map(t => {
+        if (t.id !== trackId) return t;
+        return {
+          ...t,
+          parts: t.parts.map(p => {
+            if (p.id !== partId) return p;
+            
+            const renameItem = (items?: TrackItem[]) => 
+              items?.map(i => {
+                if (i.id === itemId) {
+                  return { ...i, name: newName };
+                }
+                return i;
+              });
+              
+            return {
+              ...p,
+              lectures: renameItem(p.lectures),
+              assignments: renameItem(p.assignments)
+            };
+          })
+        };
+      });
+      return { ...prev, tracks: newTracks };
+    });
   };
 
   return (
@@ -288,7 +336,8 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       confirmDialog, showConfirm, hideConfirm,
       theme, toggleTheme, toggleItemCompleted,
       addPartToTrack, deletePartFromTrack,
-      addLectureToPart, deleteLectureFromPart
+      addLectureToPart, deleteLectureFromPart,
+      updateActivityGoal, renameLecture
     }}>
       {children}
     </StoreContext.Provider>

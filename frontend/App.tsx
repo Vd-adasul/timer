@@ -156,7 +156,7 @@ const App: React.FC = () => {
   return (
     <StoreProvider>
       <HashRouter>
-        <div className="h-screen w-screen bg-app-bg text-stone-800 font-sans overflow-hidden flex justify-center selection:bg-app-peach/30">
+        <div className="h-screen w-full bg-app-bg text-stone-800 font-sans overflow-hidden flex justify-center selection:bg-app-peach/30">
           {/* Warm Sage/Peach Ambient Glows */}
           <div className="glow-bg bg-app-sage w-80 h-80 top-[-80px] left-[-80px]" />
           <div className="glow-bg bg-app-lavender w-80 h-80 bottom-[-80px] right-[-80px]" />

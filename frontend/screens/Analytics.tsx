@@ -1,16 +1,18 @@
 import React, { useState, useMemo } from 'react';
-import { startOfDay, endOfDay, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from 'date-fns';
+import { startOfDay, endOfDay, startOfWeek, endOfWeek, startOfMonth, endOfMonth, subDays } from 'date-fns';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { useAppStore } from '../store';
 import { calculateStats } from '../utils';
 import { PartStatsModal } from '../components/PartStatsModal';
 import { TrackPart } from '../types';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
-type Period = 'Today' | 'Week' | 'Month';
+type Period = 'Today' | 'Week' | 'Month' | 'All Time';
 
 export const AnalyticsScreen: React.FC = () => {
   const { state } = useAppStore();
+  const navigate = useNavigate();
   const [period, setPeriod] = useState<Period>('Week');
   const [selectedPart, setSelectedPart] = useState<TrackPart | null>(null);
 
@@ -31,28 +33,30 @@ export const AnalyticsScreen: React.FC = () => {
         start = startOfMonth(now);
         end = endOfMonth(now);
         break;
+      case 'All Time':
+        const blockDates = Object.keys(state.blocks).map(k => k.split('-').slice(0, 3).join('-'));
+        if (blockDates.length > 0) {
+          const sorted = blockDates.sort();
+          start = new Date(sorted[0] + 'T00:00:00');
+        } else {
+          start = subDays(now, 365);
+        }
+        end = endOfDay(now);
+        break;
     }
     
     return calculateStats(state.blocks, state, start, end);
   }, [state, period]);
 
   const activityData = useMemo(() => {
-    const colorMapping: Record<string, string> = {
-      'Study': '#E8EFE8',      // Sage
-      'Gym': '#FFB7B2',        // Coral/Peach
-      'Sleep': '#EFEDF4',      // Lavender
-      'Chores': '#F5F5F0',     // Sand
-      'Work': '#FFD3B6',       // Light Orange
-      'Leisure': '#FCE1E4',    // Pale Pink
-    };
-
     return Object.entries(stats.activityBreakdown)
       .map(([name, value]) => {
-        const fallbackColor = '#F5F5F0';
-        return { name, value, color: colorMapping[name] || fallbackColor };
+        const activity = state.activities.find(a => a.name === name);
+        const color = activity?.color || '#737373';
+        return { name, value, color };
       })
       .sort((a, b) => b.value - a.value);
-  }, [stats.activityBreakdown]);
+  }, [stats.activityBreakdown, state.activities]);
 
   const partData = useMemo(() => {
     return Object.entries(stats.partBreakdown)
@@ -90,7 +94,7 @@ export const AnalyticsScreen: React.FC = () => {
         <h1 className="text-2xl font-extrabold text-stone-800 tracking-tight mb-5">Analytics</h1>
         
         <div className="flex bg-stone-100/60 p-1 rounded-2xl border border-stone-200/35">
-          {(['Today', 'Week', 'Month'] as Period[]).map(p => (
+          {(['Today', 'Week', 'Month', 'All Time'] as Period[]).map(p => (
             <button
               key={p}
               onClick={() => setPeriod(p)}
@@ -139,6 +143,21 @@ export const AnalyticsScreen: React.FC = () => {
                       dataKey="value"
                       stroke="none"
                       cornerRadius={4}
+                      onClick={(data) => {
+                        if (data && data.name) {
+                          const actBlocks = Object.values(state.blocks).filter(b => {
+                            const act = state.activities.find(a => a.name === data.name);
+                            return act && act.id === b.activityId;
+                          });
+                          if (actBlocks.length > 0) {
+                            const sorted = actBlocks.sort((a, b) => b.date.localeCompare(a.date));
+                            navigate('/timeline', { state: { jumpToDate: sorted[0].date } });
+                          } else {
+                            navigate('/timeline');
+                          }
+                        }
+                      }}
+                      className="cursor-pointer focus:outline-none"
                     >
                       {activityData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
@@ -151,7 +170,7 @@ export const AnalyticsScreen: React.FC = () => {
                     />
                   </PieChart>
                 </ResponsiveContainer>
-                <div className="absolute flex flex-col items-center justify-center">
+                <div className="absolute flex flex-col items-center justify-center pointer-events-none">
                   <span className="text-2xl font-extrabold text-stone-850 font-mono tracking-tight">{stats.totalTracked}h</span>
                   <span className="font-cursive text-xl text-stone-500 lowercase select-none">total</span>
                 </div>
@@ -159,13 +178,28 @@ export const AnalyticsScreen: React.FC = () => {
 
               <div className="w-full space-y-3 pt-2">
                 {activityData.map(item => (
-                  <div key={item.name} className="flex items-center justify-between group">
+                  <button 
+                    key={item.name} 
+                    onClick={() => {
+                      const actBlocks = Object.values(state.blocks).filter(b => {
+                        const act = state.activities.find(a => a.name === item.name);
+                        return act && act.id === b.activityId;
+                      });
+                      if (actBlocks.length > 0) {
+                        const sorted = actBlocks.sort((a, b) => b.date.localeCompare(a.date));
+                        navigate('/timeline', { state: { jumpToDate: sorted[0].date } });
+                      } else {
+                        navigate('/timeline');
+                      }
+                    }}
+                    className="w-full flex items-center justify-between group text-left active:scale-[0.99] transition-transform"
+                  >
                     <div className="flex items-center gap-3">
                       <div className="w-2.5 h-2.5 rounded-full shadow-sm shrink-0" style={{ backgroundColor: item.color, border: '1px solid rgba(41,37,36,0.05)' }} />
                       <span className="text-xs font-bold text-stone-500 group-hover:text-stone-800 transition-colors">{item.name}</span>
                     </div>
                     <span className="text-xs font-bold text-stone-800 font-mono">{item.value}h</span>
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
@@ -181,15 +215,35 @@ export const AnalyticsScreen: React.FC = () => {
             <h3 className="text-[10px] font-extrabold text-stone-400 uppercase tracking-widest mb-6">Learning Topic Share</h3>
             <div className="h-48 w-full select-none">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={topicData} layout="vertical" margin={{ top: 0, right: 10, left: -20, bottom: 0 }}>
+                <BarChart data={topicData} layout="vertical" margin={{ top: 0, right: 10, left: -5, bottom: 0 }}>
                   <XAxis type="number" hide />
-                  <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fill: '#78716C', fontSize: 10, fontWeight: 700 }} width={80} />
+                  <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fill: '#78716C', fontSize: 10, fontWeight: 700 }} width={120} />
                   <Tooltip 
                     cursor={{ fill: 'rgba(41,37,36,0.01)', radius: 4 }}
                     contentStyle={{ backgroundColor: '#fff', border: '1px solid rgba(41,37,36,0.08)', borderRadius: '16px', color: '#292524' }}
                     formatter={(value: number) => [`${value} hrs`, 'Time']}
                   />
-                  <Bar dataKey="value" fill="#FFB7B2" radius={[0, 6, 6, 0]} barSize={14} />
+                  <Bar 
+                    dataKey="value" 
+                    fill="#FFB7B2" 
+                    radius={[0, 6, 6, 0]} 
+                    barSize={14}
+                    onClick={(data) => {
+                      if (data && data.name) {
+                        const trackBlocks = Object.values(state.blocks).filter(b => {
+                          const t = state.tracks.find(tr => tr.id === b.trackId);
+                          return t && t.name === data.name;
+                        });
+                        if (trackBlocks.length > 0) {
+                          const sorted = trackBlocks.sort((a, b) => b.date.localeCompare(a.date));
+                          navigate('/timeline', { state: { jumpToDate: sorted[0].date } });
+                        } else {
+                          navigate('/timeline');
+                        }
+                      }
+                    }}
+                    className="cursor-pointer focus:outline-none"
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -208,18 +262,18 @@ export const AnalyticsScreen: React.FC = () => {
                   <div 
                     key={item.name}
                     onClick={() => handlePartClick(item.name)}
-                    className="flex flex-col p-3 rounded-[22px] hover:bg-stone-50/50 transition-all cursor-pointer group active:scale-[0.98]"
+                    className="flex flex-col p-3 rounded-[22px] hover:bg-stone-50/50 dark:hover:bg-stone-800 transition-all cursor-pointer group active:scale-[0.98]"
                   >
                     <div className="flex justify-between items-center mb-2">
                       <div className="flex items-center gap-3">
                         <span className="text-stone-300 font-bold font-mono text-xs">{index + 1}</span>
-                        <span className="text-xs font-bold text-stone-500 group-hover:text-stone-850 transition-colors">{item.name}</span>
+                        <span className="text-xs font-bold text-stone-500 group-hover:text-stone-800 transition-colors">{item.name}</span>
                       </div>
                       <span className="text-xs font-bold text-stone-800 font-mono">{item.value}h</span>
                     </div>
-                    <div className="h-1 w-full bg-stone-100 rounded-full overflow-hidden">
+                    <div className="h-1 w-full bg-stone-100 dark:bg-stone-900 rounded-full overflow-hidden">
                       <motion.div 
-                        className="h-full bg-app-peach rounded-full"
+                        className="h-full bg-app-peach"
                         initial={{ width: 0 }}
                         animate={{ width: `${ratioPercent}%` }}
                         transition={{ duration: 1, ease: [0.25, 1, 0.5, 1] }}
