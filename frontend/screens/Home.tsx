@@ -97,6 +97,26 @@ export const HomeScreen: React.FC = () => {
 
   const streak = useMemo(() => calculateStreak(state.blocks, state.activities), [state]);
 
+  const completedToday = useMemo(() => {
+    const list: { trackName: string; partName: string; lectureNumber?: string; name: string }[] = [];
+    const todayStr = format(new Date(), 'yyyy-MM-dd');
+    state.tracks.forEach(track => {
+      track.parts.forEach(part => {
+        part.lectures?.forEach(lecture => {
+          if (lecture.completed && lecture.completedDate === todayStr) {
+            list.push({
+              trackName: track.name,
+              partName: part.name,
+              lectureNumber: lecture.lectureNumber,
+              name: lecture.name
+            });
+          }
+        });
+      });
+    });
+    return list;
+  }, [state.tracks]);
+
   const topPart = Object.entries(todayStats.partBreakdown).sort((a, b) => b[1] - a[1])[0];
   
   // Resolve activities dynamically
@@ -252,6 +272,28 @@ export const HomeScreen: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Completed Lectures Today Section */}
+        {completedToday.length > 0 && (
+          <div className="bg-white p-6 rounded-[28px] border border-stone-200/30 shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)] relative overflow-hidden">
+            <h3 className="text-[10px] font-extrabold text-stone-400 uppercase tracking-widest mb-4">Completed Today</h3>
+            <div className="space-y-3">
+              {completedToday.map((lec, idx) => (
+                <div key={idx} className="flex items-center gap-3 p-3 bg-stone-50/50 rounded-2xl border border-stone-200/20">
+                  <div className="w-8 h-8 rounded-xl bg-app-peach/25 text-stone-700 flex items-center justify-center shrink-0 text-[10px] font-mono font-bold border border-stone-200/20">
+                    {lec.lectureNumber || 'L'}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-bold text-stone-800 truncate">{lec.name}</p>
+                    <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider mt-0.5">
+                      {lec.trackName} &bull; {lec.partName}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
       </div>
     </motion.div>

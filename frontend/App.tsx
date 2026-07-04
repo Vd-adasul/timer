@@ -1,10 +1,11 @@
 import React from 'react';
 import { HashRouter, Routes, Route, NavLink, Navigate, useLocation } from 'react-router-dom';
-import { Home, Clock, LayoutDashboard, Lightbulb, Settings, AlertTriangle, CheckCircle2, Info, X } from 'lucide-react';
+import { Home, Clock, LayoutDashboard, Lightbulb, Settings, AlertTriangle, CheckCircle2, Info, X, BookOpen } from 'lucide-react';
 import { StoreProvider, useAppStore } from './store';
 import { HomeScreen } from './screens/Home';
 import { TimelineScreen } from './screens/Timeline';
 import { AnalyticsScreen } from './screens/Analytics';
+import { CurriculumScreen } from './screens/Curriculum';
 import { InsightsScreen } from './screens/Insights';
 import { ReportScreen } from './screens/Report';
 import { SettingsScreen } from './screens/Settings';
@@ -92,8 +93,8 @@ const BottomNav = () => {
   const navItems = [
     { path: '/home', icon: Home, label: 'Home' },
     { path: '/timeline', icon: Clock, label: 'Timeline' },
+    { path: '/curriculum', icon: BookOpen, label: 'Curriculum' },
     { path: '/analytics', icon: LayoutDashboard, label: 'Analytics' },
-    { path: '/insights', icon: Lightbulb, label: 'Insights' },
     { path: '/settings', icon: Settings, label: 'Settings' },
   ];
 
@@ -142,6 +143,7 @@ const AnimatedRoutes = () => {
         <Route path="/home" element={<HomeScreen />} />
         <Route path="/timeline" element={<TimelineScreen />} />
         <Route path="/analytics" element={<AnalyticsScreen />} />
+        <Route path="/curriculum" element={<CurriculumScreen />} />
         <Route path="/insights" element={<InsightsScreen />} />
         <Route path="/report" element={<ReportScreen />} />
         <Route path="/settings" element={<SettingsScreen />} />

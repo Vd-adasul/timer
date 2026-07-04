@@ -15,6 +15,8 @@ export interface TrackItem {
   name: string;
   type: 'lecture' | 'assignment';
   completed?: boolean;
+  lectureNumber?: string;
+  completedDate?: string;
 }
 
 export interface TrackPart {

@@ -1,19 +1,12 @@
 import React, { useState, useRef } from 'react';
-import { Trash2, Database, Info, ChevronRight, Plus, Download, Upload, AlertTriangle, FileJson, CheckCircle2, ArrowLeft, Sun, Moon } from 'lucide-react';
+import { Database, Info, Download, Upload, AlertTriangle, Sun, Moon } from 'lucide-react';
 import { useAppStore } from '../store';
-import { Track } from '../types';
 import { motion } from 'framer-motion';
 
 export const SettingsScreen: React.FC = () => {
-  const { state, clearData, addTrack, deleteTrack, importData, showToast, showConfirm, theme, toggleTheme } = useAppStore();
-  const [view, setView] = useState<'main' | 'tracks' | 'paste_json' | 'preview_json'>('main');
+  const { state, clearData, importData, showToast, theme, toggleTheme } = useAppStore();
   const [showDangerZone, setShowDangerZone] = useState(false);
   const [deleteInput, setDeleteInput] = useState('');
-  
-  const [jsonInput, setJsonInput] = useState('');
-  const [jsonError, setJsonError] = useState('');
-  const [previewTrack, setPreviewTrack] = useState<Track | null>(null);
-
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleExport = () => {
@@ -55,214 +48,6 @@ export const SettingsScreen: React.FC = () => {
     }
   };
 
-  const handlePreviewJSON = () => {
-    try {
-      const parsed = JSON.parse(jsonInput);
-      if (!parsed.name) throw new Error("Track must have a 'name' field.");
-      
-      const newTrack: Track = {
-        id: `track_${Date.now()}`,
-        name: parsed.name,
-        description: parsed.description,
-        parts: (parsed.parts || []).map((p: any, i: number) => ({
-          id: `part_${Date.now()}_${i}`,
-          name: p.name || `Part ${i+1}`,
-          lectures: (p.lectures || []).map((l: string, j: number) => ({
-            id: `lec_${Date.now()}_${i}_${j}`,
-            name: l,
-            type: 'lecture'
-          })),
-          assignments: (p.assignments || []).map((a: string, j: number) => ({
-            id: `ass_${Date.now()}_${i}_${j}`,
-            name: a,
-            type: 'assignment'
-          }))
-        }))
-      };
-      
-      setPreviewTrack(newTrack);
-      setView('preview_json');
-      setJsonError('');
-    } catch (e: any) {
-      setJsonError(e.message || "Invalid JSON format");
-      showToast('JSON validation failed', 'error');
-    }
-  };
-
-  const handleSaveTrack = () => {
-    if (previewTrack) {
-      addTrack(previewTrack);
-      setJsonInput('');
-      setPreviewTrack(null);
-      setView('tracks');
-      showToast('Learning track added!', 'success');
-    }
-  };
-
-  if (view === 'preview_json' && previewTrack) {
-    const totalLectures = previewTrack.parts.reduce((acc, p) => acc + (p.lectures?.length || 0), 0);
-    const totalAssignments = previewTrack.parts.reduce((acc, p) => acc + (p.assignments?.length || 0), 0);
-
-    return (
-      <motion.div 
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: -20 }}
-        transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
-        className="flex flex-col h-full bg-app-bg overflow-y-auto pb-32 no-scrollbar"
-      >
-        <div className="px-6 pt-10 pb-6 sticky top-0 bg-app-bg/85 backdrop-blur-md z-10 flex items-center gap-3 border-b border-stone-200/20">
-          <button onClick={() => setView('paste_json')} className="p-2.5 -ml-2 rounded-full hover:bg-stone-50 text-stone-500 hover:text-stone-850 transition-all active:scale-95 border border-transparent hover:border-stone-200/20">
-            <ArrowLeft size={18} />
-          </button>
-          <div>
-            <h1 className="text-xl font-extrabold text-stone-800 tracking-tight">Preview Track</h1>
-            <p className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest">Confirm imported items</p>
-          </div>
-        </div>
-
-        <div className="px-6 space-y-6 max-w-2xl mx-auto w-full mt-6">
-          <div className="bg-white p-6 rounded-[36px] border border-stone-200/30 text-center relative overflow-hidden shadow-[0_4px_20px_-2px_rgba(41,37,36,0.02)]">
-            <div className="w-16 h-16 bg-app-sage rounded-full flex items-center justify-center mx-auto mb-4 border border-stone-200/20">
-              <CheckCircle2 size={24} className="text-stone-650" />
-            </div>
-            <h2 className="text-xl font-extrabold text-stone-800 mb-1.5 tracking-tight">{previewTrack.name}</h2>
-            {previewTrack.description && <p className="text-stone-400 text-xs mb-6 font-medium font-cursive text-lg">{previewTrack.description}</p>}
-            
-            <div className="grid grid-cols-3 gap-3">
-              <div className="bg-stone-50/50 p-4 rounded-[22px] border border-stone-200/35">
-                <p className="text-xl font-extrabold text-stone-800 font-mono">{previewTrack.parts.length}</p>
-                <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider mt-1">Parts</p>
-              </div>
-              <div className="bg-stone-50/50 p-4 rounded-[22px] border border-stone-200/35">
-                <p className="text-xl font-extrabold text-stone-800 font-mono">{totalLectures}</p>
-                <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider mt-1">Lectures</p>
-              </div>
-              <div className="bg-stone-50/50 p-4 rounded-[22px] border border-stone-200/35">
-                <p className="text-xl font-extrabold text-stone-800 font-mono">{totalAssignments}</p>
-                <p className="text-[9px] text-stone-400 font-extrabold uppercase tracking-wider mt-1">Tasks</p>
-              </div>
-            </div>
-          </div>
-
-          <button 
-            onClick={handleSaveTrack}
-            className="w-full py-4 bg-stone-800 hover:bg-stone-900 text-white rounded-[22px] font-extrabold text-xs uppercase tracking-wider transition-all active:scale-[0.98] shadow-lg shadow-stone-800/10"
-          >
-            Import Track
-          </button>
-        </div>
-      </motion.div>
-    );
-  }
-
-  if (view === 'paste_json') {
-    return (
-      <motion.div 
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: -20 }}
-        transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
-        className="flex flex-col h-full bg-app-bg overflow-y-auto pb-32 no-scrollbar"
-      >
-        <div className="px-6 pt-10 pb-6 sticky top-0 bg-app-bg/85 backdrop-blur-md z-10 flex items-center gap-3 border-b border-stone-200/20">
-          <button onClick={() => setView('tracks')} className="p-2.5 -ml-2 rounded-full hover:bg-stone-50 text-stone-500 hover:text-stone-850 transition-all active:scale-95 border border-transparent hover:border-stone-200/20">
-            <ArrowLeft size={18} />
-          </button>
-          <div>
-            <h1 className="text-xl font-extrabold text-stone-800 tracking-tight">Paste JSON</h1>
-            <p className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest">Input structured JSON roadmap</p>
-          </div>
-        </div>
-
-        <div className="px-6 space-y-4 max-w-2xl mx-auto w-full mt-6 flex-1 flex flex-col">
-          <textarea 
-            value={jsonInput}
-            onChange={(e) => setJsonInput(e.target.value)}
-            placeholder={`{\n  "name": "DSA Roadmap",\n  "description": "Arrays and dynamic programming",\n  "parts": [\n    {\n      "name": "Arrays",\n      "lectures": ["Intro to Arrays"],\n      "assignments": ["Array practice"]\n    }\n  ]\n}`}
-            className="flex-1 w-full bg-white border border-stone-200/40 rounded-[22px] p-4 text-xs text-stone-800 font-mono focus:outline-none focus:border-stone-400/50 resize-none min-h-[260px] shadow-sm leading-relaxed"
-          />
-          
-          {jsonError && (
-            <div className="p-4 bg-red-50/5 border border-red-200/40 rounded-[22px] text-red-600 text-xs font-bold uppercase tracking-wider leading-relaxed">
-              {jsonError}
-            </div>
-          )}
-
-          <button 
-            onClick={handlePreviewJSON}
-            disabled={!jsonInput.trim()}
-            className="w-full py-4 bg-stone-800 hover:bg-stone-900 text-white rounded-[22px] font-extrabold text-xs uppercase tracking-wider transition-all active:scale-[0.98] disabled:opacity-30"
-          >
-            Verify Preview
-          </button>
-        </div>
-      </motion.div>
-    );
-  }
-
-  if (view === 'tracks') {
-    return (
-      <motion.div 
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: -20 }}
-        transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
-        className="flex flex-col h-full bg-app-bg overflow-y-auto pb-32 no-scrollbar"
-      >
-        <div className="px-6 pt-10 pb-6 sticky top-0 bg-app-bg/85 backdrop-blur-md z-10 flex items-center gap-3 border-b border-stone-200/20">
-          <button onClick={() => setView('main')} className="p-2.5 -ml-2 rounded-full hover:bg-stone-50 text-stone-500 hover:text-stone-855 transition-all active:scale-95 border border-transparent hover:border-stone-200/20">
-            <ArrowLeft size={18} />
-          </button>
-          <div>
-            <h1 className="text-xl font-extrabold text-stone-800 tracking-tight">Learning Tracks</h1>
-            <p className="text-[10px] text-stone-400 font-extrabold uppercase tracking-widest">Configure study curriculum</p>
-          </div>
-        </div>
-
-        <div className="px-6 space-y-5 max-w-2xl mx-auto w-full mt-6">
-          <button 
-            onClick={() => setView('paste_json')}
-            className="w-full bg-app-peach hover:bg-opacity-90 border border-stone-200/35 p-4 rounded-[22px] flex items-center justify-center gap-2 text-stone-800 text-[10px] font-extrabold uppercase tracking-wider transition-all active:scale-[0.98]"
-          >
-            <Plus size={12} /> Add Track via JSON
-          </button>
-
-          <div className="space-y-3">
-            {state.tracks.map(track => (
-              <div key={track.id} className="bg-white rounded-[26px] border border-stone-200/30 p-5 flex justify-between items-center group hover:border-stone-200/50 transition-colors shadow-sm">
-                <div>
-                  <h3 className="font-extrabold text-stone-800 text-sm tracking-tight">{track.name}</h3>
-                  <p className="text-stone-400 text-[9px] font-bold uppercase tracking-wider mt-0.5">{track.parts.length} Parts</p>
-                </div>
-                <button 
-                  onClick={() => {
-                    showConfirm(
-                      'Delete Track', 
-                      `Are you sure you want to delete track "${track.name}"? This action cannot be undone.`,
-                      () => {
-                        deleteTrack(track.id);
-                        showToast('Track deleted successfully', 'success');
-                      }
-                    );
-                  }} 
-                  className="p-3 bg-stone-50 rounded-[14px] text-stone-400 hover:text-red-500 hover:bg-red-500/5 transition-all active:scale-95 border border-transparent hover:border-stone-200/30"
-                >
-                  <Trash2 size={14} />
-                </button>
-              </div>
-            ))}
-            {state.tracks.length === 0 && (
-              <div className="text-center py-16 text-stone-400/40 text-[10px] font-extrabold uppercase tracking-widest">
-                No tracks added yet.
-              </div>
-            )}
-          </div>
-        </div>
-      </motion.div>
-    );
-  }
-
   return (
     <motion.div 
       initial={{ opacity: 0, y: 15 }}
@@ -281,22 +66,6 @@ export const SettingsScreen: React.FC = () => {
         <section>
           <h2 className="text-[9px] font-extrabold text-stone-400 uppercase tracking-widest mb-3 ml-4">Customization</h2>
           <div className="bg-white rounded-[32px] border border-stone-200/30 overflow-hidden shadow-sm">
-            <button 
-              onClick={() => setView('tracks')}
-              className="w-full p-5 flex items-center justify-between hover:bg-stone-50/50 transition-colors text-left group active:bg-stone-50 border-b border-stone-100"
-            >
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-app-sage rounded-2xl text-stone-700">
-                  <FileJson size={16} />
-                </div>
-                <div>
-                  <p className="text-stone-800 font-extrabold text-xs">Learning Tracks</p>
-                  <p className="text-stone-400 text-[10px] font-medium mt-0.5">Manage JSON roadmaps</p>
-                </div>
-              </div>
-              <ChevronRight size={14} className="text-stone-300 group-hover:text-stone-500 transition-colors" />
-            </button>
-
             <button 
               onClick={toggleTheme}
               className="w-full p-5 flex items-center justify-between hover:bg-stone-50/50 transition-colors text-left group active:bg-stone-50"
@@ -330,12 +99,12 @@ export const SettingsScreen: React.FC = () => {
               </div>
             </div>
             
-            <button onClick={handleExport} className="w-full p-5 border-b border-stone-100 flex items-center justify-between hover:bg-stone-50/50 transition-colors text-left active:bg-stone-50">
+            <button onClick={handleExport} className="w-full p-5 border-b border-stone-100 flex items-center justify-between hover:bg-stone-50/50 transition-colors text-left active:bg-stone-55">
               <span className="text-stone-500 font-extrabold text-[10px] uppercase tracking-wider">Export App Data</span>
               <Download size={14} className="text-stone-400" />
             </button>
             
-            <button onClick={() => fileInputRef.current?.click()} className="w-full p-5 border-b border-stone-100 flex items-center justify-between hover:bg-stone-50/50 transition-colors text-left active:bg-stone-50">
+            <button onClick={() => fileInputRef.current?.click()} className="w-full p-5 border-b border-stone-100 flex items-center justify-between hover:bg-stone-50/50 transition-colors text-left active:bg-stone-55">
               <span className="text-stone-500 font-extrabold text-[10px] uppercase tracking-wider">Import App Data</span>
               <Upload size={14} className="text-stone-400" />
             </button>

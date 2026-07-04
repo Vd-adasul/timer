@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { AppState, TimeBlock, Track, TrackItem } from './types';
 import { INITIAL_STATE } from './constants';
+import { format } from 'date-fns';
 
 export interface ToastType {
   message: string;
@@ -21,6 +22,10 @@ interface StoreContextType {
   clearData: () => void;
   addTrack: (track: Track) => void;
   deleteTrack: (id: string) => void;
+  addPartToTrack: (trackId: string, partName: string) => void;
+  deletePartFromTrack: (trackId: string, partId: string) => void;
+  addLectureToPart: (trackId: string, partId: string, name: string, lectureNumber: string) => void;
+  deleteLectureFromPart: (trackId: string, partId: string, itemId: string) => void;
   importData: (data: string) => boolean;
   toast: ToastType | null;
   showToast: (message: string, type?: 'success' | 'error' | 'info') => void;
@@ -156,12 +161,100 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
             if (p.id !== partId) return p;
             
             const toggleCompleted = (items?: TrackItem[]) => 
-              items?.map(i => i.id === itemId ? { ...i, completed: !i.completed } : i);
+              items?.map(i => {
+                if (i.id === itemId) {
+                  const completed = !i.completed;
+                  return { 
+                    ...i, 
+                    completed,
+                    completedDate: completed ? format(new Date(), 'yyyy-MM-dd') : undefined
+                  };
+                }
+                return i;
+              });
               
             return {
               ...p,
               lectures: toggleCompleted(p.lectures),
               assignments: toggleCompleted(p.assignments)
+            };
+          })
+        };
+      });
+      return { ...prev, tracks: newTracks };
+    });
+  };
+
+  const addPartToTrack = (trackId: string, partName: string) => {
+    setState(prev => {
+      const newTracks = prev.tracks.map(t => {
+        if (t.id !== trackId) return t;
+        const newPart = {
+          id: `part_${Date.now()}`,
+          name: partName,
+          lectures: [],
+          assignments: []
+        };
+        return {
+          ...t,
+          parts: [...t.parts, newPart]
+        };
+      });
+      return { ...prev, tracks: newTracks };
+    });
+  };
+
+  const deletePartFromTrack = (trackId: string, partId: string) => {
+    setState(prev => {
+      const newTracks = prev.tracks.map(t => {
+        if (t.id !== trackId) return t;
+        return {
+          ...t,
+          parts: t.parts.filter(p => p.id !== partId)
+        };
+      });
+      return { ...prev, tracks: newTracks };
+    });
+  };
+
+  const addLectureToPart = (trackId: string, partId: string, name: string, lectureNumber: string) => {
+    setState(prev => {
+      const newTracks = prev.tracks.map(t => {
+        if (t.id !== trackId) return t;
+        return {
+          ...t,
+          parts: t.parts.map(p => {
+            if (p.id !== partId) return p;
+            const newLecture: TrackItem = {
+              id: `lec_${Date.now()}`,
+              name,
+              type: 'lecture',
+              lectureNumber,
+              completed: false
+            };
+            return {
+              ...p,
+              lectures: [...(p.lectures || []), newLecture]
+            };
+          })
+        };
+      });
+      return { ...prev, tracks: newTracks };
+    });
+  };
+
+  const deleteLectureFromPart = (trackId: string, partId: string, itemId: string) => {
+    setState(prev => {
+      const newTracks = prev.tracks.map(t => {
+        if (t.id !== trackId) return t;
+        return {
+          ...t,
+          parts: t.parts.map(p => {
+            if (p.id !== partId) return p;
+            return {
+              ...p,
+              lectures: (p.lectures || []).filter(l => l.id !== itemId),
+              assignments: (p.assignments || []).filter(a => a.id !== itemId)
             };
           })
         };
@@ -193,7 +286,9 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       addTrack, deleteTrack, importData,
       toast, showToast, hideToast,
       confirmDialog, showConfirm, hideConfirm,
-      theme, toggleTheme, toggleItemCompleted
+      theme, toggleTheme, toggleItemCompleted,
+      addPartToTrack, deletePartFromTrack,
+      addLectureToPart, deleteLectureFromPart
     }}>
       {children}
     </StoreContext.Provider>
